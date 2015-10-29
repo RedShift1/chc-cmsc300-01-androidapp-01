@@ -23,13 +23,10 @@ public class DB extends SQLiteOpenHelper
      * @param context to use to open or create the database
      * @param name    of the database file, or null for an in-memory database
      * @param factory to use for creating cursor objects, or null for the default
-     * @param version number of the database (starting at 1); if the database is older,
-     *                {@link #onUpgrade} will be used to upgrade the database; if the database is
-     *                newer, {@link #onDowngrade} will be used to downgrade the database
      */
-    public DB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
+    public DB(Context context, String name, SQLiteDatabase.CursorFactory factory)
     {
-        super(context, name, factory, version);
+        super(context, "gradekeeper.sqlite", factory, this.DATA_VERSION);
     }
 
     @Override
@@ -83,6 +80,23 @@ public class DB extends SQLiteOpenHelper
 
     }
 
+    /**
+     * Delete a course
+     * @param id
+     */
+    public void deleteCourse(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("courses", "id=" + id, null);
+    }
+
+    /**
+     * Add a course
+     * @param name
+     * @param code
+     * @param description
+     * @return Id of the inserted course
+     */
     public long addCourse(String name, String code, String description)
     {
         ContentValues values = new ContentValues();
