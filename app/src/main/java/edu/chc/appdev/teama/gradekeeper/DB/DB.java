@@ -45,14 +45,14 @@ public class DB extends SQLiteOpenHelper
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    course_id INTEGER NOT NULL REFERENCES courses (id),\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
-                "    duedate DATE,\n" +
+                "    duedate INTEGER,\n" +
                 "    maxgrade REAL\n" +
                 ");\n" +
                 "\n" +
                 "CREATE TABLE students\n" +
                 "(\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
-                "    name VARCHAR(100) NOT NULL\n" +
+                "    name VARCHAR(100) NOT NULL UNIQUE\n" +
                 ");\n" +
                 "\n" +
                 "CREATE TABLE students_courses\n" +
@@ -79,6 +79,152 @@ public class DB extends SQLiteOpenHelper
     {
 
     }
+
+
+    // *** Students ***
+
+    /**
+     * Add a student
+     * @param name Name of the student
+     * @return ID of the newly inserted row
+     */
+    public long addStudent(String name)
+    {
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long id = db.insertOrThrow("students", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    /**
+     * Add an existing student to a course
+     * @param studentId ID of the student
+     * @param courseId ID of the course
+     * @return ID of the newly inserted row
+     */
+    public long addStudentToCourse(long studentId, long courseId)
+    {
+        ContentValues values = new ContentValues();
+        values.put("student_id", studentId);
+        values.put("course_id", courseId);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long id = db.insertOrThrow("students_courses", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    /**
+     * Get a list of students for a course
+     * @param courseId ID of the course
+     * @return Array of students
+     */
+    public Student[] getStudentsForCourse(long courseId)
+    {
+        Student[] resultSet;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT * FROM students ";
+        sql += "INNER JOIN students_courses ON students.id = students_courses.student_id ";
+        sql += "WHERE students_courses.course_id = " + courseId;
+
+        Cursor c = db.rawQuery(sql, null);
+        resultSet = new Student[c.getCount()];
+        int i = 0;
+        c.moveToFirst();
+        while(!c.isAfterLast())
+        {
+            resultSet[i++] = new Student(
+                    c.getInt(c.getColumnIndex("id")),
+                    c.getString(c.getColumnIndex("name"))
+            );
+
+            c.moveToNext();
+        }
+
+        return resultSet;
+    }
+
+
+    // *** Assignments ***
+
+    /**
+     * Delete an assignment
+     * @param id ID of the assignment
+     */
+    public void deleteAssignment(long id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("assignments", "id=" + id, null);
+    }
+
+    /**
+     * Add an assignment to a course
+     * @param course_id ID of the course
+     * @param name Name of the assignment
+     * @param duedate Due date in UNIX timestamp
+     * @param maxgrade Maximum grade that can be offered
+     * @return ID of the newly inserted assignment
+     */
+    public long addAssignmentToCourse(long course_id, String name, long duedate, float maxgrade)
+    {
+        ContentValues values = new ContentValues();
+        values.put("course_id", course_id);
+        values.put("name", name);
+        values.put("duedate", duedate);
+        values.put("maxgrade", maxgrade);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long id = db.insertOrThrow("assignments", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    /**
+     * Get all assignments for a course
+     * @param courseId ID of the course
+     * @return Array of assignments
+     */
+    public Assignment[] getAssignmentsForCourse(int courseId)
+    {
+        Assignment[] resultSet;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM assignments WHERE course_id = " + courseId, null);
+        resultSet = new Assignment[c.getCount()];
+        int i = 0;
+        c.moveToFirst();
+        while(!c.isAfterLast())
+        {
+            resultSet[i++] = new Assignment(
+                    c.getInt(c.getColumnIndex("id")),
+                    c.getInt(c.getColumnIndex("course_id")),
+                    c.getString(c.getColumnIndex("name")),
+                    c.getLong(c.getColumnIndex("duedate")),
+                    c.getFloat(c.getColumnIndex("maxgrade"))
+            );
+
+            c.moveToNext();
+        }
+
+        return resultSet;
+    }
+
+
+    // *** Courses ***
 
     /**
      * Delete a course
