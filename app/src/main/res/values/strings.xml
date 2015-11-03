@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Gradekeeper</string>
+    <string name="title_activity_course">CourseActivity</string>
 </resources>
