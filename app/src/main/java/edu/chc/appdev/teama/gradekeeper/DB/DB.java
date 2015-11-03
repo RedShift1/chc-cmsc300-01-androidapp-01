@@ -103,6 +103,16 @@ public class DB extends SQLiteOpenHelper
     }
 
     /**
+     * Delete a student
+     * @param id ID of the student
+     */
+    public void deleteStudent(long id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("students", "id=" + id, null);
+    }
+
+    /**
      * Add an existing student to a course
      * @param studentId ID of the student
      * @param courseId ID of the course
