@@ -26,7 +26,7 @@ public class DB extends SQLiteOpenHelper
      */
     public DB(Context context, String name, SQLiteDatabase.CursorFactory factory)
     {
-        super(context, "gradekeeper.sqlite", factory, this.DATA_VERSION);
+        super(context, "gradekeeper.sqlite", factory, DB.DATA_VERSION);
     }
 
     @Override
