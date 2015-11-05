@@ -40,7 +40,7 @@
             android:ems="10"
             android:id="@+id/txtDescription"
             android:hint="Description"
-            android:layout_weight="0.30"/>
+            android:layout_weight="2"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -48,6 +48,11 @@
             android:text="Add meeting time"
             android:id="@+id/btnAddMeeting"
             android:onClick="showDateTimePicker"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="276dp"
+            android:id="@+id/lvMeetings"/>
 
     </LinearLayout>
 </RelativeLayout>

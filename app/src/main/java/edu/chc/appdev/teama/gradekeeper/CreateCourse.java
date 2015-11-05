@@ -7,17 +7,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.jjobes.slidedaytimepicker.SlideDayTimeListener;
 import com.github.jjobes.slidedaytimepicker.SlideDayTimePicker;
 
+import java.util.ArrayList;
+
+import edu.chc.appdev.teama.gradekeeper.ArrayAdapters.CourseMeetings;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class CreateCourse extends AppCompatActivity
 {
 
     private SlideDayTimeListener listener;
+    private ArrayList<String[]> meetingTimes;
+    private CourseMeetings meetingTimesAdapter;
+
+    public CreateCourse()
+    {
+        this.meetingTimes = new ArrayList<String[]>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +46,7 @@ public class CreateCourse extends AppCompatActivity
             {
                 // Do something with the day, hour and minute
                 // the user has selected.
+                CreateCourse.this.addMeetingTime(day, hour, minute);
             }
 
             @Override
@@ -44,6 +56,16 @@ public class CreateCourse extends AppCompatActivity
                 // This override is optional.
             }
         };
+
+        this.meetingTimesAdapter = new CourseMeetings(this, this.meetingTimes);
+        ((ListView) this.findViewById(R.id.lvMeetings)).setAdapter(this.meetingTimesAdapter);
+    }
+
+    public void addMeetingTime(int day, int hour, int minute)
+    {
+        String[] item = {String.valueOf(day), hour + ":" + minute};
+        this.meetingTimes.add(item);
+        this.meetingTimesAdapter.notifyDataSetChanged();
     }
 
     @Override
