@@ -19,8 +19,6 @@ public class CreateCourse extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_course);
 
-        // getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-
         this.setTitle("Add course");
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
