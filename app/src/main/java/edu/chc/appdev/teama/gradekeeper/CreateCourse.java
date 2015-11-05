@@ -16,6 +16,8 @@ public class CreateCourse extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_course);
+
+        this.setTitle("Add course");
     }
 
     public void addCourseToDb(View view)
