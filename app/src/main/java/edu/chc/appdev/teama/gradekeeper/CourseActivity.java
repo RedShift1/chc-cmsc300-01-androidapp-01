@@ -40,7 +40,7 @@ public class CourseActivity extends AppCompatActivity {
 
         // Should be done dynamically
         this.setTitle("Intro to Java");
-        (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        //(this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
