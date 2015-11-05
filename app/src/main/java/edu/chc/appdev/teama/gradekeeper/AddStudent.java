@@ -26,7 +26,7 @@ public class AddStudent extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.createcourse, menu);
+        this.getMenuInflater().inflate(R.menu.addstudent, menu);
         return true;
     }
 
@@ -43,7 +43,7 @@ public class AddStudent extends AppCompatActivity {
         }
     }
 
-    public void addCourseToDb(MenuItem menuItem)
+    public void addStudentToDb(MenuItem menuItem)
     {
         DB db = new DB(this, null, null);
 
