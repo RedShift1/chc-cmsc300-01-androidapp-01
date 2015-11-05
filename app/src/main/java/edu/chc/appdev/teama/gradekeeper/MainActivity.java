@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -13,7 +14,7 @@ import android.widget.ListView;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class MainActivity extends Activity
+public class MainActivity extends AppCompatActivity
 {
     static final int REQUEST_CREATE_COURSE = 1;
 
@@ -33,6 +34,12 @@ public class MainActivity extends Activity
         ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
 
         lvItems.setAdapter(this.coursesAdapter);
+
+        this.setTitle("Courses");
+        /*ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Courses");
+
+        actionBar.show();*/
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
