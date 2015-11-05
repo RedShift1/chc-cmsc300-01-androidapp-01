@@ -14,6 +14,10 @@ import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class MainActivity extends Activity
 {
+    static final int REQUEST_CREATE_COURSE = 1;
+
+    private DB db;
+    private Courses coursesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,16 +25,31 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DB db = new DB(this, null, null);
+        this.db = new DB(this, null, null);
+
+        this.coursesAdapter = new Courses(this, this.db.getCoursesCursor(), 0);
 
         ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
 
-        lvItems.setAdapter(new Courses(this, db.getCoursesCursor(), 0));
+        lvItems.setAdapter(this.coursesAdapter);
     }
 
     public void openCreateCourse(View view)
     {
         Intent createCourseIntent = new Intent(this, CreateCourse.class);
-        this.startActivity(createCourseIntent);
+        this.startActivityForResult(createCourseIntent, this.REQUEST_CREATE_COURSE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == this.REQUEST_CREATE_COURSE)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                this.coursesAdapter.swapCursor(this.db.getCoursesCursor());
+            }
+        }
     }
 }
