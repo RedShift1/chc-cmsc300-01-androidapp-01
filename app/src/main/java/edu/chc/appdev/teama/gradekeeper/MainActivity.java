@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends ListActivity
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
+import edu.chc.appdev.teama.gradekeeper.DB.DB;
+
+public class MainActivity extends Activity
 {
 
     @Override
@@ -16,19 +20,12 @@ public class MainActivity extends ListActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*String[] myStringArray={"A","B","C"};
-        ArrayAdapter<String> myAdapter=new
-                ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                myStringArray);
-        ListView myList=
-                (ListView) findViewById(R.id.courseListView);
-        myList.setAdapter(myAdapter);*/
-        String[][] testArray = {{"Intro to Java", "CMSC 101", "Teaches fundamentals..."},
-                {"English Composition", "ENG 101", "A 100-level class that..."}};
-        CoursesArrayAdapter adapter = new CoursesArrayAdapter(this, testArray);
-        setListAdapter(adapter);
+
+        DB db = new DB(this, null, null);
+
+        ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
+
+        lvItems.setAdapter(new Courses(this, db.getCoursesCursor(), 0));
     }
 
     public void openCreateCourse(View view)
