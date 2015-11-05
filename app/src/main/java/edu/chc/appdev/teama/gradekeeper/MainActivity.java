@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -32,6 +33,19 @@ public class MainActivity extends Activity
         ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
 
         lvItems.setAdapter(this.coursesAdapter);
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
+                startActivity(viewCourse);
+
+                // Get the item for passing it on to the new activity:
+                MainActivity.this.coursesAdapter.getItem(position);
+            }
+        });
     }
 
     public void openCreateCourse(View view)
