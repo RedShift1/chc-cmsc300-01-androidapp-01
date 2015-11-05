@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,8 @@ public class CreateCourse extends AppCompatActivity
         );
 
         (Toast.makeText(this, "Added!", Toast.LENGTH_LONG)).show();
+
+        this.setResult(Activity.RESULT_OK);
 
         this.finish();
     }
