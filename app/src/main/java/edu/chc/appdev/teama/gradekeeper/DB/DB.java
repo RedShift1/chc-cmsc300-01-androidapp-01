@@ -34,7 +34,7 @@ public class DB extends SQLiteOpenHelper
     {
         String sql = "CREATE TABLE courses\n" +
                 "(\n" +
-                "    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
                 "    code VARCHAR(20) NOT NULL,\n" +
                 "    description TEXT NULL\n" +
@@ -42,8 +42,8 @@ public class DB extends SQLiteOpenHelper
                 "\n" +
                 "CREATE TABLE assignments\n" +
                 "(\n" +
-                "    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
-                "    course_id INTEGER NOT NULL REFERENCES courses (id),\n" +
+                "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                "    course_id INTEGER NOT NULL REFERENCES courses (_id),\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
                 "    duedate INTEGER,\n" +
                 "    maxgrade REAL\n" +
@@ -51,23 +51,23 @@ public class DB extends SQLiteOpenHelper
                 "\n" +
                 "CREATE TABLE students\n" +
                 "(\n" +
-                "    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    name VARCHAR(100) NOT NULL UNIQUE\n" +
                 ");\n" +
                 "\n" +
                 "CREATE TABLE students_courses\n" +
                 "(\n" +
-                "    course_id INTEGER NOT NULL,\n" +
-                "    student_id INTEGER NOT NULL,\n" +
+                "    course_id INTEGER NOT NULL REFERENCES courses(_id),\n" +
+                "    student_id INTEGER NOT NULL REFERENCES students(_id),\n" +
                 "    PRIMARY KEY(course_id,student_id)\n" +
                 ");\n" +
                 "\n" +
                 "CREATE TABLE assignment_grades\n" +
                 "(\n" +
-                "    assignment_id INTEGER NOT NULL,\n" +
-                "    student_id INTEGER NOT NULL REFERENCES students (id),\n" +
+                "    assignment_id INTEGER NOT NULL REFERENCES assignments(_id),\n" +
+                "    student_id INTEGER NOT NULL REFERENCES students(_id),\n" +
                 "    grade REAL,\n" +
-                "    PRIMARY KEY(assignment_id,student_id)\n" +
+                "    PRIMARY KEY(assignment_id, student_id)\n" +
                 ");\n" +
                 "\n";
 
@@ -109,7 +109,7 @@ public class DB extends SQLiteOpenHelper
     public void deleteStudent(long id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("students", "id=" + id, null);
+        db.delete("students", "_id=" + id, null);
     }
 
     /**
@@ -155,7 +155,7 @@ public class DB extends SQLiteOpenHelper
         while(!c.isAfterLast())
         {
             resultSet[i++] = new Student(
-                    c.getInt(c.getColumnIndex("id")),
+                    c.getInt(c.getColumnIndex("_id")),
                     c.getString(c.getColumnIndex("name"))
             );
 
@@ -175,7 +175,7 @@ public class DB extends SQLiteOpenHelper
     public void deleteAssignment(long id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("assignments", "id=" + id, null);
+        db.delete("assignments", "_id=" + id, null);
     }
 
     /**
@@ -220,7 +220,7 @@ public class DB extends SQLiteOpenHelper
         while(!c.isAfterLast())
         {
             resultSet[i++] = new Assignment(
-                    c.getInt(c.getColumnIndex("id")),
+                    c.getInt(c.getColumnIndex("_id")),
                     c.getInt(c.getColumnIndex("course_id")),
                     c.getString(c.getColumnIndex("name")),
                     c.getLong(c.getColumnIndex("duedate")),
@@ -243,7 +243,7 @@ public class DB extends SQLiteOpenHelper
     public void deleteCourse(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("courses", "id=" + id, null);
+        db.delete("courses", "_id=" + id, null);
     }
 
     /**
@@ -287,7 +287,7 @@ public class DB extends SQLiteOpenHelper
         while(!c.isAfterLast())
         {
             resultSet[i++] = new Course(
-                c.getInt(c.getColumnIndex("id")),
+                c.getInt(c.getColumnIndex("_id")),
                 c.getString(c.getColumnIndex("name")),
                 c.getString(c.getColumnIndex("code")),
                 c.getString(c.getColumnIndex("description"))
@@ -297,5 +297,11 @@ public class DB extends SQLiteOpenHelper
         }
 
         return resultSet;
+    }
+
+    public Cursor getCoursesCursor()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM courses", null);
     }
 }
