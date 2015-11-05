@@ -3,7 +3,8 @@ package edu.chc.appdev.teama.gradekeeper;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,10 +19,33 @@ public class CreateCourse extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_course);
 
+        // getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
         this.setTitle("Add course");
+        (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-    public void addCourseToDb(View view)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        this.getMenuInflater().inflate(R.menu.createcourse, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    public void addCourseToDb(MenuItem menuItem)
     {
         DB db = new DB(this, null, null);
 
