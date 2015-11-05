@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".AddStudent" >
         </activity>
+        <activity android:name=".AddAssignment" >
+        </activity>
     </application>
 
 </manifest>
