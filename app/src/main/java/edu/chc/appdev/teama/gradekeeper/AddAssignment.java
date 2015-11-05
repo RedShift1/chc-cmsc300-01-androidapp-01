@@ -5,28 +5,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class AddStudent extends AppCompatActivity {
+public class AddAssignment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_student);
+        setContentView(R.layout.activity_add_assignment);
 
-        this.setTitle("Add Student");
+        this.setTitle("Add Assignment");
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.addstudent, menu);
+        this.getMenuInflater().inflate(R.menu.createcourse, menu);
         return true;
     }
 
@@ -43,17 +42,18 @@ public class AddStudent extends AppCompatActivity {
         }
     }
 
-    public void addStudentToDb(MenuItem menuItem)
+    public void addCourseToDb(MenuItem menuItem)
     {
         DB db = new DB(this, null, null);
-
-        long studentId = db.addStudent(
-                ((EditText) this.findViewById(R.id.txtName)).getText().toString());
 
         // NEED ACTUAL COURSEID
         long courseId = 1;
 
-        db.addStudentToCourse(studentId, courseId);
+        // There probably needs more conversion for the date
+        db.addAssignmentToCourse(courseId,
+                ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
+                Long.parseLong(((EditText) this.findViewById(R.id.txtDate)).getText().toString()),
+                Float.parseFloat(((EditText) this.findViewById(R.id.txtPoints)).getText().toString()));
 
         /*db.addCourse(
                 ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
