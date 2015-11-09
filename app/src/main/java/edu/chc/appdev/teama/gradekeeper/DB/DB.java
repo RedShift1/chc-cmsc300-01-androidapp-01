@@ -91,6 +91,12 @@ public class DB extends SQLiteOpenHelper
 
     // *** Students ***
 
+    public Cursor getStudentsCursor()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM students", null);
+    }
+
     /**
      * Add a student
      * @param name Name of the student
