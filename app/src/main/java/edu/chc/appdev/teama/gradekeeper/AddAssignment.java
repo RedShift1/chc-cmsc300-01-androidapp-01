@@ -118,12 +118,6 @@ public class AddAssignment extends AppCompatActivity {
             Float.parseFloat(((EditText) this.findViewById(R.id.txtPoints)).getText().toString())
         );
 
-        /*db.addCourse(
-                ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
-                ((EditText) this.findViewById(R.id.txtCode)).getText().toString(),
-                ((EditText) this.findViewById(R.id.txtDescription)).getText().toString()
-        );*/
-
         (Toast.makeText(this, "Added!", Toast.LENGTH_LONG)).show();
 
         this.setResult(Activity.RESULT_OK);
