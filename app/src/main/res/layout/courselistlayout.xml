@@ -9,7 +9,7 @@ android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@+id/label"
-        android:textSize="32px" >
+        android:textAppearance="?android:attr/textAppearanceLarge">
     </TextView>
 
     <TextView
@@ -17,7 +17,7 @@ android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@+id/label"
-        android:textSize="20px" >
+        android:textAppearance="?android:attr/textAppearanceMedium">
     </TextView>
 
     <TextView
@@ -25,7 +25,7 @@ android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@+id/label"
-        android:textSize="20px" >
+        android:textAppearance="?android:attr/textAppearanceMedium">
     </TextView>
 
 </LinearLayout>
