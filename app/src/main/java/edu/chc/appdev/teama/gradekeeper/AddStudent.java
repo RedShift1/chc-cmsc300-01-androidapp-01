@@ -6,12 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentAutocomplete;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class AddStudent extends AppCompatActivity {
+
+    private DB db;
+    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,8 +24,19 @@ public class AddStudent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
 
+
+        this.db = new DB(this, null, null);
+
+        Bundle extras = this.getIntent().getExtras();
+
+        this.id = extras.getLong("_id");
+
         this.setTitle("Add Student");
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        AutoCompleteTextView atvStudent = (AutoCompleteTextView) this.findViewById(R.id.atvStudent);
+        atvStudent.setAdapter(new StudentAutocomplete(this, db.getStudentsCursor(), 0));
+
     }
 
     @Override
@@ -47,19 +63,12 @@ public class AddStudent extends AppCompatActivity {
     {
         DB db = new DB(this, null, null);
 
+        // TODO: check if student exists first, and re-use it
+
         long studentId = db.addStudent(
-                ((EditText) this.findViewById(R.id.txtName)).getText().toString());
+                ((EditText) this.findViewById(R.id.atvStudent)).getText().toString());
 
-        // NEED ACTUAL COURSEID
-        long courseId = 1;
-
-        db.addStudentToCourse(studentId, courseId);
-
-        /*db.addCourse(
-                ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
-                ((EditText) this.findViewById(R.id.txtCode)).getText().toString(),
-                ((EditText) this.findViewById(R.id.txtDescription)).getText().toString()
-        );*/
+        db.addStudentToCourse(studentId, this.id);
 
         (Toast.makeText(this, "Added!", Toast.LENGTH_LONG)).show();
 
