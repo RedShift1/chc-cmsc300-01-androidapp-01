@@ -41,15 +41,6 @@ public class CourseActivity extends AppCompatActivity {
 
         this.db = new DB(this, null, null);
 
-        /*this.coursesAdapter = new Courses(this, this.db.getCoursesCursor(), 0);
-
-        ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
-
-        lvItems.setAdapter(this.coursesAdapter);*/
-
-        // Should be done dynamically
-
-
         Bundle extras = this.getIntent().getExtras();
 
         this.id = extras.getLong("_id");
