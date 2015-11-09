@@ -50,22 +50,6 @@ public class CourseActivity extends AppCompatActivity {
 
         ListView lvAssignments = (ListView) this.findViewById(R.id.lv_assignments);
         lvAssignments.setAdapter(this.assignmentsAdapter);
-
-
-
-
-        /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
-                startActivity(viewCourse);
-
-                // Get the item for passing it on to the new activity:
-                MainActivity.this.coursesAdapter.getItem(position);
-            }
-        });*/
     }
 
 
