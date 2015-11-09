@@ -74,5 +74,13 @@ public class MainActivity extends AppCompatActivity
                 this.coursesAdapter.swapCursor(this.db.getCoursesCursor());
             }
         }
+
+        if(requestCode == this.REQUEST_VIEW_COURSE)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                this.coursesAdapter.swapCursor(this.db.getCoursesCursor());
+            }
+        }
     }
 }
