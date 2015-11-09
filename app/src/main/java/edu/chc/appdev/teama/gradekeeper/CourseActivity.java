@@ -18,6 +18,7 @@ import android.widget.ListView;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
 import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
+import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class CourseActivity extends AppCompatActivity {
@@ -44,7 +45,16 @@ public class CourseActivity extends AppCompatActivity {
         Bundle extras = this.getIntent().getExtras();
 
         this.id = extras.getLong("_id");
-        this.setTitle("x");
+
+        try
+        {
+            Course thisCourse = this.db.getCourse(this.id);
+            this.setTitle(thisCourse.getName());
+        }
+        catch(Exception ex)
+        {
+            Log.w("Gradekeeper", "No course found with ID " + this.id);
+        }
 
         this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForCourse(this.id), 0);
 
