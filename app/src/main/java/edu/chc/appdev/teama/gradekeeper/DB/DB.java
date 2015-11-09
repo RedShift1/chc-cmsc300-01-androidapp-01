@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DB extends SQLiteOpenHelper
 {
 
-    private static final int DATA_VERSION = 1;
+    private static final int DATA_VERSION = 3;
 
     /**
      * Create a helper object to create, open, and/or manage a database.
@@ -32,52 +32,60 @@ public class DB extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String sql = "CREATE TABLE courses\n" +
+        String sqlCourses = "CREATE TABLE courses\n" +
                 "(\n" +
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
                 "    code VARCHAR(20) NOT NULL,\n" +
                 "    description TEXT NULL\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE assignments\n" +
+                ");";
+
+        String sqlAssignments = "CREATE TABLE assignments\n" +
                 "(\n" +
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    course_id INTEGER NOT NULL REFERENCES courses (_id),\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
-                "    duedate INTEGER,\n" +
+                "    duedate VARCHAR(100),\n" +
                 "    maxgrade REAL\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE students\n" +
+                ");";
+
+        String sqlStudents = "CREATE TABLE students\n" +
                 "(\n" +
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    name VARCHAR(100) NOT NULL UNIQUE\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE students_courses\n" +
+                ");\n";
+
+        String sqlStudentsCourses = "CREATE TABLE students_courses\n" +
                 "(\n" +
                 "    course_id INTEGER NOT NULL REFERENCES courses(_id),\n" +
                 "    student_id INTEGER NOT NULL REFERENCES students(_id),\n" +
                 "    PRIMARY KEY(course_id,student_id)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE assignment_grades\n" +
+                ");";
+
+        String sqlAssignmentGrades = "CREATE TABLE assignment_grades\n" +
                 "(\n" +
                 "    assignment_id INTEGER NOT NULL REFERENCES assignments(_id),\n" +
                 "    student_id INTEGER NOT NULL REFERENCES students(_id),\n" +
                 "    grade REAL,\n" +
                 "    PRIMARY KEY(assignment_id, student_id)\n" +
-                ");\n" +
-                "\n";
+                ");";
 
-        db.execSQL(sql);
+        db.execSQL(sqlCourses);
+        db.execSQL(sqlAssignments);
+        db.execSQL(sqlStudents);
+        db.execSQL(sqlStudentsCourses);
+        db.execSQL(sqlAssignmentGrades);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-
+        db.execSQL("DROP TABLE IF EXISTS courses");
+        db.execSQL("DROP TABLE IF EXISTS assignments");
+        db.execSQL("DROP TABLE IF EXISTS students");
+        db.execSQL("DROP TABLE IF EXISTS students_courses");
+        db.execSQL("DROP TABLE IF EXISTS assignment_grades");
+        this.onCreate(db);
     }
 
 
@@ -182,11 +190,11 @@ public class DB extends SQLiteOpenHelper
      * Add an assignment to a course
      * @param course_id ID of the course
      * @param name Name of the assignment
-     * @param duedate Due date in UNIX timestamp
+     * @param duedate Due date in text
      * @param maxgrade Maximum grade that can be offered
      * @return ID of the newly inserted assignment
      */
-    public long addAssignmentToCourse(long course_id, String name, long duedate, float maxgrade)
+    public long addAssignmentToCourse(long course_id, String name, String duedate, float maxgrade)
     {
         ContentValues values = new ContentValues();
         values.put("course_id", course_id);
@@ -203,36 +211,11 @@ public class DB extends SQLiteOpenHelper
         return id;
     }
 
-    /**
-     * Get all assignments for a course
-     * @param courseId ID of the course
-     * @return Array of assignments
-     */
-    public Assignment[] getAssignmentsForCourse(int courseId)
+    public Cursor getAssignmentsForCourse(long courseId)
     {
-        Assignment[] resultSet;
-
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM assignments WHERE course_id = " + courseId, null);
-        resultSet = new Assignment[c.getCount()];
-        int i = 0;
-        c.moveToFirst();
-        while(!c.isAfterLast())
-        {
-            resultSet[i++] = new Assignment(
-                    c.getInt(c.getColumnIndex("_id")),
-                    c.getInt(c.getColumnIndex("course_id")),
-                    c.getString(c.getColumnIndex("name")),
-                    c.getLong(c.getColumnIndex("duedate")),
-                    c.getFloat(c.getColumnIndex("maxgrade"))
-            );
-
-            c.moveToNext();
-        }
-
-        return resultSet;
+        return db.rawQuery("SELECT * FROM assignments WHERE course_id = " + courseId, null);
     }
-
 
     // *** Courses ***
 
