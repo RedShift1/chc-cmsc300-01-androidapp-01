@@ -223,7 +223,7 @@ public class DB extends SQLiteOpenHelper
      * Delete a course
      * @param id
      */
-    public void deleteCourse(int id)
+    public void deleteCourse(long id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("courses", "_id=" + id, null);
