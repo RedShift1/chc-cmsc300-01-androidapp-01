@@ -1,16 +1,29 @@
 package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class AddAssignment extends AppCompatActivity {
+
+    private long id;
+    private TextView txtDueDate;
+    private Calendar dueDateCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,8 +31,57 @@ public class AddAssignment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assignment);
 
+        Bundle extras = this.getIntent().getExtras();
+
+        this.id = extras.getLong("_id");
+
         this.setTitle("Add Assignment");
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
+
+        this.txtDueDate = (TextView) this.findViewById(R.id.txtDueDate);
+
+
+        this.dueDateCalendar = Calendar.getInstance();
+
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                dueDateCalendar.set(Calendar.YEAR, year);
+                dueDateCalendar.set(Calendar.MONTH, monthOfYear);
+                dueDateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDueDate();
+            }
+
+        };
+
+
+        txtDueDate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                new DatePickerDialog(
+                        AddAssignment.this,
+                        date,
+                        dueDateCalendar.get(Calendar.YEAR),
+                        dueDateCalendar.get(Calendar.MONTH),
+                        dueDateCalendar.get(Calendar.DAY_OF_MONTH)
+                ).show();
+            }
+        });
+    }
+
+
+    private void updateDueDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, y", Locale.getDefault());
+        txtDueDate.setText(sdf.format(this.dueDateCalendar.getTime()));
     }
 
     @Override
