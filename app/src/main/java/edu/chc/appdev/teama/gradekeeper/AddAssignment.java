@@ -87,7 +87,7 @@ public class AddAssignment extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.createcourse, menu);
+        this.getMenuInflater().inflate(R.menu.addassignment, menu);
         return true;
     }
 
