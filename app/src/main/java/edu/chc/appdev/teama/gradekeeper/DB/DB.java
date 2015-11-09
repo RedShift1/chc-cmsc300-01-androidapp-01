@@ -287,4 +287,29 @@ public class DB extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM courses", null);
     }
+
+    public Course getCourse(long id) throws Exception
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM courses WHERE _id = " + id, null);
+
+        if(c.getCount() == 1)
+        {
+            c.moveToFirst();
+            return new Course(
+                    c.getInt(c.getColumnIndex("_id")),
+                    c.getString(c.getColumnIndex("name")),
+                    c.getString(c.getColumnIndex("code")),
+                    c.getString(c.getColumnIndex("description"))
+            );
+        }
+        else if(c.getCount() == 0)
+        {
+            throw new Exception("No row found");
+        }
+        else
+        {
+            throw new Exception("More than one row found");
+        }
+    }
 }
