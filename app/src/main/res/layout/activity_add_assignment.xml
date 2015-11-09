@@ -32,8 +32,9 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/txtDate"
-            android:hint="Due Date" />
+            android:id="@+id/txtDueDate"
+            android:hint="Due date"
+            android:focusable="false"/>
 
         <EditText
             android:layout_width="match_parent"
