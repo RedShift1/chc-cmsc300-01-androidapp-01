@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
@@ -63,7 +64,16 @@ public class CourseActivity extends AppCompatActivity {
     }
 
 
+    public void deleteCourseFromDB(MenuItem menuItem)
+    {
+        this.db.deleteCourse(this.id);
 
+        (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
+
+        this.setResult(Activity.RESULT_OK);
+
+        this.finish();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
