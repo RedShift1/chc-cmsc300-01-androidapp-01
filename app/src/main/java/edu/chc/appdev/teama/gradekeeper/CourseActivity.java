@@ -109,16 +109,16 @@ public class CourseActivity extends AppCompatActivity {
         this.startActivityForResult(addAssignmentIntent, this.REQUEST_ADD_ASSIGNMENT);
     }
 
-    /*@Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if(requestCode == this.REQUEST_CREATE_COURSE)
+        if(requestCode == this.REQUEST_ADD_ASSIGNMENT)
         {
             if (resultCode == Activity.RESULT_OK)
             {
-                this.coursesAdapter.swapCursor(this.db.getCoursesCursor());
+                this.assignmentsAdapter.swapCursor(this.db.getAssignmentsForCourse(this.id));
             }
-        }*/
-   // }
+        }
+    }
 }
