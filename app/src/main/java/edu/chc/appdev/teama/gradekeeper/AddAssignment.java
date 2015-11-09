@@ -104,18 +104,19 @@ public class AddAssignment extends AppCompatActivity {
         }
     }
 
-    public void addCourseToDb(MenuItem menuItem)
+    public void addAssignmentToDb(MenuItem menuItem)
     {
         DB db = new DB(this, null, null);
 
-        // NEED ACTUAL COURSEID
-        long courseId = 1;
+        Log.w("Test", ((TextView) this.findViewById(R.id.txtDueDate)).getText().toString());
 
         // There probably needs more conversion for the date
-        db.addAssignmentToCourse(courseId,
-                ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
-                Long.parseLong(((EditText) this.findViewById(R.id.txtDate)).getText().toString()),
-                Float.parseFloat(((EditText) this.findViewById(R.id.txtPoints)).getText().toString()));
+        db.addAssignmentToCourse(
+            this.id,
+            ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
+            this.txtDueDate.getText().toString(),
+            Float.parseFloat(((EditText) this.findViewById(R.id.txtPoints)).getText().toString())
+        );
 
         /*db.addCourse(
                 ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
