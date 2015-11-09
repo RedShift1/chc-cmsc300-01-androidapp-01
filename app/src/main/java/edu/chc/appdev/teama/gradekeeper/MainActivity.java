@@ -47,10 +47,11 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
+                viewCourse.putExtra("_id", id);
                 startActivity(viewCourse);
 
                 // Get the item for passing it on to the new activity:
-                MainActivity.this.coursesAdapter.getItem(position);
+                // MainActivity.this.coursesAdapter.getItem(position);
             }
         });
     }
