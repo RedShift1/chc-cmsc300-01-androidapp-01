@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,13 +8,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
+import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class CourseActivity extends AppCompatActivity {
@@ -22,12 +26,17 @@ public class CourseActivity extends AppCompatActivity {
     static final int REQUEST_ADD_ASSIGNMENT = 2;
 
     private DB db;
-    //private Courses coursesAdapter;
+    private Assignments assignmentsAdapter;
+
+    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_course);
 
         this.db = new DB(this, null, null);
@@ -39,8 +48,20 @@ public class CourseActivity extends AppCompatActivity {
         lvItems.setAdapter(this.coursesAdapter);*/
 
         // Should be done dynamically
-        this.setTitle("Intro to Java");
-        (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
+        Bundle extras = this.getIntent().getExtras();
+
+        this.id = extras.getLong("_id");
+        this.setTitle("x");
+
+        this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForCourse(this.id), 0);
+
+        ListView lvAssignments = (ListView) this.findViewById(R.id.lv_assignments);
+        lvAssignments.setAdapter(this.assignmentsAdapter);
+
+
+
 
         /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -55,6 +76,9 @@ public class CourseActivity extends AppCompatActivity {
             }
         });*/
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -79,12 +103,14 @@ public class CourseActivity extends AppCompatActivity {
     public void openAddStudent(View view)
     {
         Intent addStudentIntent = new Intent(this, AddStudent.class);
+        addStudentIntent.putExtra("_id", this.id);
         this.startActivityForResult(addStudentIntent, this.REQUEST_ADD_STUDENT);
     }
 
     public void openAddAssignment(View view)
     {
         Intent addAssignmentIntent = new Intent(this, AddAssignment.class);
+        addAssignmentIntent.putExtra("_id", this.id);
         this.startActivityForResult(addAssignmentIntent, this.REQUEST_ADD_ASSIGNMENT);
     }
 
