@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import edu.chc.appdev.teama.gradekeeper.R;
 
 /**
@@ -43,7 +41,7 @@ public class Courses extends CursorAdapter
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent)
     {
-        return LayoutInflater.from(context).inflate(R.layout.courselistlayout, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.li_course, parent, false);
     }
 
     /**
