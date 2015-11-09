@@ -17,6 +17,7 @@ import edu.chc.appdev.teama.gradekeeper.DB.DB;
 public class MainActivity extends AppCompatActivity
 {
     static final int REQUEST_CREATE_COURSE = 1;
+    static final int REQUEST_VIEW_COURSE   = 2;
 
     private DB db;
     private Courses coursesAdapter;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
                 viewCourse.putExtra("_id", id);
-                startActivity(viewCourse);
+                startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
 
                 // Get the item for passing it on to the new activity:
                 // MainActivity.this.coursesAdapter.getItem(position);
