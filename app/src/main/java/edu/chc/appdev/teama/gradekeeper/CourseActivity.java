@@ -1,24 +1,20 @@
 package edu.chc.appdev.teama.gradekeeper;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
-import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
-import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
@@ -29,6 +25,7 @@ public class CourseActivity extends AppCompatActivity {
 
     private DB db;
     private Assignments assignmentsAdapter;
+    private Students studentsAdapter;
 
     private long id;
 
@@ -58,9 +55,28 @@ public class CourseActivity extends AppCompatActivity {
         }
 
         this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForCourse(this.id), 0);
+        this.studentsAdapter = new Students(this, this.db.getStudentsForCourseCursor(this.id), 0);
 
-        ListView lvAssignments = (ListView) this.findViewById(R.id.lv_assignments);
-        lvAssignments.setAdapter(this.assignmentsAdapter);
+        /*ListView lvAssignments = (ListView) this.findViewById(R.id.lv_assignments);
+        lvAssignments.setAdapter(this.assignmentsAdapter);*/
+
+        TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getSupportFragmentManager(), CourseActivity.this);
+
+        /*Bundle bundle = new Bundle();
+        bundle.putLong("_id", this.id);*/
+
+        FragmentAssignments assignmentsTab = new FragmentAssignments();
+        assignmentsTab.setAssignmentsAdapter(this.assignmentsAdapter);
+        adapter.addTabFragment(assignmentsTab);
+
+        FragmentStudents studentsTab = new FragmentStudents();
+        studentsTab.setStudentsAdapter(this.studentsAdapter);
+        adapter.addTabFragment(studentsTab);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 
@@ -118,6 +134,14 @@ public class CourseActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK)
             {
                 this.assignmentsAdapter.swapCursor(this.db.getAssignmentsForCourse(this.id));
+            }
+        }
+
+        if(requestCode == this.REQUEST_ADD_STUDENT)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                this.studentsAdapter.swapCursor(this.db.getStudentsForCourseCursor(this.id));
             }
         }
     }
