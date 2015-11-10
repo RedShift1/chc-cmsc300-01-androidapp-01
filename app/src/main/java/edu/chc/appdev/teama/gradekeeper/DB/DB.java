@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
+
 /**
  * Created by Glenn on 29/10/2015.
  */
@@ -177,6 +179,16 @@ public class DB extends SQLiteOpenHelper
         }
 
         return resultSet;
+    }
+
+    public Cursor getStudentsForCourseCursor(long courseId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM students ";
+        sql += "INNER JOIN students_courses ON students._id = students_courses.student_id ";
+        sql += "WHERE students_courses.course_id = " + courseId;
+
+        return db.rawQuery(sql, null);
     }
 
 
