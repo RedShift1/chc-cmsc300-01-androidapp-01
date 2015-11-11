@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,7 +18,7 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class CourseActivity extends AppCompatActivity {
+public class StudentActivity extends AppCompatActivity {
 
     static final int REQUEST_ADD_STUDENT = 1;
     static final int REQUEST_ADD_ASSIGNMENT = 2;
@@ -37,7 +36,7 @@ public class CourseActivity extends AppCompatActivity {
 
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_course);
+        setContentView(R.layout.activity_student);
 
         this.db = new DB(this, null, null);
 
@@ -48,11 +47,11 @@ public class CourseActivity extends AppCompatActivity {
         try
         {
             Course thisCourse = this.db.getCourse(this.id);
-            this.setTitle(thisCourse.getName());
+            this.setTitle("View Student");
         }
         catch(Exception ex)
         {
-            Log.w("Gradekeeper", "No course found with ID " + this.id);
+            Log.w("Gradekeeper", "No student found with ID " + this.id);
         }
 
         this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForCourse(this.id), 0);
@@ -61,12 +60,12 @@ public class CourseActivity extends AppCompatActivity {
         /*ListView lvAssignments = (ListView) this.findViewById(R.id.lv_assignments);
         lvAssignments.setAdapter(this.assignmentsAdapter);*/
 
-        TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getSupportFragmentManager(), CourseActivity.this);
+        //TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getSupportFragmentManager(), CourseActivity.this);
 
         /*Bundle bundle = new Bundle();
         bundle.putLong("_id", this.id);*/
 
-        FragmentAssignments assignmentsTab = new FragmentAssignments();
+        /*FragmentAssignments assignmentsTab = new FragmentAssignments();
         assignmentsTab.setAssignmentsAdapter(this.assignmentsAdapter);
         adapter.addTabFragment(assignmentsTab);
 
@@ -77,27 +76,13 @@ public class CourseActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-
-
-       /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
-                viewCourse.putExtra("_id", id);
-                startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
-
-                // Get the item for passing it on to the new activity:
-                // MainActivity.this.coursesAdapter.getItem(position);
-            }
-        });*/
+        tabLayout.setupWithViewPager(viewPager);*/
     }
 
 
-    public void deleteCourseFromDB(MenuItem menuItem)
+    public void deleteStudentFromDB(MenuItem menuItem)
     {
-        this.db.deleteCourse(this.id);
+        this.db.deleteStudent(this.id);
 
         (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
 
@@ -126,7 +111,7 @@ public class CourseActivity extends AppCompatActivity {
         }
     }
 
-    public void openAddStudent(View view)
+    /*public void openAddStudent(View view)
     {
         Intent addStudentIntent = new Intent(this, AddStudent.class);
         addStudentIntent.putExtra("_id", this.id);
@@ -159,5 +144,5 @@ public class CourseActivity extends AppCompatActivity {
                 this.studentsAdapter.swapCursor(this.db.getStudentsForCourseCursor(this.id));
             }
         }
-    }
+    }*/
 }

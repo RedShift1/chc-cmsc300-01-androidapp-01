@@ -17,13 +17,23 @@
         </activity>
         <activity
             android:name=".CourseActivity"
-            android:label="@string/title_activity_course">
+            android:label="@string/title_activity_course" >
         </activity>
         <activity android:name=".CreateCourse" >
         </activity>
         <activity android:name=".AddStudent" >
         </activity>
         <activity android:name=".AddAssignment" >
+        </activity>
+        <activity
+            android:name=".StudentActivity"
+            android:label="@string/title_activity_student"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".AssignmentActivity"
+            android:label="@string/title_activity_assignment"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
