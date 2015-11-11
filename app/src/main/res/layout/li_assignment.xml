@@ -4,12 +4,26 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/li_assigment_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="[name]"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/ib_li_assignment_delete"
+        android:src="@android:drawable/ic_menu_delete"
+        android:layout_gravity="center_vertical" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,6 +37,7 @@
             android:text="[duedate]"
             android:layout_weight="1"/>
 
+        <!--android:layout_toLeftOf ="@+id/ib_li_assignment_delete"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +45,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="[maxgrade]"
             android:layout_weight="1"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            />
+
+
     </RelativeLayout>
 
 </LinearLayout>

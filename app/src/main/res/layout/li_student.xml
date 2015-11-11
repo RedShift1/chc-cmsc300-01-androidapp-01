@@ -4,13 +4,33 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/li_student_name"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+        android:id="@+id/li_student_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="[li_student_name]"
-        android:textAppearance="?android:attr/textAppearanceLarge">
+        android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_vertical">
     </TextView>
+
+        <!--<Space
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>-->
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/ib_li_student_delete"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_gravity="center_vertical" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>
