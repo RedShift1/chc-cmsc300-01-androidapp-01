@@ -218,7 +218,7 @@ public class DB extends SQLiteOpenHelper
     public Assignment getAssignment(long id) throws Exception
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM assigments WHERE _id = " + id, null);
+        Cursor c = db.rawQuery("SELECT * FROM assignments WHERE _id = " + id, null);
 
         if(c.getCount() == 1)
         {
