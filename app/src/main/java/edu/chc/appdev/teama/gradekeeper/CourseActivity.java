@@ -26,6 +26,7 @@ import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class CourseActivity extends AppCompatActivity {
 
+    public final int REQUEST_GRADEACTIVITY = 0;
     static final int REQUEST_ADD_STUDENT = 1;
     static final int REQUEST_ADD_ASSIGNMENT = 2;
 
@@ -71,7 +72,7 @@ public class CourseActivity extends AppCompatActivity {
         /*Bundle bundle = new Bundle();
         bundle.putLong("_id", this.id);*/
 
-        FragmentAssignments assignmentsTab = new FragmentAssignments();
+        FragmentAssignments assignmentsTab = new FragmentAssignments(this);
         assignmentsTab.setAssignmentsAdapter(this.assignmentsAdapter);
         adapter.addTabFragment(assignmentsTab);
 
@@ -87,6 +88,16 @@ public class CourseActivity extends AppCompatActivity {
 
     public synchronized void refreshStudents() {
         this.studentsAdapter.changeCursor(this.db.getStudentsForCourseCursor(this.id));
+        studentsAdapter.notifyDataSetChanged();
+        //listParent.invalidateViews();
+        //listParent.scrollBy(0, 0);
+    }
+
+    public synchronized void refreshAssignments() {
+        this.assignmentsAdapter.changeCursor(this.db.getAssignmentsForCourse(this.id));
+        assignmentsAdapter.notifyDataSetChanged();
+        //listParent.invalidateViews();
+        //listParent.scrollBy(0, 0);
     }
 
     public void deleteStudent(View view) {
@@ -103,9 +114,6 @@ public class CourseActivity extends AppCompatActivity {
         Toast.makeText(CourseActivity.this, "Deleted " + name + "!", Toast.LENGTH_LONG).show();
 
         refreshStudents();
-        adapter.notifyDataSetChanged();
-        listParent.invalidateViews();
-        listParent.scrollBy(0, 0);
     }
 
 
@@ -172,6 +180,10 @@ public class CourseActivity extends AppCompatActivity {
             {
                 this.studentsAdapter.swapCursor(this.db.getStudentsForCourseCursor(this.id));
             }
+        }
+
+        if (requestCode == this.REQUEST_GRADEACTIVITY) {
+            refreshAssignments();
         }
     }
 }

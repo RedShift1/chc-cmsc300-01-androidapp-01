@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,12 +16,13 @@ import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class FragmentAssignments extends ListFragment implements ITabbedFragment
 {
+    private CourseActivity parentActivity;
 
     public final int REQUEST_GRADEACTIVITY = 0;
 
-    public FragmentAssignments()
+    public FragmentAssignments(CourseActivity parentActivity)
     {
-        // Required empty public constructor
+        this.parentActivity = parentActivity;
     }
 
     @Override
@@ -60,5 +62,15 @@ public class FragmentAssignments extends ListFragment implements ITabbedFragment
     public String getName()
     {
         return "Assignments";
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == this.REQUEST_GRADEACTIVITY) {
+            parentActivity.refreshAssignments();
+        }
     }
 }

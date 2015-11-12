@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsForAssignment;
 import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
@@ -58,7 +60,13 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
     public void deleteAssigmentFromDB(MenuItem menuItem)
     {
+        this.db.deleteAssignment(this.id);
 
+        (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
+
+        this.setResult(Activity.RESULT_OK);
+
+        this.finish();
     }
 
 
