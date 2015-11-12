@@ -91,6 +91,17 @@ public class DB extends SQLiteOpenHelper
     }
 
 
+    public Cursor getStudentsForAssignment(long id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT students._id, students.name AS name FROM students ";
+        sql += "INNER JOIN students_courses ON students_courses.student_id = students._id ";
+        sql += "INNER JOIN assignments ON students_courses.course_id = assignments.course_id ";
+        sql += "WHERE assignments._id = " + id;
+        return db.rawQuery(sql, null);
+    }
+
+
     // *** Students ***
 
     public Cursor getStudentsCursor()
