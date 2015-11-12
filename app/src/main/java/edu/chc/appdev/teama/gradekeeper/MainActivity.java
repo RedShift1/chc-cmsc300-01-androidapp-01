@@ -48,10 +48,6 @@ public class MainActivity extends AppCompatActivity
         lvItems.setAdapter(this.coursesAdapter);
 
         this.setTitle("Courses");
-        /*ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Courses");
-
-        actionBar.show();*/
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -60,8 +56,6 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
                 viewCourse.putExtra("_id", id);
-
-                //Toast.makeText(MainActivity.this, ((Cursor) parent.getItemAtPosition(position)).getString(2), Toast.LENGTH_LONG).show();
 
                 startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
 

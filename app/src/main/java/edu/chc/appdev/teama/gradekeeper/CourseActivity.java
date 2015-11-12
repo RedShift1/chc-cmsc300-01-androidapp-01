@@ -83,31 +83,13 @@ public class CourseActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        //Toast.makeText(CourseActivity.this, studentsTab.ge, Toast.LENGTH_LONG).show();
-
-       /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
-                viewCourse.putExtra("_id", id);
-                startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
-
-                // Get the item for passing it on to the new activity:
-                // MainActivity.this.coursesAdapter.getItem(position);
-            }
-        });*/
     }
 
-    /*public synchronized void refreshStudents() {
-        this.studentsAdapter this.db.getStudentsForCourseCursor(this.id).;
-    }*/
+    public synchronized void refreshStudents() {
+        this.studentsAdapter.changeCursor(this.db.getStudentsForCourseCursor(this.id));
+    }
 
     public void deleteStudent(View view) {
-        /*Toast.makeText(CourseActivity.this, ((Integer) ((ListView) ((LinearLayout) ((RelativeLayout) view.getParent()).getParent()).getParent()).indexOfChild(
-                ((LinearLayout) ((RelativeLayout) view.getParent()).getParent())
-        )).toString(), Toast.LENGTH_LONG).show();*/
-
         LinearLayout linearParent = ((LinearLayout) ((RelativeLayout) view.getParent()).getParent());
         ListView listParent = (ListView) linearParent.getParent();
         int n = ((Integer) listParent.indexOfChild(linearParent));
@@ -120,13 +102,10 @@ public class CourseActivity extends AppCompatActivity {
 
         Toast.makeText(CourseActivity.this, "Deleted " + name + "!", Toast.LENGTH_LONG).show();
 
-
+        refreshStudents();
         adapter.notifyDataSetChanged();
         listParent.invalidateViews();
         listParent.scrollBy(0, 0);
-        //cursor.close();
-
-        //Toast.makeText(CourseActivity.this, ((Integer) position).toString(), Toast.LENGTH_LONG).show();
     }
 
 
