@@ -215,6 +215,32 @@ public class DB extends SQLiteOpenHelper
         db.delete("assignments", "_id=" + id, null);
     }
 
+    public Assignment getAssignment(long id) throws Exception
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM assigments WHERE _id = " + id, null);
+
+        if(c.getCount() == 1)
+        {
+            c.moveToFirst();
+            return new Assignment(
+                    c.getLong(c.getColumnIndex("_id")),
+                    c.getLong(c.getColumnIndex("course_id")),
+                    c.getString(c.getColumnIndex("name")),
+                    c.getString(c.getColumnIndex("duedate")),
+                    c.getFloat(c.getColumnIndex("maxgrade"))
+            );
+        }
+        else if(c.getCount() == 0)
+        {
+            throw new Exception("No row found");
+        }
+        else
+        {
+            throw new Exception("More than one row found");
+        }
+    }
+
     /**
      * Add an assignment to a course
      * @param course_id ID of the course
