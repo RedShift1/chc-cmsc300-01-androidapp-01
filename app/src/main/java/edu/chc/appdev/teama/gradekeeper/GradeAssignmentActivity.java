@@ -6,11 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsForAssignment;
+import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class GradeAssignmentActivity extends AppCompatActivity
@@ -41,6 +43,16 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
         ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
         lvGradesList.setAdapter(this.studentsForAssignmentAdapter);
+
+        try
+        {
+            Assignment thisAssignment = this.db.getAssignment(this.id);
+            this.setTitle(thisAssignment.getName());
+        }
+        catch(Exception ex)
+        {
+            Log.w("Gradekeeper", "No assignment found with ID " + this.id);
+        }
     }
 
     @Override
