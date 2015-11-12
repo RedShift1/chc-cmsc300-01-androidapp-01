@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -14,6 +15,9 @@ import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class FragmentAssignments extends ListFragment implements ITabbedFragment
 {
+
+    public final int REQUEST_GRADEACTIVITY = 0;
+
     public FragmentAssignments()
     {
         // Required empty public constructor
@@ -23,6 +27,14 @@ public class FragmentAssignments extends ListFragment implements ITabbedFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        Intent gradeAssignment = new Intent(this.getActivity(), GradeAssignmentActivity.class);
+        gradeAssignment.putExtra("_id", id);
+        this.startActivityForResult(gradeAssignment, this.REQUEST_GRADEACTIVITY);
     }
 
     public void setAssignmentsAdapter(Assignments adapter)
