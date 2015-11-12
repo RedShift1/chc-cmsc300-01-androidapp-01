@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
+import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class MainActivity extends AppCompatActivity
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
                 viewCourse.putExtra("_id", id);
+
+                //Toast.makeText(MainActivity.this, ((Cursor) parent.getItemAtPosition(position)).getString(2), Toast.LENGTH_LONG).show();
+
                 startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
 
                 // Get the item for passing it on to the new activity:

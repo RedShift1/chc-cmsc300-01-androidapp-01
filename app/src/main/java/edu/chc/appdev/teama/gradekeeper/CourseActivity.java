@@ -2,6 +2,7 @@ package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CursorAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
@@ -79,7 +84,7 @@ public class CourseActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-
+        //Toast.makeText(CourseActivity.this, studentsTab.ge, Toast.LENGTH_LONG).show();
 
        /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,6 +97,36 @@ public class CourseActivity extends AppCompatActivity {
                 // MainActivity.this.coursesAdapter.getItem(position);
             }
         });*/
+    }
+
+    /*public synchronized void refreshStudents() {
+        this.studentsAdapter this.db.getStudentsForCourseCursor(this.id).;
+    }*/
+
+    public void deleteStudent(View view) {
+        /*Toast.makeText(CourseActivity.this, ((Integer) ((ListView) ((LinearLayout) ((RelativeLayout) view.getParent()).getParent()).getParent()).indexOfChild(
+                ((LinearLayout) ((RelativeLayout) view.getParent()).getParent())
+        )).toString(), Toast.LENGTH_LONG).show();*/
+
+        LinearLayout linearParent = ((LinearLayout) ((RelativeLayout) view.getParent()).getParent());
+        ListView listParent = (ListView) linearParent.getParent();
+        int n = ((Integer) listParent.indexOfChild(linearParent));
+        Cursor cursor = ((Cursor) listParent.getAdapter().getItem(n));
+        CursorAdapter adapter = ((CursorAdapter) listParent.getAdapter());
+        int id = cursor.getInt(cursor.getColumnIndex("_id"));
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+
+        this.db.deleteStudent(id);
+
+        Toast.makeText(CourseActivity.this, "Deleted " + name + "!", Toast.LENGTH_LONG).show();
+
+
+        adapter.notifyDataSetChanged();
+        listParent.invalidateViews();
+        listParent.scrollBy(0, 0);
+        //cursor.close();
+
+        //Toast.makeText(CourseActivity.this, ((Integer) position).toString(), Toast.LENGTH_LONG).show();
     }
 
 
