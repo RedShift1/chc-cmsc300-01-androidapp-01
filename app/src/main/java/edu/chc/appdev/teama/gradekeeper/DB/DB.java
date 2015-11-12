@@ -97,6 +97,23 @@ public class DB extends SQLiteOpenHelper {
         return db.rawQuery(sql, null);
     }
 
+    public void saveAssignmentGrades(long assignment_id, long[] student_ids, double[] grades) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (int i = 0; i < student_ids.length; i++) {
+            ContentValues values = new ContentValues();
+            values.put("assignment_id", assignment_id);
+            values.put("student_id", student_ids[i]);
+            values.put("grade", grades[i]);
+            if (getAssignmentGrade(assignment_id, student_ids[i]).getCount() > 0) {
+                db.update("assignments", values, "assignment_id="+assignment_id + " AND " +
+                        "student_id=" + student_ids[i], null);
+            }
+            else {
+                long id = db.insertOrThrow("assignment_grades", null, values);
+            }
+        }
+        db.close();
+    }
 
     // *** Students ***
 
@@ -226,22 +243,6 @@ public class DB extends SQLiteOpenHelper {
         } else {
             throw new Exception("More than one row found");
         }
-    }
-
-    // Actually I'm mistaken with this, I need to make a bridge table instead.
-    public void updateAssignment(long id, long course_id, String name, String duedate, float maxgrade)
-    {
-        ContentValues values = new ContentValues();
-        values.put("course_id", course_id);
-        values.put("name", name);
-        values.put("duedate", duedate);
-        values.put("maxgrade", maxgrade);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.update("assignments", values, "_id="+id, null);
-
-        db.close();
     }
 
     /**

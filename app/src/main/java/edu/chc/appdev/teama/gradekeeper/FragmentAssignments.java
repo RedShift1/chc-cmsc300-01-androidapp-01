@@ -20,9 +20,9 @@ public class FragmentAssignments extends ListFragment implements ITabbedFragment
 
     public final int REQUEST_GRADEACTIVITY = 0;
 
-    public FragmentAssignments(CourseActivity parentActivity)
+    public FragmentAssignments()
     {
-        this.parentActivity = parentActivity;
+        // Required blank constructor
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FragmentAssignments extends ListFragment implements ITabbedFragment
         return "Assignments";
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -72,5 +72,5 @@ public class FragmentAssignments extends ListFragment implements ITabbedFragment
         if (requestCode == this.REQUEST_GRADEACTIVITY) {
             parentActivity.refreshAssignments();
         }
-    }
+    }*/
 }

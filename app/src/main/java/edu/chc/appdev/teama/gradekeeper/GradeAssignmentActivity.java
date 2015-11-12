@@ -2,6 +2,7 @@ package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,8 +27,6 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
     private StudentsForAssignment studentsForAssignmentAdapter;
 
-    private Assignment thisAssignment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -51,7 +50,7 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
         try
         {
-            thisAssignment = this.db.getAssignment(this.id);
+            Assignment thisAssignment = this.db.getAssignment(this.id);
             this.setTitle(thisAssignment.getName());
         }
         catch(Exception ex)
@@ -72,8 +71,32 @@ public class GradeAssignmentActivity extends AppCompatActivity
     }
 
     public void saveAssignmentGrades(MenuItem menuItem) {
+        long[] student_ids;
+        double[] grades;
+
+        Cursor cursor = this.studentsForAssignmentAdapter.getCursor();
+
+        ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
+        lvGradesList.getChildAt(0);
+
+        int rows = cursor.getCount();
+        student_ids = new long[rows];
+        grades = new double[rows];
+
+        cursor.moveToFirst();
+
+        int i = 0;
+        while (!cursor.isAfterLast()) {
+            student_ids[i] = cursor.getLong(cursor.getColumnIndex("student_id"));
+            //grades[i] = cursor.getDouble(cursor.getColumnIndex("grade"));
+            cursor.moveToNext();
+            i++;
+        }
+
+       //(Toast.makeText(this, lvGradesList..toString(), Toast.LENGTH_LONG)).show();
+
         //this.studentsForAssignmentAdapter.
-        //this.db.saveAssignmentGrades(thisAssignment.getId(), , );
+        this.db.saveAssignmentGrades(this.id, student_ids, grades);
 
         (Toast.makeText(this, "Saved!", Toast.LENGTH_LONG)).show();
 

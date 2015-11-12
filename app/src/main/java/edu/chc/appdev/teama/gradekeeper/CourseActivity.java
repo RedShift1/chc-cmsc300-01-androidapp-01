@@ -72,7 +72,7 @@ public class CourseActivity extends AppCompatActivity {
         /*Bundle bundle = new Bundle();
         bundle.putLong("_id", this.id);*/
 
-        FragmentAssignments assignmentsTab = new FragmentAssignments(this);
+        FragmentAssignments assignmentsTab = new FragmentAssignments();
         assignmentsTab.setAssignmentsAdapter(this.assignmentsAdapter);
         adapter.addTabFragment(assignmentsTab);
 
