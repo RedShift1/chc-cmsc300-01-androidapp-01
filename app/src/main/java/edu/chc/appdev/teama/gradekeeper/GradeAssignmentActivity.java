@@ -26,6 +26,8 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
     private StudentsForAssignment studentsForAssignmentAdapter;
 
+    private Assignment thisAssignment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,7 +51,7 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
         try
         {
-            Assignment thisAssignment = this.db.getAssignment(this.id);
+            thisAssignment = this.db.getAssignment(this.id);
             this.setTitle(thisAssignment.getName());
         }
         catch(Exception ex)
@@ -63,6 +65,17 @@ public class GradeAssignmentActivity extends AppCompatActivity
         this.db.deleteAssignment(this.id);
 
         (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
+
+        this.setResult(Activity.RESULT_OK);
+
+        this.finish();
+    }
+
+    public void saveAssignmentGrades(MenuItem menuItem) {
+        //this.studentsForAssignmentAdapter.
+        //this.db.saveAssignmentGrades(thisAssignment.getId(), , );
+
+        (Toast.makeText(this, "Saved!", Toast.LENGTH_LONG)).show();
 
         this.setResult(Activity.RESULT_OK);
 

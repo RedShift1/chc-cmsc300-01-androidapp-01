@@ -11,8 +11,7 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 /**
  * Created by Glenn on 29/10/2015.
  */
-public class DB extends SQLiteOpenHelper
-{
+public class DB extends SQLiteOpenHelper {
 
     private static final int DATA_VERSION = 3;
 
@@ -26,14 +25,12 @@ public class DB extends SQLiteOpenHelper
      * @param name    of the database file, or null for an in-memory database
      * @param factory to use for creating cursor objects, or null for the default
      */
-    public DB(Context context, String name, SQLiteDatabase.CursorFactory factory)
-    {
+    public DB(Context context, String name, SQLiteDatabase.CursorFactory factory) {
         super(context, "gradekeeper.sqlite", factory, DB.DATA_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db)
-    {
+    public void onCreate(SQLiteDatabase db) {
         String sqlCourses = "CREATE TABLE courses\n" +
                 "(\n" +
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
@@ -80,8 +77,7 @@ public class DB extends SQLiteOpenHelper
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS courses");
         db.execSQL("DROP TABLE IF EXISTS assignments");
         db.execSQL("DROP TABLE IF EXISTS students");
@@ -91,10 +87,10 @@ public class DB extends SQLiteOpenHelper
     }
 
 
-    public Cursor getStudentsForAssignment(long id)
-    {
+    public Cursor getStudentsForAssignment(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "SELECT students._id, students.name AS name FROM students ";
+        String sql = "SELECT students._id, students.name AS name, ";
+        sql += "assignments._id AS assignment_id, students._id AS student_id FROM students ";
         sql += "INNER JOIN students_courses ON students_courses.student_id = students._id ";
         sql += "INNER JOIN assignments ON students_courses.course_id = assignments.course_id ";
         sql += "WHERE assignments._id = " + id;
@@ -104,19 +100,18 @@ public class DB extends SQLiteOpenHelper
 
     // *** Students ***
 
-    public Cursor getStudentsCursor()
-    {
+    public Cursor getStudentsCursor() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM students", null);
     }
 
     /**
      * Add a student
+     *
      * @param name Name of the student
      * @return ID of the newly inserted row
      */
-    public long addStudent(String name)
-    {
+    public long addStudent(String name) {
         ContentValues values = new ContentValues();
         values.put("name", name);
 
@@ -131,22 +126,22 @@ public class DB extends SQLiteOpenHelper
 
     /**
      * Delete a student
+     *
      * @param id ID of the student
      */
-    public void deleteStudent(long id)
-    {
+    public void deleteStudent(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("students", "_id=" + id, null);
     }
 
     /**
      * Add an existing student to a course
+     *
      * @param studentId ID of the student
-     * @param courseId ID of the course
+     * @param courseId  ID of the course
      * @return ID of the newly inserted row
      */
-    public long addStudentToCourse(long studentId, long courseId)
-    {
+    public long addStudentToCourse(long studentId, long courseId) {
         ContentValues values = new ContentValues();
         values.put("student_id", studentId);
         values.put("course_id", courseId);
@@ -162,11 +157,11 @@ public class DB extends SQLiteOpenHelper
 
     /**
      * Get a list of students for a course
+     *
      * @param courseId ID of the course
      * @return Array of students
      */
-    public Student[] getStudentsForCourse(long courseId)
-    {
+    public Student[] getStudentsForCourse(long courseId) {
         Student[] resultSet;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -179,8 +174,7 @@ public class DB extends SQLiteOpenHelper
         resultSet = new Student[c.getCount()];
         int i = 0;
         c.moveToFirst();
-        while(!c.isAfterLast())
-        {
+        while (!c.isAfterLast()) {
             resultSet[i++] = new Student(
                     c.getInt(c.getColumnIndex("_id")),
                     c.getString(c.getColumnIndex("name"))
@@ -192,8 +186,7 @@ public class DB extends SQLiteOpenHelper
         return resultSet;
     }
 
-    public Cursor getStudentsForCourseCursor(long courseId)
-    {
+    public Cursor getStudentsForCourseCursor(long courseId) {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "SELECT * FROM students ";
         sql += "INNER JOIN students_courses ON students._id = students_courses.student_id ";
@@ -207,21 +200,19 @@ public class DB extends SQLiteOpenHelper
 
     /**
      * Delete an assignment
+     *
      * @param id ID of the assignment
      */
-    public void deleteAssignment(long id)
-    {
+    public void deleteAssignment(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("assignments", "_id=" + id, null);
     }
 
-    public Assignment getAssignment(long id) throws Exception
-    {
+    public Assignment getAssignment(long id) throws Exception {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM assignments WHERE _id = " + id, null);
 
-        if(c.getCount() == 1)
-        {
+        if (c.getCount() == 1) {
             c.moveToFirst();
             return new Assignment(
                     c.getLong(c.getColumnIndex("_id")),
@@ -230,15 +221,27 @@ public class DB extends SQLiteOpenHelper
                     c.getString(c.getColumnIndex("duedate")),
                     c.getFloat(c.getColumnIndex("maxgrade"))
             );
-        }
-        else if(c.getCount() == 0)
-        {
+        } else if (c.getCount() == 0) {
             throw new Exception("No row found");
-        }
-        else
-        {
+        } else {
             throw new Exception("More than one row found");
         }
+    }
+
+    // Actually I'm mistaken with this, I need to make a bridge table instead.
+    public void updateAssignment(long id, long course_id, String name, String duedate, float maxgrade)
+    {
+        ContentValues values = new ContentValues();
+        values.put("course_id", course_id);
+        values.put("name", name);
+        values.put("duedate", duedate);
+        values.put("maxgrade", maxgrade);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.update("assignments", values, "_id="+id, null);
+
+        db.close();
     }
 
     /**
@@ -366,5 +369,11 @@ public class DB extends SQLiteOpenHelper
         {
             throw new Exception("More than one row found");
         }
+    }
+
+    public Cursor getAssignmentGrade(long assignmentId, long studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM assignment_grades WHERE assignment_id = " + assignmentId +
+                " AND student_id = " + studentId, null);
     }
 }
