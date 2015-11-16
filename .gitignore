@@ -30,3 +30,6 @@ proguard/
 # IntelliJ
 .idea/workspace.xml
 .idea/
+
+# Windows
+Thumbs.db
