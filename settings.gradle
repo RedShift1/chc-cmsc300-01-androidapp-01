@@ -1,1 +1,1 @@
-include ':app', ':slideDayTimePicker'
+include ':app', ':slideDayTimePicker', 'TextDrawable'
