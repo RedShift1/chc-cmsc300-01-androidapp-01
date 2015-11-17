@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import edu.chc.appdev.teama.gradekeeper.R;
 
@@ -15,6 +19,10 @@ import edu.chc.appdev.teama.gradekeeper.R;
  */
 public class Courses extends CursorAdapter
 {
+
+    ColorGenerator colorGen;
+
+
     /**
      * Recommended constructor.
      *
@@ -27,6 +35,7 @@ public class Courses extends CursorAdapter
     public Courses(Context context, Cursor c, int flags)
     {
         super(context, c, flags);
+        this.colorGen = ColorGenerator.MATERIAL;
     }
 
     /**
@@ -54,11 +63,20 @@ public class Courses extends CursorAdapter
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
+
+        String courseName = cursor.getString(cursor.getColumnIndex("name"));
+
         ((TextView) view.findViewById(R.id.coursename)).
-                setText(cursor.getString(cursor.getColumnIndex("name")));
+                setText(courseName);
         ((TextView) view.findViewById(R.id.coursecode)).
                 setText(cursor.getString(cursor.getColumnIndex("code")));
         ((TextView) view.findViewById(R.id.coursedescription)).
                 setText(cursor.getString(cursor.getColumnIndex("description")));
+
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRound(courseName.substring(0, 1).toUpperCase(), this.colorGen.getColor(courseName));
+
+        ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
+        image.setImageDrawable(drawable);
     }
 }
