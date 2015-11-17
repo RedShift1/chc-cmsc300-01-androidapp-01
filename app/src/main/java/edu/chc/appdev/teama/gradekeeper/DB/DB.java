@@ -243,7 +243,7 @@ public class DB extends SQLiteOpenHelper {
             values.put("student_id", student_ids[i]);
             values.put("grade", grades[i]);
             if (getAssignmentGrade(assignment_id, student_ids[i]).getCount() > 0) {
-                db.update("assignments", values, "assignment_id="+assignment_id + " AND " +
+                db.update("assignment_grades", values, "assignment_id="+assignment_id + " AND " +
                         "student_id=" + student_ids[i], null);
             }
             else {

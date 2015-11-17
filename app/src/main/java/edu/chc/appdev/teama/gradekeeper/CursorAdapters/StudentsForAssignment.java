@@ -47,9 +47,11 @@ public class StudentsForAssignment extends CursorAdapter
 
         String currentGrade = "";
         if (assignmentGrade.getCount() > 0) {
+            assignmentGrade.moveToFirst();
             currentGrade = ((Double) assignmentGrade.getDouble(assignmentGrade.getColumnIndex("grade"))).toString();
         }
 
         ((EditText) view.findViewById(R.id.editText)).setText(currentGrade);
+        assignmentGrade.close();
     }
 }
