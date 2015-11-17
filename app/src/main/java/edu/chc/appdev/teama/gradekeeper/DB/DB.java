@@ -225,6 +225,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
 
+    @Deprecated
     public Cursor getStudentsForAssignment(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "SELECT students._id, students.name AS name, ";
