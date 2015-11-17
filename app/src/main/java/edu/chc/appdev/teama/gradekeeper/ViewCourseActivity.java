@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Gradebooks;
+import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.DB.Gradebook;
 
 public class ViewCourseActivity extends AppCompatActivity
 {
@@ -44,6 +47,17 @@ public class ViewCourseActivity extends AppCompatActivity
         Bundle extras = this.getIntent().getExtras();
 
         this.id = extras.getLong("_id");
+
+
+        try
+        {
+            Course thisCourse = this.db.getCourse(this.id);
+            this.setTitle(thisCourse.getName());
+        }
+        catch(Exception ex)
+        {
+            Log.w("Gradekeeper", "No course found with ID " + this.id + ": " + ex.getMessage());
+        }
 
         this.gradebooksAdapter = new Gradebooks(this, this.db.getGradebooksForCourse(this.id), 0);
 
