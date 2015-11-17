@@ -236,18 +236,22 @@ public class DB extends SQLiteOpenHelper {
         return db.rawQuery(sql, null);
     }
 
-    public void saveAssignmentGrades(long assignment_id, long[] student_ids, double[] grades) {
+    public void saveAssignmentGrades(long assignment_id, long[] student_ids, double[] grades)
+    {
         SQLiteDatabase db = this.getWritableDatabase();
-        for (int i = 0; i < student_ids.length; i++) {
+        for (int i = 0; i < student_ids.length; i++)
+        {
             ContentValues values = new ContentValues();
             values.put("assignment_id", assignment_id);
             values.put("student_id", student_ids[i]);
             values.put("grade", grades[i]);
-            if (getAssignmentGrade(assignment_id, student_ids[i]).getCount() > 0) {
+            if (getAssignmentGrade(assignment_id, student_ids[i]).getCount() > 0)
+            {
                 db.update("assignment_grades", values, "assignment_id="+assignment_id + " AND " +
                         "student_id=" + student_ids[i], null);
             }
-            else {
+            else
+            {
                 long id = db.insertOrThrow("assignment_grades", null, values);
             }
         }
