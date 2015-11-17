@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
-import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 import edu.chc.appdev.teama.gradekeeper.DB.Gradebook;
 
@@ -42,7 +41,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
 
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_viewcourse);
+        setContentView(R.layout.activity_view_gradebook);
 
         this.db = new DB(this, null, null);
 
@@ -77,6 +76,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
     public synchronized void refreshStudents() {
