@@ -111,7 +111,7 @@ public class AddAssignment extends AppCompatActivity {
         Log.w("Test", ((TextView) this.findViewById(R.id.txtDueDate)).getText().toString());
 
         // There probably needs more conversion for the date
-        db.addAssignmentToCourse(
+        db.addAssignmentToGradebook(
             this.id,
             ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
             this.txtDueDate.getText().toString(),

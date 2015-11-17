@@ -63,17 +63,23 @@ public class AddStudent extends AppCompatActivity {
     {
         DB db = new DB(this, null, null);
 
-        // TODO: check if student exists first, and re-use it
+        try
+        {
+            db.addStudentToGradebook(
+                this.id,
+                ((EditText) this.findViewById(R.id.atvStudent)).getText().toString()
+            );
 
-        long studentId = db.addStudent(
-                ((EditText) this.findViewById(R.id.atvStudent)).getText().toString());
+            (Toast.makeText(this, "Added!", Toast.LENGTH_LONG)).show();
 
-        db.addStudentToCourse(studentId, this.id);
+            this.setResult(Activity.RESULT_OK);
 
-        (Toast.makeText(this, "Added!", Toast.LENGTH_LONG)).show();
-
-        this.setResult(Activity.RESULT_OK);
-
-        this.finish();
+            this.finish();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            (Toast.makeText(this, "Something went wrong: " + e.getMessage(), Toast.LENGTH_LONG)).show();
+        }
     }
 }

@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CourseActivity"
+            android:name=".ViewGradebookActivity"
             android:label="@string/title_activity_course" >
         </activity>
         <activity android:name=".CreateCourse" >
@@ -27,7 +27,14 @@
         </activity>
         <activity
             android:name=".GradeAssignmentActivity"
-            android:label="@string/title_activity_assignment">
+            android:label="@string/title_activity_assignment" >
+        </activity>
+        <activity
+            android:name=".ViewCourseActivity"
+            android:label="@string/title_activity_view_gradebooks"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".AddGradebookActivity" >
         </activity>
     </application>
 

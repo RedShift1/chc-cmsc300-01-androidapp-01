@@ -1,9 +1,7 @@
 package edu.chc.appdev.teama.gradekeeper;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
-import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
-import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class FragmentAssignments extends ListFragment implements ITabbedFragment
 {
-    private CourseActivity parentActivity;
+    private ViewGradebookActivity parentActivity;
 
     public final int REQUEST_GRADEACTIVITY = 0;
 

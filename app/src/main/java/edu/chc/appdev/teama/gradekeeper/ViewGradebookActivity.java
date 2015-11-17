@@ -11,9 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -23,8 +21,9 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.DB.Gradebook;
 
-public class CourseActivity extends AppCompatActivity {
+public class ViewGradebookActivity extends AppCompatActivity {
 
     public final int REQUEST_GRADEACTIVITY = 0;
     static final int REQUEST_ADD_STUDENT = 1;
@@ -43,7 +42,7 @@ public class CourseActivity extends AppCompatActivity {
 
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_course);
+        setContentView(R.layout.activity_viewcourse);
 
         this.db = new DB(this, null, null);
 
@@ -53,24 +52,18 @@ public class CourseActivity extends AppCompatActivity {
 
         try
         {
-            Course thisCourse = this.db.getCourse(this.id);
-            this.setTitle(thisCourse.getName());
+            Gradebook thisGradebook = this.db.getGradebook(this.id);
+            this.setTitle(thisGradebook.getName());
         }
         catch(Exception ex)
         {
             Log.w("Gradekeeper", "No course found with ID " + this.id);
         }
 
-        this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForCourse(this.id), 0);
-        this.studentsAdapter = new Students(this, this.db.getStudentsForCourseCursor(this.id), 0);
+        this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForGradebook(this.id), 0);
+        this.studentsAdapter = new Students(this, this.db.getStudentsForGradebook(this.id), 0);
 
-        /*ListView lvAssignments = (ListView) this.findViewById(R.id.lv_assignments);
-        lvAssignments.setAdapter(this.assignmentsAdapter);*/
-
-        TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getSupportFragmentManager(), CourseActivity.this);
-
-        /*Bundle bundle = new Bundle();
-        bundle.putLong("_id", this.id);*/
+        TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getSupportFragmentManager(), ViewGradebookActivity.this);
 
         FragmentAssignments assignmentsTab = new FragmentAssignments();
         assignmentsTab.setAssignmentsAdapter(this.assignmentsAdapter);
@@ -87,14 +80,14 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public synchronized void refreshStudents() {
-        this.studentsAdapter.changeCursor(this.db.getStudentsForCourseCursor(this.id));
+        this.studentsAdapter.changeCursor(this.db.getStudentsForGradebook(this.id));
         studentsAdapter.notifyDataSetChanged();
         //listParent.invalidateViews();
         //listParent.scrollBy(0, 0);
     }
 
     public synchronized void refreshAssignments() {
-        this.assignmentsAdapter.changeCursor(this.db.getAssignmentsForCourse(this.id));
+        this.assignmentsAdapter.changeCursor(this.db.getAssignmentsForGradebook(this.id));
         assignmentsAdapter.notifyDataSetChanged();
         //listParent.invalidateViews();
         //listParent.scrollBy(0, 0);
@@ -106,20 +99,20 @@ public class CourseActivity extends AppCompatActivity {
         int n = ((Integer) listParent.indexOfChild(linearParent));
         Cursor cursor = ((Cursor) listParent.getAdapter().getItem(n));
         CursorAdapter adapter = ((CursorAdapter) listParent.getAdapter());
-        int id = cursor.getInt(cursor.getColumnIndex("_id"));
+        int studentId = cursor.getInt(cursor.getColumnIndex("_id"));
         String name = cursor.getString(cursor.getColumnIndex("name"));
 
-        this.db.deleteStudent(id);
+        this.db.removeStudentFromGradebook(this.id, studentId);
 
-        Toast.makeText(CourseActivity.this, "Deleted " + name + "!", Toast.LENGTH_LONG).show();
+        Toast.makeText(ViewGradebookActivity.this, "Deleted " + name + "!", Toast.LENGTH_LONG).show();
 
         refreshStudents();
     }
 
 
-    public void deleteCourseFromDB(MenuItem menuItem)
+    public void deleteGradebookFromDB(MenuItem menuItem)
     {
-        this.db.deleteCourse(this.id);
+        this.db.deleteGradebook(this.id);
 
         (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
 
@@ -131,7 +124,7 @@ public class CourseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.courseactivity, menu);
+        this.getMenuInflater().inflate(R.menu.viewgradebook, menu);
         return true;
     }
 
@@ -170,7 +163,7 @@ public class CourseActivity extends AppCompatActivity {
         {
             if (resultCode == Activity.RESULT_OK)
             {
-                this.assignmentsAdapter.swapCursor(this.db.getAssignmentsForCourse(this.id));
+                this.assignmentsAdapter.swapCursor(this.db.getAssignmentsForGradebook(this.id));
             }
         }
 
@@ -178,7 +171,7 @@ public class CourseActivity extends AppCompatActivity {
         {
             if (resultCode == Activity.RESULT_OK)
             {
-                this.studentsAdapter.swapCursor(this.db.getStudentsForCourseCursor(this.id));
+                this.studentsAdapter.swapCursor(this.db.getStudentsForGradebook(this.id));
             }
         }
 

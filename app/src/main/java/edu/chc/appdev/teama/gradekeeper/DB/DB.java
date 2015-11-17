@@ -13,7 +13,7 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
  */
 public class DB extends SQLiteOpenHelper {
 
-    private static final int DATA_VERSION = 3;
+    private static final int DATA_VERSION = 4;
 
     /**
      * Create a helper object to create, open, and/or manage a database.
@@ -39,10 +39,17 @@ public class DB extends SQLiteOpenHelper {
                 "    description TEXT NULL\n" +
                 ");";
 
-        String sqlAssignments = "CREATE TABLE assignments\n" +
+        String sqlGradebooks = "CREATE TABLE gradebooks\n" +
                 "(\n" +
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    course_id INTEGER NOT NULL REFERENCES courses (_id),\n" +
+                "    name VARCHAR(100) NOT NULL" +
+                ");";
+
+        String sqlAssignments = "CREATE TABLE assignments\n" +
+                "(\n" +
+                "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+                "    gradebook_id INTEGER NOT NULL REFERENCES gradebooks (_id),\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
                 "    duedate VARCHAR(100),\n" +
                 "    maxgrade REAL\n" +
@@ -54,11 +61,11 @@ public class DB extends SQLiteOpenHelper {
                 "    name VARCHAR(100) NOT NULL UNIQUE\n" +
                 ");\n";
 
-        String sqlStudentsCourses = "CREATE TABLE students_courses\n" +
+        String sqlGradebookStudents = "CREATE TABLE gradebook_students\n" +
                 "(\n" +
-                "    course_id INTEGER NOT NULL REFERENCES courses(_id),\n" +
-                "    student_id INTEGER NOT NULL REFERENCES students(_id),\n" +
-                "    PRIMARY KEY(course_id,student_id)\n" +
+                "    gradebook_id INTEGER NOT NULL REFERENCES gradebooks (_id),\n" +
+                "    student_id INTEGER NOT NULL REFERENCES students (_id),\n" +
+                "    PRIMARY KEY(gradebook_id,student_id)\n" +
                 ");";
 
         String sqlAssignmentGrades = "CREATE TABLE assignment_grades\n" +
@@ -70,20 +77,151 @@ public class DB extends SQLiteOpenHelper {
                 ");";
 
         db.execSQL(sqlCourses);
+        db.execSQL(sqlGradebooks);
         db.execSQL(sqlAssignments);
         db.execSQL(sqlStudents);
-        db.execSQL(sqlStudentsCourses);
+        db.execSQL(sqlGradebookStudents);
         db.execSQL(sqlAssignmentGrades);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS courses");
+        db.execSQL("DROP TABLE IF EXISTS gradebooks");
         db.execSQL("DROP TABLE IF EXISTS assignments");
         db.execSQL("DROP TABLE IF EXISTS students");
         db.execSQL("DROP TABLE IF EXISTS students_courses");
+        db.execSQL("DROP TABLE IF EXISTS gradebook_students");
         db.execSQL("DROP TABLE IF EXISTS assignment_grades");
         this.onCreate(db);
+    }
+
+    public Cursor getGradebooksForCourse(long id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM gradebooks WHERE course_id = " + id, null);
+    }
+
+    public long addGradebookToCourse(long courseId, String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("course_id", courseId);
+        values.put("name", name);
+        long id = db.insertOrThrow("gradebooks", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public Cursor getAssignmentsForGradebook(long gradebookId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM assignments WHERE gradebook_id = " + gradebookId, null);
+    }
+
+    public Cursor getStudentsForGradebook(long gradebookId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM students ";
+        sql += "INNER JOIN gradebook_students ON students._id = gradebook_students.student_id ";
+        sql += "WHERE gradebook_students.gradebook_id = " + gradebookId;
+
+        return db.rawQuery(sql, null);
+    }
+
+    public void deleteGradebook(long gradebookId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("gradebooks", "_id=" + gradebookId, null);
+        db.close();
+    }
+
+    public long addAssignmentToGradebook(long gradebookId, String name, String duedate, float maxgrade)
+    {
+        ContentValues values = new ContentValues();
+        values.put("gradebook_id", gradebookId);
+        values.put("name", name);
+        values.put("duedate", duedate);
+        values.put("maxgrade", maxgrade);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long id = db.insertOrThrow("assignments", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public long addStudentToGradebook(long gradebookId, String name) throws Exception
+    {
+        ContentValues values = new ContentValues();
+
+        long studentId = this.getExistingStudentIdOrCreateNewId(name);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        values.put("gradebook_id", gradebookId);
+        values.put("student_id", studentId);
+
+        long id = db.insertOrThrow("gradebook_students", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public void removeStudentFromGradebook(long gradebookId, long studentId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("gradebook_students", "gradebook_id = " + gradebookId + " AND student_id = " + studentId, null);
+    }
+
+    public Gradebook getGradebook(long gradebookId) throws Exception
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM gradebooks WHERE _id = " + gradebookId, null);
+
+        if (c.getCount() == 1)
+        {
+            c.moveToFirst();
+            return new Gradebook(
+                    c.getLong(c.getColumnIndex("_id")),
+                    c.getString(c.getColumnIndex("name"))
+            );
+        }
+        else if (c.getCount() == 0)
+        {
+            throw new Exception("No row found");
+        }
+        else
+        {
+            throw new Exception("More than one row found");
+        }
+    }
+
+    public long getExistingStudentIdOrCreateNewId(String name) throws Exception
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT _id FROM students WHERE name = '" + name + "'", null);
+
+        if(c.getCount() == 1)
+        {
+            c.moveToFirst();
+            long id = c.getLong(c.getColumnIndex("_id"));
+            db.close();
+            return id;
+        }
+        else if(c.getCount() == 0)
+        {
+            return this.addStudent(name);
+        }
+        else
+        {
+            throw new Exception("More than one row found");
+        }
     }
 
 

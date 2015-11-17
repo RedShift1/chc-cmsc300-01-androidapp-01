@@ -1,25 +1,17 @@
 package edu.chc.appdev.teama.gradekeeper;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
-import edu.chc.appdev.teama.gradekeeper.DB.Course;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class MainActivity extends AppCompatActivity
@@ -54,7 +46,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent viewCourse = new Intent(MainActivity.this, CourseActivity.class);
+                Intent viewCourse = new Intent(MainActivity.this, ViewCourseActivity.class);
                 viewCourse.putExtra("_id", id);
 
                 startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
