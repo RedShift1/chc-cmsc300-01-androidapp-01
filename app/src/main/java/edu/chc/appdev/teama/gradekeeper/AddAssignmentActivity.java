@@ -19,7 +19,7 @@ import java.util.Locale;
 
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class AddAssignment extends AppCompatActivity {
+public class AddAssignmentActivity extends AppCompatActivity {
 
     private long id;
     private TextView txtDueDate;
@@ -67,7 +67,7 @@ public class AddAssignment extends AppCompatActivity {
             public void onClick(View v)
             {
                 new DatePickerDialog(
-                        AddAssignment.this,
+                        AddAssignmentActivity.this,
                         date,
                         dueDateCalendar.get(Calendar.YEAR),
                         dueDateCalendar.get(Calendar.MONTH),

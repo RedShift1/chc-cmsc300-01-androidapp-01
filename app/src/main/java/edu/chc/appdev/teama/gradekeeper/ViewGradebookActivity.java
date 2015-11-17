@@ -150,7 +150,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
 
     public void openAddAssignment(View view)
     {
-        Intent addAssignmentIntent = new Intent(this, AddAssignment.class);
+        Intent addAssignmentIntent = new Intent(this, AddAssignmentActivity.class);
         addAssignmentIntent.putExtra("_id", this.id);
         this.startActivityForResult(addAssignmentIntent, this.REQUEST_ADD_ASSIGNMENT);
     }

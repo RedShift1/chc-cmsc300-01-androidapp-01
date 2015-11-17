@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".AddStudent" >
         </activity>
-        <activity android:name=".AddAssignment" >
+        <activity android:name=".AddAssignmentActivity" >
         </activity>
         <activity
             android:name=".GradeAssignmentActivity"
