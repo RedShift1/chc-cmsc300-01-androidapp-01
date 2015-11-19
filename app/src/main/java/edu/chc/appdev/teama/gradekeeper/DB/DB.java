@@ -346,6 +346,14 @@ public class DB extends SQLiteOpenHelper {
         return resultSet;
     }
 
+    public Cursor getAllStudents()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM students ";
+
+        return db.rawQuery(sql, null);
+    }
+
     public Cursor getStudentsForCourseCursor(long courseId) {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "SELECT * FROM students ";
