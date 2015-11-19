@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity
 {
     static final int REQUEST_CREATE_COURSE = 1;
     static final int REQUEST_VIEW_COURSE   = 2;
+    static final int REQUEST_VIEW_STUDENTS   = 2;
 
     private DB db;
     private Courses coursesAdapter;
@@ -100,11 +102,28 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.students:
+                openStudents();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void openCreateCourse(View view)
     {
         Intent createCourseIntent = new Intent(this, CreateCourse.class);
         this.startActivityForResult(createCourseIntent, this.REQUEST_CREATE_COURSE);
+    }
+
+    public void openStudents()
+    {
+        Intent openStudentsIntent = new Intent(this, StudentsActivity.class);
+        this.startActivityForResult(openStudentsIntent, this.REQUEST_VIEW_STUDENTS);
     }
 
     @Override
