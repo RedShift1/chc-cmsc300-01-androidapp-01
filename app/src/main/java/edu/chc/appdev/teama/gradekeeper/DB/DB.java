@@ -528,4 +528,40 @@ public class DB extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM assignment_grades WHERE assignment_id = " + assignmentId +
                 " AND student_id = " + studentId, null);
     }
+
+    public Student getStudent(long studentId) {
+        Student result;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT * FROM students ";
+        sql += "WHERE id = " + studentId;
+
+        Cursor c = db.rawQuery(sql, null);
+        //result = new Student[c.getCount()];
+        int i = 0;
+        c.moveToFirst();
+        //while (!c.isAfterLast()) {
+            result = new Student(
+                    c.getInt(c.getColumnIndex("_id")),
+                    c.getString(c.getColumnIndex("name"))
+            );
+
+            //c.moveToNext();
+        //}
+
+        return result;
+    }
+
+    public Cursor getAssignmentsForStudent(long studentId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM assignments WHERE student_id = " + studentId, null);
+    }
+
+    public Cursor getGrade(long studentId, long assignmentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM assignment_grades WHERE student_id = " + studentId +
+                " AND assignment_id = " + assignmentId, null);
+    }
 }

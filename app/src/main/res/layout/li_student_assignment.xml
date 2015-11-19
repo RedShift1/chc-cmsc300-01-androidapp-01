@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/li_assigment_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="[name]"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/li_assigment_duedate"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="[duedate]"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/li_assigment_maxgrade"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="[maxgrade]"
+            android:layout_weight="1"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/li_assigment_slash"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="/"
+            android:layout_weight="1"
+            android:layout_alignLeft="@id/li_assigment_maxgrade"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/li_assigment_grade"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="[grade]"
+            android:layout_weight="1"
+            android:layout_alignLeft="@id/li_assigment_slash"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
