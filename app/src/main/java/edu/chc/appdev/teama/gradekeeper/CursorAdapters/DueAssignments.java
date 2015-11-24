@@ -31,5 +31,9 @@ public class DueAssignments extends CursorAdapter
     {
         ((TextView) view.findViewById(R.id.tvAssignmentName)).
                 setText(cursor.getString(cursor.getColumnIndex("assignment_name")));
+        ((TextView) view.findViewById(R.id.tvGradebookName)).
+                setText(cursor.getString(cursor.getColumnIndex("gradebook_name")));
+        ((TextView) view.findViewById(R.id.tvCourseName)).
+                setText(cursor.getString(cursor.getColumnIndex("course_name")));
     }
 }
