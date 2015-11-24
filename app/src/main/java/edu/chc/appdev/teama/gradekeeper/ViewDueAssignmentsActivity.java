@@ -33,6 +33,9 @@ public class ViewDueAssignmentsActivity extends AppCompatActivity
 
         lvItems.setAdapter(this.dueAssignmentsAdapter);
 
+        // TODO: view due dates
+        // TODO: group by course
+
     }
 
     @Override
