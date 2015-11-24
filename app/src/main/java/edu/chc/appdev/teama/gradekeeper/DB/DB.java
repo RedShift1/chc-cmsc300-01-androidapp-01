@@ -258,6 +258,20 @@ public class DB extends SQLiteOpenHelper {
         db.close();
     }
 
+    public Cursor getDueAssignments()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT assignments._id, " +
+            "assignments.name AS assignment_name, " +
+            "assignments.duedate, " +
+            "gradebooks.name AS gradebook_name " +
+            "FROM assignments " +
+            "INNER JOIN gradebooks ON assignments.gradebook_id = gradebooks._id " +
+            "WHERE STRFTIME('%Y-%m-%d', assignments.duedate / 1000, 'unixepoch') >= STRFTIME('%Y-%m-%d', 'now') " +
+            "ORDER BY duedate ASC";
+        return db.rawQuery(sql, null);
+    }
+
     // *** Students ***
 
     public Cursor getStudentsCursor() {

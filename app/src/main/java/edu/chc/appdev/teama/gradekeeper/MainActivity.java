@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.students:
                 openStudents();
                 return true;
+            case R.id.dueAssignments:
+                openDueAssigments();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -128,6 +131,12 @@ public class MainActivity extends AppCompatActivity
     {
         Intent openStudentsIntent = new Intent(this, StudentsActivity.class);
         this.startActivityForResult(openStudentsIntent, this.REQUEST_VIEW_STUDENTS);
+    }
+
+    public void openDueAssigments()
+    {
+        Intent openDueAssigmentsIntent = new Intent(this, ViewDueAssignmentsActivity.class);
+        this.startActivity(openDueAssigmentsIntent);
     }
 
     @Override

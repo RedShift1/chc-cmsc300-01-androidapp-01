@@ -12,9 +12,8 @@
         android:title="Students">
     </item>
     <item
-        android:id="@+id/temp"
-        android:icon="@android:drawable/ic_menu_add"
+        android:id="@+id/dueAssignments"
         app:showAsAction="never"
-        android:title="Temporary">
+        android:title="Due assignments">
     </item>
 </menu>
