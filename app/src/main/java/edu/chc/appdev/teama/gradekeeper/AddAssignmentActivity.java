@@ -117,10 +117,9 @@ public class AddAssignmentActivity extends AppCompatActivity {
         db.addAssignmentToGradebook(
             this.id,
             ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
-            this.txtDueDate.getText().toString(),
+            this.dueDateCalendar.getTime().getTime(),
             Float.parseFloat(((EditText) this.findViewById(R.id.txtPoints)).getText().toString())
         );
-
         (Toast.makeText(this, "Added!", Toast.LENGTH_LONG)).show();
 
         this.setResult(Activity.RESULT_OK);

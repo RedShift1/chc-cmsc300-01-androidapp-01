@@ -13,7 +13,7 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
  */
 public class DB extends SQLiteOpenHelper {
 
-    private static final int DATA_VERSION = 4;
+    private static final int DATA_VERSION = 5;
 
     /**
      * Create a helper object to create, open, and/or manage a database.
@@ -51,7 +51,7 @@ public class DB extends SQLiteOpenHelper {
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
                 "    gradebook_id INTEGER NOT NULL REFERENCES gradebooks (_id),\n" +
                 "    name VARCHAR(100) NOT NULL,\n" +
-                "    duedate VARCHAR(100),\n" +
+                "    duedate INTEGER NOT NULL,\n" +
                 "    maxgrade REAL\n" +
                 ");";
 
@@ -138,7 +138,7 @@ public class DB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public long addAssignmentToGradebook(long gradebookId, String name, String duedate, float maxgrade)
+    public long addAssignmentToGradebook(long gradebookId, String name, long duedate, float maxgrade)
     {
         ContentValues values = new ContentValues();
         values.put("gradebook_id", gradebookId);
