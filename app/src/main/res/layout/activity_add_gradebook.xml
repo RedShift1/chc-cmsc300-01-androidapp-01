@@ -11,11 +11,11 @@
     tools:context="edu.chc.appdev.teama.gradekeeper.AddGradebookActivity">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etName"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Name"/>
+        android:hint="Gradebook name"/>
 </RelativeLayout>
