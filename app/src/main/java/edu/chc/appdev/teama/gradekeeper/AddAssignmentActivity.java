@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,8 @@ public class AddAssignmentActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assignment);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
 
         Bundle extras = this.getIntent().getExtras();
 
