@@ -3,6 +3,7 @@ package edu.chc.appdev.teama.gradekeeper;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -18,6 +19,11 @@ public class AddGradebookActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_gradebook);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
+
 
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
