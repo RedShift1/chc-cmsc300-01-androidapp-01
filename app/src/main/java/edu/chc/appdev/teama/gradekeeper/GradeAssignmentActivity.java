@@ -36,6 +36,9 @@ public class GradeAssignmentActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gradeassignment);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
+
 
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
