@@ -1,6 +1,8 @@
 package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -111,13 +113,35 @@ public class ViewCourseActivity extends AppCompatActivity
 
     public void deleteCourseFromDB(MenuItem menuItem)
     {
-        this.db.deleteCourse(this.id);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(this);
 
-        (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
+        confirm.setTitle("Delete");
+        confirm.setMessage("Are you sure you want to delete this course?");
+        confirm.setPositiveButton("Delete", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                ViewCourseActivity.this.db.deleteCourse(ViewCourseActivity.this.id);
 
-        this.setResult(Activity.RESULT_OK);
+                (Toast.makeText(ViewCourseActivity.this, "Deleted!", Toast.LENGTH_LONG)).show();
+                dialog.dismiss();
+                ViewCourseActivity.this.setResult(Activity.RESULT_OK);
+                ViewCourseActivity.this.finish();
+            }
+        });
 
-        this.finish();
+        confirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        confirm.create();
+        confirm.show();
     }
 
 
