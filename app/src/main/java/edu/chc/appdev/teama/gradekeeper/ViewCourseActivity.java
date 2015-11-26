@@ -54,7 +54,8 @@ public class ViewCourseActivity extends AppCompatActivity
         try
         {
             Course thisCourse = this.db.getCourse(this.id);
-            this.setTitle(thisCourse.getName());
+            this.setTitle("Course gradebooks");
+            toolbar.setSubtitle(thisCourse.getName());
         }
         catch(Exception ex)
         {
