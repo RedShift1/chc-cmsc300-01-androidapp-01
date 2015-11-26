@@ -36,6 +36,14 @@
             android:layout_height="match_parent"
             android:id="@+id/lv_gradebooks"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No gradebooks found"
+            android:id="@+id/tvNoGradebooks"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:layout_centerInParent="true"/>
+
 
     </RelativeLayout>
 

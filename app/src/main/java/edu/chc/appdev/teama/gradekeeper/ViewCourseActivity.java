@@ -65,6 +65,7 @@ public class ViewCourseActivity extends AppCompatActivity
 
 
         ListView lvGradebookList = (ListView) this.findViewById(R.id.lv_gradebooks);
+        lvGradebookList.setEmptyView(this.findViewById(R.id.tvNoGradebooks));
         lvGradebookList.setAdapter(this.gradebooksAdapter);
 
 
