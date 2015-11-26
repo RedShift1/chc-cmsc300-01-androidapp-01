@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         this.coursesAdapter = new Courses(this, this.db.getCoursesCursor(), 0);
 
         ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
-
+        lvItems.setEmptyView(this.findViewById(R.id.tvNoCourses));
         lvItems.setAdapter(this.coursesAdapter);
 
         this.setTitle("Courses");
