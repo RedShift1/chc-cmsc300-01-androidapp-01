@@ -22,12 +22,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
+    <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvDueAssignments"
         android:layout_below="@+id/view"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:id="@+id/lvDueAssignments"
+        android:headerDividersEnabled="true"/>
 
 </RelativeLayout>

@@ -270,7 +270,24 @@ public class DB extends SQLiteOpenHelper {
             "INNER JOIN gradebooks ON assignments.gradebook_id = gradebooks._id " +
             "INNER JOIN courses ON gradebooks.course_id = courses._id " +
             "WHERE STRFTIME('%Y-%m-%d', assignments.duedate / 1000, 'unixepoch') >= STRFTIME('%Y-%m-%d', 'now') " +
-            "ORDER BY duedate ASC";
+            "ORDER BY courses.code DESC, duedate ASC";
+        return db.rawQuery(sql, null);
+    }
+
+    public Cursor getDueAssignmentsForCourse(Cursor courseCursor)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT assignments._id, " +
+                "assignments.name AS assignment_name, " +
+                "assignments.duedate, " +
+                "gradebooks.name AS gradebook_name, " +
+                "courses.name AS course_name " +
+                "FROM assignments " +
+                "INNER JOIN gradebooks ON assignments.gradebook_id = gradebooks._id " +
+                "INNER JOIN courses ON gradebooks.course_id = courses._id " +
+                "WHERE STRFTIME('%Y-%m-%d', assignments.duedate / 1000, 'unixepoch') >= STRFTIME('%Y-%m-%d', 'now') " +
+                "AND courses._id = " + courseCursor.getInt(courseCursor.getColumnIndex("_id")) + " " +
+                "ORDER BY duedate ASC";
         return db.rawQuery(sql, null);
     }
 

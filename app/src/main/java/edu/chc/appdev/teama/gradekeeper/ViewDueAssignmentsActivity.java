@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.DueAssignments;
@@ -24,18 +25,29 @@ public class ViewDueAssignmentsActivity extends AppCompatActivity
         this.setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         this.db = new DB(this, null, null);
 
-        this.dueAssignmentsAdapter = new DueAssignments(this, this.db.getDueAssignments(), 0);
+        this.dueAssignmentsAdapter = new DueAssignments(this.db.getCoursesCursor(), this, this.db);
 
-        ListView lvItems = (ListView) this.findViewById(R.id.lvDueAssignments);
+        ExpandableListView lvItems = (ExpandableListView) this.findViewById(R.id.lvDueAssignments);
 
         lvItems.setAdapter(this.dueAssignmentsAdapter);
 
-        // TODO: view due dates
-        // TODO: group by course
+        for(int i = 0; i < lvItems.getExpandableListAdapter().getGroupCount(); i++)
+        {
+            lvItems.expandGroup(i);
+        }
 
+        // TODO: view due dates
+
+    }
+
+    public int GetDipsFromPixel(float pixels)
+    {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
     }
 
     @Override
