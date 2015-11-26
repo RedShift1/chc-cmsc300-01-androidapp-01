@@ -25,6 +25,9 @@ public class ViewDueAssignmentsActivity extends AppCompatActivity
         this.setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.setTitle("Due assignments");
+        toolbar.setSubtitle("Due today and in the future");
+
         this.db = new DB(this, null, null);
 
         this.dueAssignmentsAdapter = new DueAssignments(this.db.getCoursesCursor(), this, this.db);
