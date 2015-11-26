@@ -57,7 +57,8 @@ public class ViewGradebookActivity extends AppCompatActivity {
         try
         {
             Gradebook thisGradebook = this.db.getGradebook(this.id);
-            this.setTitle(thisGradebook.getName());
+            this.setTitle("Gradebook");
+            toolbar.setSubtitle(thisGradebook.getName());
         }
         catch(Exception ex)
         {
