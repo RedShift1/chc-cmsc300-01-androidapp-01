@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimary">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Filter"
+            android:id="@+id/textView"
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:elegantTextHeight="false"
+            />
+    </FrameLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etCourseName"
+        android:hint="Name like"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:singleLine="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etCourseCode"
+        android:hint="Code like"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:singleLine="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etCourseDescription"
+        android:hint="Description like"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:singleLine="true"/>
+
+</LinearLayout>
