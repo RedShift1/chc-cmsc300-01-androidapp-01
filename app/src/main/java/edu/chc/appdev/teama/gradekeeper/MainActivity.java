@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         {
             if (resultCode == Activity.RESULT_OK)
             {
-                this.coursesAdapter.swapCursor(this.db.getCoursesCursor());
+                this.updateCoursesView();
             }
         }
 
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity
         {
             if (resultCode == Activity.RESULT_OK)
             {
-                this.coursesAdapter.swapCursor(this.db.getCoursesCursor());
+                this.updateCoursesView();
             }
         }
     }
