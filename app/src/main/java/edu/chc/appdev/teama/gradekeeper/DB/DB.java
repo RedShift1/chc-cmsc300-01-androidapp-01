@@ -531,6 +531,15 @@ public class DB extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM courses", null);
     }
 
+    public Cursor getCoursesCursor(String nameLike, String codeLike, String descriptionLike)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(
+            "SELECT * FROM courses WHERE name LIKE ? AND code LIKE ? AND description LIKE ?",
+            new String[] {nameLike, codeLike, descriptionLike}
+        );
+    }
+
     public Course getCourse(long id) throws Exception
     {
         SQLiteDatabase db = this.getWritableDatabase();
