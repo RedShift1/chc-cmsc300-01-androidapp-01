@@ -11,12 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements IFilterTextChangedListener
 {
     static final int REQUEST_CREATE_COURSE = 1;
     static final int REQUEST_VIEW_COURSE   = 2;
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private StringBuilder courseNameLike;
+    private StringBuilder courseCodeLike;
+    private StringBuilder courseDescriptionLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,13 +46,17 @@ public class MainActivity extends AppCompatActivity
 
         this.db = new DB(this, null, null);
 
-        this.coursesAdapter = new Courses(this, this.db.getCoursesCursor(), 0);
+        this.coursesAdapter = new Courses(this, this.db.getCoursesCursor("%", "%", "%"), 0);
 
         ListView lvItems = (ListView) this.findViewById(R.id.lvCourses);
         lvItems.setEmptyView(this.findViewById(R.id.tvNoCourses));
         lvItems.setAdapter(this.coursesAdapter);
 
         this.setTitle("Courses");
+
+        this.courseNameLike = new StringBuilder("%");
+        this.courseCodeLike = new StringBuilder("%");
+        this.courseDescriptionLike = new StringBuilder("%");
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -61,6 +72,24 @@ public class MainActivity extends AppCompatActivity
                 // MainActivity.this.coursesAdapter.getItem(position);
             }
         });
+
+        SlidingMenu menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeEnabled(true);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(R.layout.srm_main);
+
+        ((EditText) menu.findViewById(R.id.etCourseCode)).
+            addTextChangedListener(new SQLFilterTextChanged(this.courseCodeLike, this));
+
+        ((EditText) menu.findViewById(R.id.etCourseName)).
+                addTextChangedListener(new SQLFilterTextChanged(this.courseNameLike, this));
+
+        ((EditText) menu.findViewById(R.id.etCourseDescription)).
+                addTextChangedListener(new SQLFilterTextChanged(this.courseDescriptionLike, this));
 
         /*
         Drawer menu stuff - causes NPE for now
@@ -137,6 +166,23 @@ public class MainActivity extends AppCompatActivity
     {
         Intent openDueAssigmentsIntent = new Intent(this, ViewDueAssignmentsActivity.class);
         this.startActivity(openDueAssigmentsIntent);
+    }
+
+    protected void updateCoursesView()
+    {
+        this.coursesAdapter.swapCursor(
+            this.db.getCoursesCursor(
+                this.courseNameLike.toString(),
+                this.courseCodeLike.toString(),
+                this.courseDescriptionLike.toString()
+            )
+        );
+    }
+
+    @Override
+    public void FilterTextChanged()
+    {
+        this.updateCoursesView();
     }
 
     @Override
