@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp"
+      android:layout_marginLeft="5dp"
+      android:layout_marginRight="5dp">
 
-    <RelativeLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/li_student_name"
-            android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="[li_student_name]"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_vertical"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-        </TextView>
+            android:gravity="center_vertical"
+            android:padding="10dp">
 
-    </RelativeLayout>
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/iv_name_icon"/>
 
+            <TextView
+                android:id="@+id/li_student_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="[li_student_name]"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/abc_dialog_padding_material">
+            </TextView>
 
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
