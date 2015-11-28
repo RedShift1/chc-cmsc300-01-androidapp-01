@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="48dp">
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="[tvCourseName]"
-        android:id="@+id/tvCourseName"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/iv_name_icon"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[tvCourseName]"
+            android:id="@+id/tvCourseName"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/abc_dialog_padding_material"/>
+
+    </TableRow>
+</TableLayout>

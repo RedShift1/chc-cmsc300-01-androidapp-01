@@ -7,7 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.CursorTreeAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 import edu.chc.appdev.teama.gradekeeper.R;
@@ -18,23 +26,30 @@ import edu.chc.appdev.teama.gradekeeper.R;
 public class DueAssignments extends CursorTreeAdapter
 {
 
+    ColorGenerator colorGen;
+
     private DB db;
 
     public DueAssignments(Cursor cursor, Context context, DB db)
     {
         super(cursor, context);
         this.db = db;
+        this.colorGen = ColorGenerator.MATERIAL;
     }
 
     @Override
     protected void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild)
     {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, y", Locale.getDefault());
+        String dueDate = sdf.format(new Date(cursor.getLong(cursor.getColumnIndex("duedate"))));
+
         ((TextView) view.findViewById(R.id.tvAssignmentName)).
                 setText(cursor.getString(cursor.getColumnIndex("assignment_name")));
         ((TextView) view.findViewById(R.id.tvGradebookName)).
-                setText(cursor.getString(cursor.getColumnIndex("gradebook_name")));
-        ((TextView) view.findViewById(R.id.tvCourseName)).
-                setText(cursor.getString(cursor.getColumnIndex("course_name")));
+                setText("Gradebook: " + cursor.getString(cursor.getColumnIndex("gradebook_name")));
+        ((TextView) view.findViewById(R.id.tvDueDate)).
+                setText(dueDate);
+
     }
 
     @Override
@@ -58,7 +73,17 @@ public class DueAssignments extends CursorTreeAdapter
     @Override
     protected void bindGroupView(View view, Context context, Cursor cursor, boolean isExpanded)
     {
+        String name = cursor.getString(cursor.getColumnIndex("name"));
         ((TextView) view.findViewById(R.id.tvCourseName)).
-                setText(cursor.getString(cursor.getColumnIndex("name")));
+                setText(name);
+
+        if(name.length() > 0)
+        {
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRound(name.substring(0, 1).toUpperCase(), this.colorGen.getColor(name));
+
+            ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
+            image.setImageDrawable(drawable);
+        }
     }
 }
