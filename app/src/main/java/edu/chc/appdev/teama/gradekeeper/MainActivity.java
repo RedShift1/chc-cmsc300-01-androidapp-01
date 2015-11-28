@@ -101,25 +101,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         */
     }
 
-    /*
-    Drawer menu stuff - causes NPE for now
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = this.getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
     public void toggleLeftMenu(MenuItem menuItem)
     {
         SlidingMenu menu = (SlidingMenu) this.findViewById(R.id.slidingmenulayout);
