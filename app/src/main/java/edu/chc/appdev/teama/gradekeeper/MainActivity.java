@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         return super.onOptionsItemSelected(item);
     }*/
 
+    public void toggleLeftMenu(MenuItem menuItem)
+    {
+        SlidingMenu menu = (SlidingMenu) this.findViewById(R.id.slidingmenulayout);
+        menu.toggle();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
