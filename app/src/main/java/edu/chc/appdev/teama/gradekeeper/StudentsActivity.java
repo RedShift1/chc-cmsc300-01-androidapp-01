@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsFromAll;
@@ -65,6 +67,10 @@ public class StudentsActivity extends AppCompatActivity
         });*/
     }
 
+    public void toggleLeftMenu(MenuItem menuItem)
+    {
+        ((SlidingMenu) this.findViewById(R.id.slidingmenulayout)).toggle();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
