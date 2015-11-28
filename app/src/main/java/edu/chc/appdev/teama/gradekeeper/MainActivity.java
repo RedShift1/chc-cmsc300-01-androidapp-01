@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
                 openStudents();
                 return true;
             case R.id.dueAssignments:
-                openDueAssigments();
+                openDueAssignments();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
