@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -64,6 +65,21 @@ public class StudentsActivity extends AppCompatActivity implements IFilterTextCh
                 // MainActivity.this.coursesAdapter.getItem(position);
             }
         });*/
+
+        this.studentNameLike = new StringBuilder("%");
+        SlidingMenu menu = (SlidingMenu) this.findViewById(R.id.slidingmenulayout);
+        ((EditText) menu.findViewById(R.id.etStudentName)).
+                addTextChangedListener(new SQLFilterTextChanged(this.studentNameLike, this));
+    }
+
+    @Override
+    public void FilterTextChanged()
+    {
+        this.studentsAdapter.swapCursor(
+            this.db.getStudentsCursor(
+                this.studentNameLike.toString()
+            )
+        );
     }
 
     public void toggleLeftMenu(MenuItem menuItem)
