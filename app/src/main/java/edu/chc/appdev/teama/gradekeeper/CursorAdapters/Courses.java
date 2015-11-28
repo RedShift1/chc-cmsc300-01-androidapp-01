@@ -73,10 +73,13 @@ public class Courses extends CursorAdapter
         ((TextView) view.findViewById(R.id.coursedescription)).
                 setText(cursor.getString(cursor.getColumnIndex("description")));
 
-        TextDrawable drawable = TextDrawable.builder()
-                .buildRound(courseName.substring(0, 1).toUpperCase(), this.colorGen.getColor(courseName));
+        if(courseName.length() > 0)
+        {
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRound(courseName.substring(0, 1).toUpperCase(), this.colorGen.getColor(courseName));
 
-        ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
-        image.setImageDrawable(drawable);
+            ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
+            image.setImageDrawable(drawable);
+        }
     }
 }
