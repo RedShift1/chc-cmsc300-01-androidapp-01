@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         this.startActivityForResult(openStudentsIntent, this.REQUEST_VIEW_STUDENTS);
     }
 
-    public void openDueAssigments()
+    public void openDueAssignments()
     {
         Intent openDueAssigmentsIntent = new Intent(this, ViewDueAssignmentsActivity.class);
         this.startActivity(openDueAssigmentsIntent);
