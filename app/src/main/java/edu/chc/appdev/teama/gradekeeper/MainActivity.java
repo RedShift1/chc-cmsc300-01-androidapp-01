@@ -73,14 +73,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
             }
         });
 
-        SlidingMenu menu = new SlidingMenu(this);
-        menu.setMode(SlidingMenu.LEFT);
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        menu.setFadeEnabled(true);
-        menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.srm_main);
+        SlidingMenu menu = (SlidingMenu) this.findViewById(R.id.slidingmenulayout);
 
         ((EditText) menu.findViewById(R.id.etCourseCode)).
             addTextChangedListener(new SQLFilterTextChanged(this.courseCodeLike, this));
