@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
     private DB db;
     private Courses coursesAdapter;
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-
     private StringBuilder courseNameLike;
     private StringBuilder courseCodeLike;
     private StringBuilder courseDescriptionLike;
