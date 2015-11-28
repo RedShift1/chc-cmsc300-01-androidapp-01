@@ -298,6 +298,12 @@ public class DB extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM students", null);
     }
 
+    public Cursor getStudentsCursor(String nameLike)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM students WHERE name LIKE ?", new String[] {nameLike});
+    }
+
     /**
      * Add a student
      *
