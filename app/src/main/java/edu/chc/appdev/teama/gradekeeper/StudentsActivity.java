@@ -27,8 +27,7 @@ public class StudentsActivity extends AppCompatActivity
     private DB db;
     private StudentsFromAll studentsAdapter;
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private StringBuilder studentNameLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
