@@ -83,22 +83,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
 
         ((EditText) menu.findViewById(R.id.etCourseDescription)).
                 addTextChangedListener(new SQLFilterTextChanged(this.courseDescriptionLike, this));
-
-        /*
-        Drawer menu stuff - causes NPE for now
-        (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        (this.getSupportActionBar()).setHomeButtonEnabled(true);
-
-        this.mDrawerLayout = (DrawerLayout) this.findViewById(R.id.drawer_layout);
-        this.mDrawerToggle = new ActionBarDrawerToggle(
-            this,
-            this.mDrawerLayout,
-            R.string.open,
-            R.string.close
-        );
-
-        this.mDrawerLayout.setDrawerListener(this.mDrawerToggle);
-        */
     }
 
     public void toggleLeftMenu(MenuItem menuItem)
