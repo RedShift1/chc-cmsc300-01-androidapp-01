@@ -20,7 +20,7 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsFromAll;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class StudentsActivity extends AppCompatActivity
+public class StudentsActivity extends AppCompatActivity implements IFilterTextChangedListener
 {
     static final int REQUEST_VIEW_COURSES = 1;
 
