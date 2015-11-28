@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
 
     public void toggleLeftMenu(MenuItem menuItem)
     {
-        SlidingMenu menu = (SlidingMenu) this.findViewById(R.id.slidingmenulayout);
-        menu.toggle();
+        ((SlidingMenu) this.findViewById(R.id.slidingmenulayout)).toggle();
     }
 
     @Override
