@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.chc.appdev.teama.gradekeeper.AddGradebookActivity">
+    tools:context="edu.chc.appdev.teama.gradekeeper.AddGradebookActivity"
+    android:orientation="vertical">
 
     <include layout="@layout/common_toolbar"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
 
         <LinearLayout
             android:orientation="vertical"
@@ -31,5 +26,4 @@
                 android:hint="Gradebook name"/>
 
         </LinearLayout>
-    </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
