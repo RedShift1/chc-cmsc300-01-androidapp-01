@@ -604,7 +604,29 @@ public class DB extends SQLiteOpenHelper {
     public Cursor getAssignmentsForStudent(long studentId)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM assignments WHERE student_id = " + studentId, null);
+        //return db.rawQuery("SELECT * FROM assignments WHERE student_id = " + studentId, null);
+        //Cursor c =  db.rawQuery("SELECT * FROM assignment_grades WHERE student_id = " + studentId, null);
+
+        String sql = "SELECT * FROM assignments WHERE gradebook_id IN ";
+        sql += "(SELECT gradebook_id from gradebook_students WHERE student_id = ";
+        sql += studentId + ")";
+
+        Cursor c =  db.rawQuery(sql, null);
+
+       /* Cursor c = db.rawQuery(sql, null);
+        result = new Student[c.getCount()];
+        int i = 0;
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+        result = new Student(
+                c.getInt(c.getColumnIndex("_id")),
+                c.getString(c.getColumnIndex("name"))
+        );
+
+        c.moveToNext();
+        }*/
+
+        return c;
     }
 
     public Cursor getGrade(long studentId, long assignmentId) {
