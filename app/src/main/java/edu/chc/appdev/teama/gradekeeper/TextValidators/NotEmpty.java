@@ -1,6 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper.TextValidators;
 
-import edu.chc.appdev.teama.gradekeeper.ITextValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
 
 /**
  * Created by Glenn on 29/11/2015.

@@ -1,8 +1,8 @@
 package edu.chc.appdev.teama.gradekeeper;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.EditText;
+
+import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
 
 
 /**

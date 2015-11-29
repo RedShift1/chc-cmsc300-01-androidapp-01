@@ -1,4 +1,4 @@
-package edu.chc.appdev.teama.gradekeeper;
+package edu.chc.appdev.teama.gradekeeper.FormValidator;
 
 /**
  * Created by Glenn on 29/11/2015.
