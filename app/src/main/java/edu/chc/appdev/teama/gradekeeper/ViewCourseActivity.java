@@ -111,6 +111,13 @@ public class ViewCourseActivity extends AppCompatActivity
                 this.gradebooksAdapter.swapCursor(this.db.getGradebooksForCourse(this.id));
             }
         }
+        if(requestCode == this.REQUEST_VIEWGRADEBOOK)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                this.gradebooksAdapter.swapCursor(this.db.getGradebooksForCourse(this.id));
+            }
+        }
     }
 
     public void deleteCourseFromDB(MenuItem menuItem)
