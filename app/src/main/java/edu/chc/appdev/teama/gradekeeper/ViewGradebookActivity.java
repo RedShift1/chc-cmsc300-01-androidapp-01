@@ -1,6 +1,8 @@
 package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -118,13 +120,44 @@ public class ViewGradebookActivity extends AppCompatActivity {
 
     public void deleteGradebookFromDB(MenuItem menuItem)
     {
+        AlertDialog.Builder confirm = new AlertDialog.Builder(this);
+
+        confirm.setTitle("Delete");
+        confirm.setMessage("Are you sure you want to delete this gradebook?");
+        confirm.setPositiveButton("Delete", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                ViewGradebookActivity.this.db.deleteGradebook(ViewGradebookActivity.this.id);
+
+                (Toast.makeText(ViewGradebookActivity.this, "Deleted!", Toast.LENGTH_LONG)).show();
+                dialog.dismiss();
+                ViewGradebookActivity.this.setResult(Activity.RESULT_OK);
+                ViewGradebookActivity.this.finish();
+            }
+        });
+
+        confirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        confirm.create();
+        confirm.show();
+
+        /*
         this.db.deleteGradebook(this.id);
 
         (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
 
         this.setResult(Activity.RESULT_OK);
 
-        this.finish();
+        this.finish();*/
     }
 
     @Override
