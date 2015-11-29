@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.FormValidator;
 
 public class AddGradebookActivity extends AppCompatActivity
 {
     private long id;
+
+    private FormValidator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
