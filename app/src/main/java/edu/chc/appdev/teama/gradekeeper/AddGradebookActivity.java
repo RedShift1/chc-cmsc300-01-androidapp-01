@@ -38,6 +38,13 @@ public class AddGradebookActivity extends AppCompatActivity
         Bundle extras = this.getIntent().getExtras();
         this.id = extras.getLong("_id");
 
+        this.validator = new FormValidator();
+        this.validator.addField(
+            new EditTextValidator(
+                (EditText) this.findViewById(R.id.etName),
+                new ITextValidator[] { new NotEmpty() }
+            )
+        );
     }
 
 
