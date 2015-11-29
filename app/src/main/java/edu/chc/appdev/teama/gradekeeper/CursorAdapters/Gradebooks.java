@@ -42,10 +42,13 @@ public class Gradebooks extends CursorAdapter
         ((TextView) view.findViewById(R.id.tv_name)).
                 setText(gradebookName);
 
-        TextDrawable drawable = TextDrawable.builder()
+        if(gradebookName.length() > 0)
+        {
+            TextDrawable drawable = TextDrawable.builder()
                 .buildRound(gradebookName.substring(0, 1).toUpperCase(), this.colorGen.getColor(gradebookName));
 
-        ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
-        image.setImageDrawable(drawable);
+            ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
+            image.setImageDrawable(drawable);
+        }
     }
 }
