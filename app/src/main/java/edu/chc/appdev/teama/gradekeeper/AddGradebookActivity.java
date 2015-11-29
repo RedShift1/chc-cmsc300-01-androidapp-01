@@ -71,6 +71,12 @@ public class AddGradebookActivity extends AppCompatActivity
 
     public void addGradebookToDB(MenuItem menuItem)
     {
+        if(!this.validator.isValid())
+        {
+            (Toast.makeText(this, "Form contains errors", Toast.LENGTH_LONG)).show();
+            return;
+        }
+
         DB db = new DB(this, null, null);
         db.addGradebookToCourse(this.id,
                 ((EditText) this.findViewById(R.id.etName)).getText().toString());
