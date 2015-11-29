@@ -118,7 +118,7 @@ public class ViewCourseActivity extends AppCompatActivity
         AlertDialog.Builder confirm = new AlertDialog.Builder(this);
 
         confirm.setTitle("Delete");
-        confirm.setMessage("Are you sure you want to delete this course?");
+        confirm.setMessage("Are you sure you want to delete this course? All gradebooks will be erased too.");
         confirm.setPositiveButton("Delete", new DialogInterface.OnClickListener()
         {
             @Override
