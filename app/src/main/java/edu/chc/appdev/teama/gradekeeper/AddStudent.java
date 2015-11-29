@@ -38,8 +38,8 @@ public class AddStudent extends AppCompatActivity {
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         AutoCompleteTextView atvStudent = (AutoCompleteTextView) this.findViewById(R.id.atvStudent);
-        atvStudent.setAdapter(new StudentAutocomplete(this, db.getStudentsCursor(), 0));
-
+        atvStudent.setAdapter(new StudentAutocomplete(this, db.getStudentsCursor(), 0, db));
+        atvStudent.setThreshold(1);
     }
 
     @Override

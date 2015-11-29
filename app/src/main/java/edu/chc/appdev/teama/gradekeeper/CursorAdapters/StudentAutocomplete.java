@@ -9,17 +9,21 @@ import android.widget.CursorAdapter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import edu.chc.appdev.teama.gradekeeper.DB.DB;
 import edu.chc.appdev.teama.gradekeeper.R;
 
 /**
  * Created by Glenn on 9/11/2015.
  */
-public class StudentAutocomplete extends CursorAdapter implements Filterable
+public class StudentAutocomplete extends CursorAdapter
 {
 
-    public StudentAutocomplete(Context context, Cursor c, int flags)
+    private DB db;
+
+    public StudentAutocomplete(Context context, Cursor c, int flags, DB db)
     {
         super(context, c, flags);
+        this.db = db;
     }
 
     @Override
@@ -33,6 +37,24 @@ public class StudentAutocomplete extends CursorAdapter implements Filterable
     {
         ((TextView) view.findViewById(android.R.id.text1)).
                 setText(cursor.getString(cursor.getColumnIndex("name")));
+    }
+
+    @Override
+    public Cursor runQueryOnBackgroundThread(CharSequence constraint)
+    {
+        if (this.getFilterQueryProvider() != null)
+        {
+            return this.getFilterQueryProvider().runQuery(constraint);
+        }
+
+        String args = "";
+
+        if (constraint != null)
+        {
+            args = "%" + constraint.toString() + "%";
+        }
+
+        return this.db.getStudentsCursor(args);
     }
 
     @Override
