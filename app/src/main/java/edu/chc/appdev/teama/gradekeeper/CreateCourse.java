@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import edu.chc.appdev.teama.gradekeeper.ArrayAdapters.CourseMeetings;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.EditTextValidator;
 import edu.chc.appdev.teama.gradekeeper.FormValidator.FormValidator;
 import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
 import edu.chc.appdev.teama.gradekeeper.TextValidators.NotEmpty;

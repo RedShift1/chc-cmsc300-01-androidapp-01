@@ -2,8 +2,6 @@ package edu.chc.appdev.teama.gradekeeper.FormValidator;
 
 import java.util.ArrayList;
 
-import edu.chc.appdev.teama.gradekeeper.EditTextValidator;
-
 /**
  * Created by Glenn on 29/11/2015.
  */

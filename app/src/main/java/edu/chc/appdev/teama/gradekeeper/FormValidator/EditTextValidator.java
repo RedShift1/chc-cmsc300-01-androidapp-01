@@ -1,4 +1,4 @@
-package edu.chc.appdev.teama.gradekeeper;
+package edu.chc.appdev.teama.gradekeeper.FormValidator;
 
 import android.widget.EditText;
 
