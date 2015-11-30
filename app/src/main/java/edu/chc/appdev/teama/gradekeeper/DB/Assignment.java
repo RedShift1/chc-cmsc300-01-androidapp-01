@@ -6,15 +6,15 @@ package edu.chc.appdev.teama.gradekeeper.DB;
 public class Assignment
 {
     private long id;
-    private long courseId;
+    private long gradebookId;
     private String name;
     private String dueDate;
     private float maxgrade;
 
-    public Assignment(long id, long courseId, String name, String dueDate, float maxgrade)
+    public Assignment(long id, long gradebookId, String name, String dueDate, float maxgrade)
     {
         this.id         = id;
-        this.courseId   = courseId;
+        this.gradebookId = gradebookId;
         this.name       = name;
         this.dueDate    = dueDate;
         this.maxgrade   = maxgrade;
@@ -30,14 +30,14 @@ public class Assignment
         this.id = id;
     }
 
-    public long getCourseId()
+    public long getGradebookId()
     {
-        return courseId;
+        return gradebookId;
     }
 
-    public void setCourseId(int courseId)
+    public void setGradebookId(int gradebookId)
     {
-        this.courseId = courseId;
+        this.gradebookId = gradebookId;
     }
 
     public String getName()
