@@ -58,7 +58,8 @@ public class GradeAssignmentActivity extends AppCompatActivity
         try
         {
             Assignment thisAssignment = this.db.getAssignment(this.id);
-            this.setTitle(thisAssignment.getName());
+            this.setTitle("Grade assignment");
+            toolbar.setSubtitle(thisAssignment.getName());
         }
         catch(Exception ex)
         {
