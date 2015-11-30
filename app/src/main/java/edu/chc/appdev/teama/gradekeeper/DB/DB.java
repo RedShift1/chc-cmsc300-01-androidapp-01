@@ -546,6 +546,15 @@ public class DB extends SQLiteOpenHelper {
         );
     }
 
+    public Cursor getCoursesCursor(String search)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(
+            "SELECT * FROM courses WHERE name LIKE ? OR code LIKE ? OR description LIKE ?",
+            new String[] {search, search, search}
+        );
+    }
+
     public Course getCourse(long id) throws Exception
     {
         SQLiteDatabase db = this.getWritableDatabase();

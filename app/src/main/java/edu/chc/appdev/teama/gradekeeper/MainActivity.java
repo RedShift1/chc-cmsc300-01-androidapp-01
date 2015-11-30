@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
     private StringBuilder courseCodeLike;
     private StringBuilder courseDescriptionLike;
 
+    private StringBuilder search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         this.courseNameLike = new StringBuilder("%");
         this.courseCodeLike = new StringBuilder("%");
         this.courseDescriptionLike = new StringBuilder("%");
+        this.search                 = new StringBuilder("%");
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -74,15 +77,31 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
             addTextChangedListener(new SQLFilterTextChanged(this.courseCodeLike, this));
 
         ((EditText) menu.findViewById(R.id.etCourseName)).
-                addTextChangedListener(new SQLFilterTextChanged(this.courseNameLike, this));
+            addTextChangedListener(new SQLFilterTextChanged(this.courseNameLike, this));
 
         ((EditText) menu.findViewById(R.id.etCourseDescription)).
-                addTextChangedListener(new SQLFilterTextChanged(this.courseDescriptionLike, this));
+            addTextChangedListener(new SQLFilterTextChanged(this.courseDescriptionLike, this));
+
+        ((EditText) menu.findViewById(R.id.etSearch)).
+            addTextChangedListener(new SQLFilterTextChanged(this.search, this));
     }
 
     public void toggleLeftMenu(MenuItem menuItem)
     {
         ((SlidingMenu) this.findViewById(R.id.slidingmenulayout)).toggle();
+    }
+
+    public void toggleSearchBox(MenuItem menuItem)
+    {
+        View etSearch = this.findViewById(R.id.etSearch);
+        if (etSearch.getVisibility() == View.VISIBLE)
+        {
+            etSearch.setVisibility(View.GONE);
+        }
+        else
+        {
+            etSearch.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -127,13 +146,24 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
 
     protected void updateCoursesView()
     {
-        this.coursesAdapter.swapCursor(
-            this.db.getCoursesCursor(
-                this.courseNameLike.toString(),
-                this.courseCodeLike.toString(),
-                this.courseDescriptionLike.toString()
-            )
-        );
+        if(this.search.toString().equals("%"))
+        {
+            this.coursesAdapter.swapCursor(
+                this.db.getCoursesCursor(
+                    this.courseNameLike.toString(),
+                    this.courseCodeLike.toString(),
+                    this.courseDescriptionLike.toString()
+                )
+            );
+        }
+        else
+        {
+            this.coursesAdapter.swapCursor(
+                this.db.getCoursesCursor(
+                    this.search.toString()
+                )
+            );
+        }
     }
 
     @Override
