@@ -423,7 +423,7 @@ public class DB extends SQLiteOpenHelper {
             c.moveToFirst();
             return new Assignment(
                     c.getLong(c.getColumnIndex("_id")),
-                    c.getLong(c.getColumnIndex("course_id")),
+                    c.getLong(c.getColumnIndex("gradebook_id")),
                     c.getString(c.getColumnIndex("name")),
                     c.getString(c.getColumnIndex("duedate")),
                     c.getFloat(c.getColumnIndex("maxgrade"))
