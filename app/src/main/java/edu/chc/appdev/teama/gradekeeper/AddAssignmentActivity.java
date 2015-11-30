@@ -19,12 +19,18 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.EditTextValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.FormValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
+import edu.chc.appdev.teama.gradekeeper.TextValidators.NotEmpty;
 
 public class AddAssignmentActivity extends AppCompatActivity {
 
     private long id;
     private TextView txtDueDate;
     private Calendar dueDateCalendar;
+
+    private FormValidator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,8 +82,30 @@ public class AddAssignmentActivity extends AppCompatActivity {
                         dueDateCalendar.get(Calendar.MONTH),
                         dueDateCalendar.get(Calendar.DAY_OF_MONTH)
                 ).show();
+                ((EditText) v).setError(null);
             }
         });
+
+
+        this.validator = new FormValidator();
+        this.validator.addField(
+            new EditTextValidator(
+                (EditText) this.findViewById(R.id.txtPoints),
+                new ITextValidator[]{new NotEmpty()}
+            )
+        );
+        this.validator.addField(
+            new EditTextValidator(
+                (EditText) this.findViewById(R.id.txtName),
+                new ITextValidator[]{new NotEmpty()}
+            )
+        );
+        this.validator.addField(
+            new EditTextValidator(
+                (EditText) this.findViewById(R.id.txtDueDate),
+                new ITextValidator[]{new NotEmpty()}
+            )
+        );
     }
 
 
@@ -109,11 +137,14 @@ public class AddAssignmentActivity extends AppCompatActivity {
 
     public void addAssignmentToDb(MenuItem menuItem)
     {
+        if(!this.validator.isValid())
+        {
+            (Toast.makeText(this, "Form contains errors", Toast.LENGTH_LONG)).show();
+            return;
+        }
+
         DB db = new DB(this, null, null);
 
-        Log.w("Test", ((TextView) this.findViewById(R.id.txtDueDate)).getText().toString());
-
-        // There probably needs more conversion for the date
         db.addAssignmentToGradebook(
             this.id,
             ((EditText) this.findViewById(R.id.txtName)).getText().toString(),
