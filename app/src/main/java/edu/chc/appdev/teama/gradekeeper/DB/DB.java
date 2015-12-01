@@ -592,7 +592,7 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sql = "SELECT * FROM students ";
-        sql += "WHERE id = " + studentId;
+        sql += "WHERE _id = " + studentId;
 
         Cursor c = db.rawQuery(sql, null);
         //result = new Student[c.getCount()];
