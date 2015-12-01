@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         this.courseNameLike = new StringBuilder("%");
         this.courseCodeLike = new StringBuilder("%");
         this.courseDescriptionLike = new StringBuilder("%");
-        this.search                 = new StringBuilder("%");
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
