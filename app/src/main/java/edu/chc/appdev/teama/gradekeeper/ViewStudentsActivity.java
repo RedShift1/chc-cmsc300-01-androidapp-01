@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -16,7 +18,8 @@ import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class ViewStudentsActivity extends AppCompatActivity implements IFilterTextChangedListener
 {
-    static final int REQUEST_VIEW_COURSES = 1;
+    static final int REQUEST_VIEW_COURSES = 0;
+    static final int REQUEST_VIEW_STUDENT = 1;
 
     private DB db;
     private StudentsFromAll studentsAdapter;
@@ -28,9 +31,8 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_students);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        this.setSupportActionBar(toolbar);
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -44,20 +46,17 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
 
         this.setTitle("Students");
 
-        /*lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent viewCourse = new Intent(MainActivity.this, ViewCourseActivity.class);
-                viewCourse.putExtra("_id", id);
+                Intent viewStudent = new Intent(ViewStudentsActivity.this, ViewStudentActivity.class);
+                viewStudent.putExtra("_id", id);
 
-                startActivityForResult(viewCourse, MainActivity.REQUEST_VIEW_COURSE);
-
-                // Get the item for passing it on to the new activity:
-                // MainActivity.this.coursesAdapter.getItem(position);
+                startActivityForResult(viewStudent, ViewStudentsActivity.REQUEST_VIEW_STUDENT);
             }
-        });*/
+        });
 
         this.studentNameLike = new StringBuilder("%");
         SlidingMenu menu = (SlidingMenu) this.findViewById(R.id.slidingmenulayout);
