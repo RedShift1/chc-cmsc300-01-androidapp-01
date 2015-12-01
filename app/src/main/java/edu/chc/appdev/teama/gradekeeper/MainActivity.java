@@ -127,24 +127,13 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
 
     protected void updateCoursesView()
     {
-        if(this.search.toString().equals("%"))
-        {
-            this.coursesAdapter.swapCursor(
-                this.db.getCoursesCursor(
-                    this.courseNameLike.toString(),
-                    this.courseCodeLike.toString(),
-                    this.courseDescriptionLike.toString()
-                )
-            );
-        }
-        else
-        {
-            this.coursesAdapter.swapCursor(
-                this.db.getCoursesCursor(
-                    this.search.toString()
-                )
-            );
-        }
+        this.coursesAdapter.swapCursor(
+            this.db.getCoursesCursor(
+                this.courseNameLike.toString(),
+                this.courseCodeLike.toString(),
+                this.courseDescriptionLike.toString()
+            )
+        );
     }
 
     @Override
