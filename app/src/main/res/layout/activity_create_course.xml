@@ -19,13 +19,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtName"
-            android:hint="Name"/>
+            android:hint="Name"
+            android:inputType="textCapSentences|text"
+            android:singleLine="true"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtCode"
-            android:hint="Code"/>
+            android:hint="Code"
+            android:inputType="textCapSentences|text"
+            android:singleLine="true"/>
 
         <EditText
             android:layout_width="match_parent"

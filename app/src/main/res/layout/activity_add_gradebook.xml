@@ -23,7 +23,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:hint="Gradebook name"/>
+                android:hint="Gradebook name"
+                android:inputType="textCapSentences|text"
+                android:singleLine="true"/>
 
         </LinearLayout>
 </LinearLayout>

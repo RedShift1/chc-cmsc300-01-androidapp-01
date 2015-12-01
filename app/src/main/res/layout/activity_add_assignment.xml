@@ -28,7 +28,8 @@
                 android:id="@+id/txtName"
                 android:editable="true"
                 android:autoText="false"
-                android:hint="Name"/>
+                android:hint="Name"
+                android:inputType="textCapSentences|text"/>
 
             <EditText
                 android:layout_width="match_parent"
