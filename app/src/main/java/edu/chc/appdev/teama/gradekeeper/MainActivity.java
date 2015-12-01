@@ -91,19 +91,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         ((SlidingMenu) this.findViewById(R.id.slidingmenulayout)).toggle();
     }
 
-    public void toggleSearchBox(MenuItem menuItem)
-    {
-        View etSearch = this.findViewById(R.id.etSearch);
-        if (etSearch.getVisibility() == View.VISIBLE)
-        {
-            etSearch.setVisibility(View.GONE);
-        }
-        else
-        {
-            etSearch.setVisibility(View.VISIBLE);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
