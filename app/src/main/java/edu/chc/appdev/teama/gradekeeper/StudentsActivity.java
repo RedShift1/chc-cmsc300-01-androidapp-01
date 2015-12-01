@@ -90,7 +90,7 @@ public class StudentsActivity extends AppCompatActivity implements IFilterTextCh
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.mainactivity, menu);
+        this.getMenuInflater().inflate(R.menu.viewstudent, menu);
         return true;
     }
 
