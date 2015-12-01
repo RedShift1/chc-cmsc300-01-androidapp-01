@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
 
     public void openStudents()
     {
-        Intent openStudentsIntent = new Intent(this, StudentsActivity.class);
+        Intent openStudentsIntent = new Intent(this, ViewStudentsActivity.class);
         this.startActivityForResult(openStudentsIntent, this.REQUEST_VIEW_STUDENTS);
     }
 

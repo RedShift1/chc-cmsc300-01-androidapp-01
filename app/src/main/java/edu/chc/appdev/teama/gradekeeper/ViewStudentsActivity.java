@@ -1,27 +1,20 @@
 package edu.chc.appdev.teama.gradekeeper;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
-import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsFromAll;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
-public class StudentsActivity extends AppCompatActivity implements IFilterTextChangedListener
+public class ViewStudentsActivity extends AppCompatActivity implements IFilterTextChangedListener
 {
     static final int REQUEST_VIEW_COURSES = 1;
 
@@ -34,7 +27,7 @@ public class StudentsActivity extends AppCompatActivity implements IFilterTextCh
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_students);
+        setContentView(R.layout.activity_view_students);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

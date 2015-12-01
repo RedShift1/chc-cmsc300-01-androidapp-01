@@ -6,7 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="edu.chc.appdev.teama.gradekeeper.StudentsActivity">
+    tools:context=".ViewStudentsActivity">
 
     <include layout="@layout/common_toolbar"/>
 
@@ -17,7 +17,7 @@
         android:id="@+id/slidingmenulayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        sliding:viewAbove="@layout/content_students"
+        sliding:viewAbove="@layout/content_view_students"
         sliding:viewBehind="@layout/srm_students"
         sliding:touchModeAbove="fullscreen"
         sliding:fadeEnabled="true"
