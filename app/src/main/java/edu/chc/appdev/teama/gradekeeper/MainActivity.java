@@ -78,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
 
         ((EditText) menu.findViewById(R.id.etCourseDescription)).
             addTextChangedListener(new SQLFilterTextChanged(this.courseDescriptionLike, this));
-
-        ((EditText) menu.findViewById(R.id.etSearch)).
-            addTextChangedListener(new SQLFilterTextChanged(this.search, this));
     }
 
     public void toggleLeftMenu(MenuItem menuItem)
