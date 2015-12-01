@@ -39,7 +39,7 @@
             android:label="Add gradebook">
         </activity>
         <activity
-            android:name=".StudentActivity"
+            android:name=".ViewStudentActivity"
             android:label="@string/title_activity_student"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
