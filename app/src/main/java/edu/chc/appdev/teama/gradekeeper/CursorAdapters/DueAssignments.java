@@ -2,6 +2,7 @@ package edu.chc.appdev.teama.gradekeeper.CursorAdapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,17 @@ public class DueAssignments extends CursorTreeAdapter
 
             ImageView image = (ImageView) view.findViewById(R.id.iv_name_icon);
             image.setImageDrawable(drawable);
+        }
+
+        ImageView expand = (ImageView) view.findViewById(R.id.iv_expand_icon);
+
+        if(isExpanded)
+        {
+            expand.setImageResource(R.drawable.chevron_up);
+        }
+        else
+        {
+            expand.setImageResource(R.drawable.chevron_down);
         }
     }
 }
