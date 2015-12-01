@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
     private StringBuilder courseCodeLike;
     private StringBuilder courseDescriptionLike;
 
-    private StringBuilder search;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
