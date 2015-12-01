@@ -3,6 +3,7 @@ package edu.chc.appdev.teama.gradekeeper.CursorAdapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,5 +98,24 @@ public class DueAssignments extends CursorTreeAdapter
         {
             expand.setImageResource(R.drawable.chevron_down);
         }
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
+    {
+        View view = super.getGroupView(groupPosition, isExpanded, convertView, parent);
+        TextView tvNumAssigmentsDue = (TextView) view.findViewById(R.id.tvNumAssignmentsDue);
+        int childrenCount = this.getChildrenCount(groupPosition);
+        if(childrenCount == 0)
+        {
+            ((ImageView) view.findViewById(R.id.iv_expand_icon)).setImageResource(android.R.color.transparent);
+            tvNumAssigmentsDue.setText("No assignments due");
+        }
+        else
+        {
+            tvNumAssigmentsDue.setText(childrenCount + " assignments due");
+        }
+
+        return view;
     }
 }
