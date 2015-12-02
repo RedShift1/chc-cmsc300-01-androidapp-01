@@ -108,8 +108,6 @@ public class GradeAssignmentActivity extends AppCompatActivity
             cursor.moveToNext();
         }
 
-        cursor.close();
-
         (Toast.makeText(this, "Saved!", Toast.LENGTH_LONG)).show();
     }
 
