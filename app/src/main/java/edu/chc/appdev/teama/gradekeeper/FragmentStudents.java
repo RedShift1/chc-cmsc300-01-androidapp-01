@@ -28,7 +28,7 @@ public class FragmentStudents extends ListFragment implements ITabbedFragment
         return inflater.inflate(R.layout.fragment_students, container, false);
     }
 
-    public void setStudentsAdapter(Students adapter)
+    public void setStudentsAdapter(StudentsFromAll adapter)
     {
         this.setListAdapter(adapter);
     }
