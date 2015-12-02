@@ -78,54 +78,39 @@ public class GradeAssignmentActivity extends AppCompatActivity
         this.finish();
     }
 
-    public void saveAssignmentGrades(MenuItem menuItem) {
-        long[] student_ids;
-        double[] grades;
+    public void saveAssignmentGrades(MenuItem menuItem)
+    {
 
         Cursor cursor = this.studentsForAssignmentAdapter.getCursor();
 
         ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
 
-        //LinearLayout linearGrades = (LinearLayout) lvGradesList.getChildAt(0);
-        //TableLayout tableGrades = (TableLayout) linearGrades.getChildAt(0);
-
-        int rows = cursor.getCount();
-        student_ids = new long[rows];
-        grades = new double[rows];
-
         cursor.moveToFirst();
 
         int i = 0;
         while (!cursor.isAfterLast()) {
-            student_ids[i] = cursor.getLong(cursor.getColumnIndex("student_id"));
-            LinearLayout linearGrades = (LinearLayout) lvGradesList.getChildAt(i);
-            TableLayout tableGrades = (TableLayout) linearGrades.getChildAt(0);
-            TableRow gradeRow = (TableRow) tableGrades.getChildAt(0);
-            /*(Toast.makeText(this, "lvGradesList " + ((Integer) lvGradesList.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-            (Toast.makeText(this, "linearGrades " + ((Integer) linearGrades.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-            (Toast.makeText(this, "tableGrades " + ((Integer) tableGrades.getChildCount()).toString(), Toast.LENGTH_LONG)).show();*/
-            //(Toast.makeText(this, ((Integer) gradeRow.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-            EditText gradeEditText = (EditText) gradeRow.getChildAt(1);
-            double grade = Double.parseDouble(gradeEditText.getText().toString());
-            grades[i] = grade;
-            //grades[i] = cursor.getDouble(cursor.getColumnIndex("grade"));
-            cursor.moveToNext();
+            View linearGrades = lvGradesList.getChildAt(i);
+            EditText etGrade = (EditText) linearGrades.findViewById(R.id.etGrade);
+            if(!etGrade.getText().toString().equals(""))
+            {
+                try
+                {
+                    Double grade = Double.parseDouble(etGrade.getText().toString());
+                    db.setAssignmentGradeForStudent(this.id, cursor.getLong(cursor.getColumnIndex("student_id")), grade);
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(this, "An error occured while updating: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
             i++;
+            cursor.moveToNext();
         }
-
-        //(Toast.makeText(this, ((LinearLayout) lvGradesList.getChildAt(0)).getChildAt(0).toString(), Toast.LENGTH_LONG)).show();
-       //(Toast.makeText(this, ((Integer) lvGradesList.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
 
         cursor.close();
 
-        //this.studentsForAssignmentAdapter.
-        this.db.saveAssignmentGrades(this.id, student_ids, grades);
-
         (Toast.makeText(this, "Saved!", Toast.LENGTH_LONG)).show();
-
-        this.setResult(Activity.RESULT_OK);
-
-        this.finish();
     }
 
 
