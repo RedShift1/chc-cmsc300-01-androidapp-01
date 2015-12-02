@@ -37,7 +37,7 @@ public class DB extends SQLiteOpenHelper {
      * @param name    of the database file, or null for an in-memory database
      * @param factory to use for creating cursor objects, or null for the default
      */
-    public DB(Context context, String name, SQLiteDatabase.CursorFactory factory) {
+    private DB(Context context, String name, SQLiteDatabase.CursorFactory factory) {
         super(context, "gradekeeper.sqlite", factory, DB.DATA_VERSION);
     }
 
