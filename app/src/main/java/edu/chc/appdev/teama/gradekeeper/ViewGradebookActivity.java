@@ -117,6 +117,12 @@ public class ViewGradebookActivity extends AppCompatActivity {
         refreshStudents();
     }
 
+    public void removeStudentFromGradebook(long studentId)
+    {
+        this.db.removeStudentFromGradebook(this.id, studentId);
+        this.studentsAdapter.swapCursor(this.db.getStudentsForGradebook(this.id));
+    }
+
 
     public void deleteGradebookFromDB(MenuItem menuItem)
     {
