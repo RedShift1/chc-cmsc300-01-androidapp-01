@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsFromAll;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 import edu.chc.appdev.teama.gradekeeper.DB.Gradebook;
 
@@ -33,7 +34,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
 
     private DB db;
     private Assignments assignmentsAdapter;
-    private Students studentsAdapter;
+    private StudentsFromAll studentsAdapter;
 
     private long id;
 
@@ -68,7 +69,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
         }
 
         this.assignmentsAdapter = new Assignments(this, this.db.getAssignmentsForGradebook(this.id), 0);
-        this.studentsAdapter = new Students(this, this.db.getStudentsForGradebook(this.id), 0);
+        this.studentsAdapter = new StudentsFromAll(this, this.db.getStudentsForGradebook(this.id), 0);
 
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(this.getSupportFragmentManager(), ViewGradebookActivity.this);
 
