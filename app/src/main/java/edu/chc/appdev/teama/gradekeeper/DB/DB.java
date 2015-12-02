@@ -15,6 +15,18 @@ public class DB extends SQLiteOpenHelper {
 
     private static final int DATA_VERSION = 5;
 
+    private static DB instance = null;
+
+    public static DB getInstance(Context context)
+    {
+        if(instance == null)
+        {
+            instance = new DB(context.getApplicationContext(), null, null);
+        }
+
+        return instance;
+    }
+
     /**
      * Create a helper object to create, open, and/or manage a database.
      * This method always returns very quickly.  The database is not actually
