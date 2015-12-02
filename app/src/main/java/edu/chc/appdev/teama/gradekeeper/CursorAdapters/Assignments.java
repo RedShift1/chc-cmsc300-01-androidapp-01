@@ -37,11 +37,11 @@ public class Assignments extends CursorAdapter
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, y", Locale.getDefault());
         String dueDate = sdf.format(new Date(cursor.getLong(cursor.getColumnIndex("duedate"))));
 
-        ((TextView) view.findViewById(R.id.li_assigment_name)).
+        ((TextView) view.findViewById(R.id.li_assignment_name)).
                 setText(cursor.getString(cursor.getColumnIndex("name")));
-        ((TextView) view.findViewById(R.id.li_assigment_duedate)).
+        ((TextView) view.findViewById(R.id.li_assignment_duedate)).
                 setText(dueDate);
-        ((TextView) view.findViewById(R.id.li_assigment_maxgrade)).
+        ((TextView) view.findViewById(R.id.li_assignment_maxgrade)).
                 setText(cursor.getString(cursor.getColumnIndex("maxgrade")));
     }
 }
