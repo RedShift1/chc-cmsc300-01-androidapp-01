@@ -1,7 +1,9 @@
 package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -69,13 +71,35 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
     public void deleteAssigmentFromDB(MenuItem menuItem)
     {
-        this.db.deleteAssignment(this.id);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(this);
 
-        (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
+        confirm.setTitle("Delete");
+        confirm.setMessage("Are you sure you want to delete this assignment?");
+        confirm.setPositiveButton("Delete", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                GradeAssignmentActivity.this.db.deleteAssignment(GradeAssignmentActivity.this.id);
 
-        this.setResult(Activity.RESULT_OK);
+                (Toast.makeText(GradeAssignmentActivity.this, "Deleted!", Toast.LENGTH_LONG)).show();
+                dialog.dismiss();
+                GradeAssignmentActivity.this.setResult(Activity.RESULT_OK);
+                GradeAssignmentActivity.this.finish();
+            }
+        });
 
-        this.finish();
+        confirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        confirm.create();
+        confirm.show();
     }
 
     public void saveAssignmentGrades(MenuItem menuItem)
