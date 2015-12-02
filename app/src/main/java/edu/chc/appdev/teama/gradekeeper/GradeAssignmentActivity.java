@@ -50,7 +50,7 @@ public class GradeAssignmentActivity extends AppCompatActivity
         this.id = extras.getLong("_id");
 
 
-        this.studentsForAssignmentAdapter = new StudentsForAssignment(this, this.db.getStudentsForAssignment(this.id), 0);
+        this.studentsForAssignmentAdapter = new StudentsForAssignment(this, this.db.getStudentsWithGradesForAssignment(this.id), 0);
 
         ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
         lvGradesList.setAdapter(this.studentsForAssignmentAdapter);
