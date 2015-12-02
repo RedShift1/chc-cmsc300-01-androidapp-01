@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements IFilterTextChange
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         this.setSupportActionBar(toolbar);
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         this.coursesAdapter = new Courses(this, this.db.getCoursesCursor("%", "%", "%"), 0);
 

@@ -77,7 +77,7 @@ public class AddGradebookActivity extends AppCompatActivity
             return;
         }
 
-        DB db = new DB(this, null, null);
+        DB db = DB.getInstance(this);
         db.addGradebookToCourse(this.id,
                 ((EditText) this.findViewById(R.id.etName)).getText().toString());
 

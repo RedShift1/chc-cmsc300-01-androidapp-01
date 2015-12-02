@@ -28,7 +28,7 @@ public class AddStudent extends AppCompatActivity {
         this.setSupportActionBar(toolbar);
 
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         Bundle extras = this.getIntent().getExtras();
 

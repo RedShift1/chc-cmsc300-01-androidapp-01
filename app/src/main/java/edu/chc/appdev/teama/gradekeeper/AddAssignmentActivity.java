@@ -143,7 +143,7 @@ public class AddAssignmentActivity extends AppCompatActivity {
             return;
         }
 
-        DB db = new DB(this, null, null);
+        DB db = DB.getInstance(this);
 
         db.addAssignmentToGradebook(
             this.id,

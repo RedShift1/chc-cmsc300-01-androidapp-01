@@ -51,7 +51,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
 
 
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         Bundle extras = this.getIntent().getExtras();
 

@@ -43,7 +43,7 @@ public class GradeAssignmentActivity extends AppCompatActivity
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         Bundle extras = this.getIntent().getExtras();
 

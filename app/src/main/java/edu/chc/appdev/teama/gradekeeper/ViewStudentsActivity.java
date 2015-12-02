@@ -36,7 +36,7 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         this.studentsAdapter = new StudentsFromAll(this, this.db.getAllStudents(), 0);
 
