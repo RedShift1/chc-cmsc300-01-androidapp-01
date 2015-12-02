@@ -10,10 +10,11 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:shrinkColumns="1">
 
         <TableRow
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="10dp">
@@ -25,12 +26,14 @@
 
             <TextView
                 android:id="@+id/li_student_name"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="[li_student_name]"
                 android:textAppearance="?android:attr/textAppearanceListItem"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/abc_dialog_padding_material">
+                android:layout_marginLeft="@dimen/abc_dialog_padding_material"
+                android:singleLine="false"
+                >
             </TextView>
 
         </TableRow>
