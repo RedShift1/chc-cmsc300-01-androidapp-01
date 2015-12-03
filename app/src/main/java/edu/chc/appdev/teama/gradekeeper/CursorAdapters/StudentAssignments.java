@@ -41,23 +41,18 @@ public class StudentAssignments extends CursorAdapter
 
         String assignmentName = cursor.getString(cursor.getColumnIndex("name"));
 
-        DB db = DB.getInstance(context);
-        //Student thisStudent = db.getStudent(this.id);
+        String grade = cursor.getString(cursor.getColumnIndex("grade"));
+        if (grade == null) {
+            grade = "-";
+        }
+
+        String maxGrade = cursor.getString(cursor.getColumnIndex("maxgrade"));
 
         ((TextView) view.findViewById(R.id.li_assignment_name)).
                 setText(assignmentName);
         ((TextView) view.findViewById(R.id.li_assignment_duedate)).
                 setText(dueDate);
-        ((TextView) view.findViewById(R.id.li_assignment_maxgrade)).
-                setText(cursor.getString(cursor.getColumnIndex("maxgrade")));
-
-        /*((TextView) view.findViewById(R.id.li_assigment_name)).
-                setText(cursor.getString(cursor.getColumnIndex("name")));*/
-        /*((TextView) view.findViewById(R.id.li_assigment_name)).
-                setText(assignmentName);*/
-        /*((TextView) view.findViewById(R.id.li_assignment_duedate)).
-                setText(cursor.getString(cursor.getColumnIndex("duedate")));
-        ((TextView) view.findViewById(R.id.li_assignment_maxgrade)).
-                setText(cursor.getString(cursor.getColumnIndex("maxgrade")));*/
+        ((TextView) view.findViewById(R.id.li_assignment_grade)).
+                setText(grade + "/" + maxGrade);
     }
 }
