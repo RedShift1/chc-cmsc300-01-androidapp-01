@@ -111,22 +111,6 @@ public class ViewGradebookActivity extends AppCompatActivity {
         //listParent.scrollBy(0, 0);
     }
 
-    public void deleteStudent(View view) {
-        LinearLayout linearParent = ((LinearLayout) ((RelativeLayout) view.getParent()).getParent());
-        ListView listParent = (ListView) linearParent.getParent();
-        int n = ((Integer) listParent.indexOfChild(linearParent));
-        Cursor cursor = ((Cursor) listParent.getAdapter().getItem(n));
-        CursorAdapter adapter = ((CursorAdapter) listParent.getAdapter());
-        int studentId = cursor.getInt(cursor.getColumnIndex("_id"));
-        String name = cursor.getString(cursor.getColumnIndex("name"));
-
-        this.db.removeStudentFromGradebook(this.id, studentId);
-
-        Toast.makeText(ViewGradebookActivity.this, "Deleted " + name + "!", Toast.LENGTH_LONG).show();
-
-        refreshStudents();
-    }
-
     public void removeStudentFromGradebook(long studentId)
     {
         this.db.removeStudentFromGradebook(this.id, studentId);
