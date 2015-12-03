@@ -681,7 +681,13 @@ public class DB extends SQLiteOpenHelper {
         //return db.rawQuery("SELECT * FROM assignments WHERE student_id = " + studentId, null);
         //Cursor c =  db.rawQuery("SELECT * FROM assignment_grades WHERE student_id = " + studentId, null);
 
-        String sql = "SELECT * FROM assignments WHERE gradebook_id IN ";
+        String sql = "SELECT * FROM assignments ";
+        sql += "LEFT JOIN assignment_grades ";
+        sql += "ON assignments._id = assignment_grades.assignment_id ";
+        sql += "WHERE (assignment_grades.student_id = ";
+        sql += studentId + " ";
+        sql += "OR assignment_grades.student_id IS NULL) ";
+        sql += "AND assignments.gradebook_id IN ";
         sql += "(SELECT gradebook_id from gradebook_students WHERE student_id = ";
         sql += studentId + ")";
 

@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.DB.Student;
 import edu.chc.appdev.teama.gradekeeper.R;
 
 /**
@@ -38,6 +40,9 @@ public class StudentAssignments extends CursorAdapter
         String dueDate = sdf.format(new Date(cursor.getLong(cursor.getColumnIndex("duedate"))));
 
         String assignmentName = cursor.getString(cursor.getColumnIndex("name"));
+
+        DB db = DB.getInstance(context);
+        //Student thisStudent = db.getStudent(this.id);
 
         ((TextView) view.findViewById(R.id.li_assignment_name)).
                 setText(assignmentName);
