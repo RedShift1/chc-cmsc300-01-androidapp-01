@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.GradebookMeetingTimes;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsFromAll;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
@@ -36,6 +37,7 @@ public class ViewGradebookActivity extends AppCompatActivity {
     private DB db;
     private Assignments assignmentsAdapter;
     private StudentsFromAll studentsAdapter;
+    private GradebookMeetingTimes meetingTimesAdapter;
 
     private long id;
 
@@ -90,7 +92,9 @@ public class ViewGradebookActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
-
+        this.meetingTimesAdapter = new GradebookMeetingTimes(this, this.db.getMeetingTimesForGradebook(this.id), 0);
+        ListView lvMeetingTimes = (ListView) this.findViewById(R.id.lvMeetingTimes);
+        lvMeetingTimes.setAdapter(this.meetingTimesAdapter);
     }
 
     public synchronized void refreshStudents() {
