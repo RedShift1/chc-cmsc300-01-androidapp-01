@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Gradebooks;
@@ -56,6 +57,9 @@ public class ViewCourseActivity extends AppCompatActivity
             Course thisCourse = this.db.getCourse(this.id);
             this.setTitle("Course gradebooks");
             toolbar.setSubtitle(thisCourse.getName());
+
+            TextView descriptionView = (TextView) findViewById(R.id.course_description);
+            descriptionView.setText(thisCourse.getDescription());
         }
         catch(Exception ex)
         {

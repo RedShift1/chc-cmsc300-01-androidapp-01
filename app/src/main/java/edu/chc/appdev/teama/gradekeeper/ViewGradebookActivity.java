@@ -18,6 +18,7 @@ import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Assignments;
@@ -61,6 +62,8 @@ public class ViewGradebookActivity extends AppCompatActivity {
             Gradebook thisGradebook = this.db.getGradebook(this.id);
             this.setTitle("Gradebook");
             toolbar.setSubtitle(thisGradebook.getName());
+
+
         }
         catch(Exception ex)
         {
@@ -84,6 +87,8 @@ public class ViewGradebookActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+
 
     }
 
