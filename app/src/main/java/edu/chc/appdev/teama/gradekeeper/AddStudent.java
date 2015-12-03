@@ -64,11 +64,10 @@ public class AddStudent extends AppCompatActivity {
 
     public void addStudentToDb(MenuItem menuItem)
     {
-        DB db = DB.getInstance(this);
 
         try
         {
-            db.addStudentToGradebook(
+            this.db.addStudentToGradebook(
                 this.id,
                 ((EditText) this.findViewById(R.id.atvStudent)).getText().toString()
             );
