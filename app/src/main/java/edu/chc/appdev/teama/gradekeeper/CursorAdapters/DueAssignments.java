@@ -2,12 +2,9 @@ package edu.chc.appdev.teama.gradekeeper.CursorAdapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.CursorTreeAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
