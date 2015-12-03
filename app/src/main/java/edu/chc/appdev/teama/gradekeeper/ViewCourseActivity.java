@@ -59,7 +59,10 @@ public class ViewCourseActivity extends AppCompatActivity
             toolbar.setSubtitle(thisCourse.getName());
 
             TextView descriptionView = (TextView) findViewById(R.id.course_description);
-            descriptionView.setText(thisCourse.getDescription());
+            descriptionView.setText("Description: " + thisCourse.getDescription());
+
+            TextView tvCourseCode = (TextView) this.findViewById(R.id.course_code);
+            tvCourseCode.setText("Code: " + thisCourse.getCode());
         }
         catch(Exception ex)
         {
