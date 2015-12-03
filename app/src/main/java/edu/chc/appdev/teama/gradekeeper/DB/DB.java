@@ -232,17 +232,21 @@ public class DB extends SQLiteOpenHelper {
         if (c.getCount() == 1)
         {
             c.moveToFirst();
-            return new Gradebook(
+            Gradebook gb = new Gradebook(
                     c.getLong(c.getColumnIndex("_id")),
                     c.getString(c.getColumnIndex("name"))
             );
+            c.close();
+            return gb;
         }
         else if (c.getCount() == 0)
         {
+            c.close();
             throw new Exception("No row found");
         }
         else
         {
+            c.close();
             throw new Exception("More than one row found");
         }
     }
