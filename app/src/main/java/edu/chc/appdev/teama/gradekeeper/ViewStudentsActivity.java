@@ -82,7 +82,7 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        this.getMenuInflater().inflate(R.menu.viewstudent, menu);
+        this.getMenuInflater().inflate(R.menu.viewstudents, menu);
         return true;
     }
 
