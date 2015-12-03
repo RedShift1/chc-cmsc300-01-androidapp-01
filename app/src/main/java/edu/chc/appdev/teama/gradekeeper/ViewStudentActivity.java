@@ -51,7 +51,7 @@ public class ViewStudentActivity extends AppCompatActivity
             Log.w("Gradekeeper", "No student found with ID " + this.id + ": " + ex.getMessage());
         }
 
-        this.db = new DB(this, null, null);
+        //this.db = new DB(this, null, null);
 
         this.assignmentAdapter = new StudentAssignments(this, this.db.getAssignmentsForStudent(this.id), 0);
 

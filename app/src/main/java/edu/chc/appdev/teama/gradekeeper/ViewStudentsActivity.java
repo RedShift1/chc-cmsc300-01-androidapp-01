@@ -1,9 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,24 +13,17 @@ import android.widget.ListView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Courses;
-import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsFromAll;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 
 public class ViewStudentsActivity extends AppCompatActivity implements IFilterTextChangedListener
 {
-    static final int REQUEST_VIEW_COURSES = 1;
-    static final int REQUEST_VIEW_STUDENT = 2;
     static final int REQUEST_VIEW_COURSES = 0;
     static final int REQUEST_VIEW_STUDENT = 1;
 
     private DB db;
     private StudentsFromAll studentsAdapter;
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    
     private StringBuilder studentNameLike;
 
     @Override
@@ -64,8 +54,6 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
                 Intent viewStudent = new Intent(ViewStudentsActivity.this, ViewStudentActivity.class);
                 viewStudent.putExtra("_id", id);
 
-                // Get the item for passing it on to the new activity:
-                // MainActivity.this.coursesAdapter.getItem(position);
                 startActivityForResult(viewStudent, ViewStudentsActivity.REQUEST_VIEW_STUDENT);
             }
         });
@@ -80,9 +68,9 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
     public void FilterTextChanged()
     {
         this.studentsAdapter.swapCursor(
-            this.db.getStudentsCursor(
-                this.studentNameLike.toString()
-            )
+                this.db.getStudentsCursor(
+                        this.studentNameLike.toString()
+                )
         );
     }
 

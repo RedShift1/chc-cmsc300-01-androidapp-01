@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/li_assigment_name"
+            android:id="@+id/li_assignment_name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="[name]"/>
 
@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/li_assigment_duedate"
+            android:id="@+id/li_assignment_duedate"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="[duedate]"
             android:layout_weight="1"/>
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/li_assigment_maxgrade"
+            android:id="@+id/li_assignment_maxgrade"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="[maxgrade]"
             android:layout_weight="1"
@@ -41,20 +41,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/li_assigment_slash"
+            android:id="@+id/li_assignment_slash"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="/"
             android:layout_weight="1"
-            android:layout_alignLeft="@id/li_assigment_maxgrade"
+            android:layout_alignLeft="@id/li_assignment_maxgrade"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/li_assigment_grade"
+            android:id="@+id/li_assignment_grade"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="[grade]"
             android:layout_weight="1"
-            android:layout_alignLeft="@id/li_assigment_slash"
+            android:layout_alignLeft="@id/li_assignment_slash"
             />
 
 

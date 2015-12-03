@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.chc.appdev.teama.gradekeeper.R;
 
 /**
@@ -30,11 +34,25 @@ public class StudentAssignments extends CursorAdapter
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
-        ((TextView) view.findViewById(R.id.li_assigment_name)).
-                setText(cursor.getString(cursor.getColumnIndex("name")));
-        ((TextView) view.findViewById(R.id.li_assigment_duedate)).
-                setText(cursor.getString(cursor.getColumnIndex("duedate")));
-        ((TextView) view.findViewById(R.id.li_assigment_maxgrade)).
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, y", Locale.getDefault());
+        String dueDate = sdf.format(new Date(cursor.getLong(cursor.getColumnIndex("duedate"))));
+
+        String assignmentName = cursor.getString(cursor.getColumnIndex("name"));
+
+        ((TextView) view.findViewById(R.id.li_assignment_name)).
+                setText(assignmentName);
+        ((TextView) view.findViewById(R.id.li_assignment_duedate)).
+                setText(dueDate);
+        ((TextView) view.findViewById(R.id.li_assignment_maxgrade)).
                 setText(cursor.getString(cursor.getColumnIndex("maxgrade")));
+
+        /*((TextView) view.findViewById(R.id.li_assigment_name)).
+                setText(cursor.getString(cursor.getColumnIndex("name")));*/
+        /*((TextView) view.findViewById(R.id.li_assigment_name)).
+                setText(assignmentName);*/
+        /*((TextView) view.findViewById(R.id.li_assignment_duedate)).
+                setText(cursor.getString(cursor.getColumnIndex("duedate")));
+        ((TextView) view.findViewById(R.id.li_assignment_maxgrade)).
+                setText(cursor.getString(cursor.getColumnIndex("maxgrade")));*/
     }
 }
