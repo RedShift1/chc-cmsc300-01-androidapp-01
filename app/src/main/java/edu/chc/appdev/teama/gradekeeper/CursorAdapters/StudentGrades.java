@@ -61,10 +61,19 @@ public class StudentGrades extends CursorTreeAdapter
 
         String assignmentName = cursor.getString(cursor.getColumnIndex("name"));
 
-        String grade = cursor.getString(cursor.getColumnIndex("grade"));
-        if (grade == null) {
+        //String grade = cursor.getString(cursor.getColumnIndex("grade"));
+        String grade = null;
+        Cursor gradeCursor = this.db.getGrade(this.studentId, cursor.getLong(cursor.getColumnIndex("_id")));
+        gradeCursor.moveToFirst();
+        if (gradeCursor.getCount() > 0)
+        {
+            grade = gradeCursor.getString(gradeCursor.getColumnIndex("grade"));
+        }
+        if (grade == null)
+        {
             grade = "-";
         }
+        gradeCursor.close();
 
         String maxGrade = cursor.getString(cursor.getColumnIndex("maxgrade"));
 

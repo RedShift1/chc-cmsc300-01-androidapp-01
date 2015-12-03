@@ -733,13 +733,24 @@ public class DB extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String sql = "SELECT * FROM assignments ";
+        /*String sql = "SELECT assignments.*, assignment_grades.student_id, ";
+        sql += "CASE WHEN assignment_grades.student_id =" + studentId + " ";
+        sql += "THEN assignment_grades.grade ELSE null END AS grade ";
+        sql += "FROM assignments ";
         sql += "LEFT JOIN assignment_grades ";
         sql += "ON assignments._id = assignment_grades.assignment_id ";
-        sql += "WHERE (assignment_grades.student_id = ";
-        sql += studentId + " ";
-        sql += "OR assignment_grades.student_id IS NULL) ";
-        sql += "AND assignments.gradebook_id = ";
+        //sql += "WHERE (assignment_grades.student_id = ";
+        //sql += studentId + " ";
+        //sql += "OR assignment_grades.grade IS NULL) ";
+        sql += "WHERE assignments.gradebook_id = ";
+        sql += gradebookCursor.getInt(gradebookCursor.getColumnIndex("_id"));*/
+
+        String sql = "SELECT * ";
+        sql += "FROM assignments ";
+        //sql += "WHERE (assignment_grades.student_id = ";
+        //sql += studentId + " ";
+        //sql += "OR assignment_grades.grade IS NULL) ";
+        sql += "WHERE assignments.gradebook_id = ";
         sql += gradebookCursor.getInt(gradebookCursor.getColumnIndex("_id"));
 
         Cursor c =  db.rawQuery(sql, null);
