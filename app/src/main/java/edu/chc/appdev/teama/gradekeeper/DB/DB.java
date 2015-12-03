@@ -13,7 +13,7 @@ import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
  */
 public class DB extends SQLiteOpenHelper {
 
-    private static final int DATA_VERSION = 5;
+    private static final int DATA_VERSION = 7;
 
     private static DB instance = null;
 
