@@ -101,6 +101,10 @@ public class StudentGrades extends CursorTreeAdapter
         ((TextView) view.findViewById(R.id.tvGradebookName)).
                 setText(name);
 
+        String courseName = cursor.getString(cursor.getColumnIndex("course_name"));
+        ((TextView) view.findViewById(R.id.tvCourseName)).
+                setText(courseName);
+
         if(name.length() > 0)
         {
             TextDrawable drawable = TextDrawable.builder()

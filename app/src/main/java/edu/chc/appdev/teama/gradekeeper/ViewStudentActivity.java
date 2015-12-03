@@ -54,7 +54,7 @@ public class ViewStudentActivity extends AppCompatActivity
             Log.w("Gradekeeper", "No student found with ID " + this.id + ": " + ex.getMessage());
         }
 
-       this.assignmentAdapter = new StudentGrades(this.db.getGradebooksForStudent(this.id), this,
+       this.assignmentAdapter = new StudentGrades(this.db.getGradebooksWithCourseNameForStudent(this.id), this,
                this.db, this.id);
 
         ExpandableListView lvItems = (ExpandableListView) this.findViewById(R.id.lvStudentAssignments);

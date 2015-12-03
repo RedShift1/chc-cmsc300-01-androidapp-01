@@ -759,6 +759,21 @@ public class DB extends SQLiteOpenHelper {
         return c;
     }
 
+    public Cursor getGradebooksWithCourseNameForStudent(long studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT gradebooks.*, courses._id AS courses_id, courses.name AS course_name ";
+        sql += "FROM gradebooks INNER JOIN courses ";
+        sql += "ON gradebooks.course_id = courses._id ";
+        sql += "WHERE gradebooks._id in ";
+        sql += "(SELECT gradebook_id from gradebook_students WHERE student_id = ";
+        sql += studentId + ")";
+
+        Cursor c =  db.rawQuery(sql, null);
+
+        return c;
+    }
+
     public Cursor getGrade(long studentId, long assignmentId) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM assignment_grades WHERE student_id = " + studentId +
