@@ -98,6 +98,7 @@ public class DB extends SQLiteOpenHelper {
 
         db.execSQL(sqlCourses);
         db.execSQL(sqlGradebooks);
+        db.execSQL(sqlGradebookMeetingTimes);
         db.execSQL(sqlAssignments);
         db.execSQL(sqlStudents);
         db.execSQL(sqlGradebookStudents);
