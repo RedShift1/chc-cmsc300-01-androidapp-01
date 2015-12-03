@@ -11,7 +11,7 @@ public class FormValidator
 
     public FormValidator()
     {
-        this.fields = new ArrayList<EditTextValidator>();
+        this.fields = new ArrayList<>();
     }
 
     public void addField(EditTextValidator field)
