@@ -398,13 +398,13 @@ public class DB extends SQLiteOpenHelper {
 
     public Cursor getStudentsCursor() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM students", null);
+        return db.rawQuery("SELECT * FROM students ORDER BY name ASC", null);
     }
 
     public Cursor getStudentsCursor(String nameLike)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM students WHERE name LIKE ?", new String[] {nameLike});
+        return db.rawQuery("SELECT * FROM students WHERE name LIKE ? ORDER BY name ASC", new String[] {nameLike});
     }
 
     /**
@@ -486,14 +486,6 @@ public class DB extends SQLiteOpenHelper {
         }
 
         return resultSet;
-    }
-
-    public Cursor getAllStudents()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "SELECT * FROM students ";
-
-        return db.rawQuery(sql, null);
     }
 
     public Cursor getStudentsForCourseCursor(long courseId) {

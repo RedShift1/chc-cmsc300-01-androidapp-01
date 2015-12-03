@@ -38,7 +38,7 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
 
         this.db = DB.getInstance(this);
 
-        this.studentsAdapter = new StudentsFromAll(this, this.db.getAllStudents(), 0);
+        this.studentsAdapter = new StudentsFromAll(this, this.db.getStudentsCursor(), 0);
 
         ListView lvItems = (ListView) this.findViewById(R.id.lvStudents);
 
