@@ -10,7 +10,7 @@
         android:onClick="toggleLeftMenu"
         />
 
-    <item
+    <!--<item
         android:id="@+id/courses"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Courses">
@@ -22,7 +22,7 @@
     </item>
     <item
         android:id="@+id/dueAssignments"
-        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_add"
         android:title="Due assignments">
-    </item>
+    </item>-->
 </menu>

@@ -40,8 +40,6 @@ public class ViewDueAssignmentsActivity extends AppCompatActivity
             lvItems.expandGroup(i);
         }
 
-        // TODO: view due dates
-
     }
 
     @Override

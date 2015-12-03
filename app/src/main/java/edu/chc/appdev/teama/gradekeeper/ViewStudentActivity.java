@@ -1,5 +1,6 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -84,8 +85,26 @@ public class ViewStudentActivity extends AppCompatActivity
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.courses:
+                openCourses();
+                return true;
+            case R.id.dueAssignments:
+                openDueAssignments();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void openDueAssignments()
+    {
+        Intent openDueAssigmentsIntent = new Intent(this, ViewDueAssignmentsActivity.class);
+        this.startActivity(openDueAssigmentsIntent);
+    }
+
+    public void openCourses()
+    {
+        Intent openCoursesIntent = new Intent(this, MainActivity.class);
+        this.startActivity(openCoursesIntent);
     }
 }
