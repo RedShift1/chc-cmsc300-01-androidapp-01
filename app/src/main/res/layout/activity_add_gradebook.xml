@@ -27,5 +27,27 @@
                 android:inputType="textCapSentences|text"
                 android:singleLine="true"/>
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Meeting times"
+                android:id="@+id/textView2"
+                android:layout_gravity="center_horizontal"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add meeting time"
+                android:id="@+id/btnAddMeeting"
+                android:onClick="showDateTimePicker"/>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="276dp"
+                android:id="@+id/lvMeetings"/>
+
+
         </LinearLayout>
 </LinearLayout>
