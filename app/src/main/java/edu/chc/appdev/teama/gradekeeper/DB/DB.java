@@ -161,7 +161,10 @@ public class DB extends SQLiteOpenHelper {
     public Cursor getAssignmentsForGradebook(long gradebookId)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM assignments WHERE gradebook_id = " + gradebookId, null);
+        return db.rawQuery(
+            String.format("SELECT * FROM assignments WHERE gradebook_id = %d ORDER BY duedate", gradebookId),
+            null
+        );
     }
 
     public Cursor getStudentsForGradebook(long gradebookId)
