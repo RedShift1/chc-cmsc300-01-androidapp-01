@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.DueAssignments;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
