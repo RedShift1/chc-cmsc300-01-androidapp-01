@@ -87,12 +87,10 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.courses:
-                openCourses();
-                return true;
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case android.R.id.home:
                 this.finish();
                 return true;

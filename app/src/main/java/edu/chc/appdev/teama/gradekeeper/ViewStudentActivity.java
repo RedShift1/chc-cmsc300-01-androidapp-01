@@ -124,14 +124,12 @@ public class ViewStudentActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         switch (item.getItemId())
         {
             case android.R.id.home:
                 this.finish();
-                return true;
-            case R.id.courses:
-                openCourses();
                 return true;
             case R.id.dueAssignments:
                 openDueAssignments();

@@ -11,11 +11,6 @@
     />
 
     <item
-        android:id="@+id/courses"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="Courses">
-    </item>
-    <item
         android:id="@+id/students"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Students">
