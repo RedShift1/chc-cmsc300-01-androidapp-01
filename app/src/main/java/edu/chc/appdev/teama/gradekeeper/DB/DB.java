@@ -109,6 +109,7 @@ public class DB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS courses");
         db.execSQL("DROP TABLE IF EXISTS gradebooks");
+        db.execSQL("DROP TABLE IF EXISTS gradebook_meetingtimes");
         db.execSQL("DROP TABLE IF EXISTS assignments");
         db.execSQL("DROP TABLE IF EXISTS students");
         db.execSQL("DROP TABLE IF EXISTS students_courses");
