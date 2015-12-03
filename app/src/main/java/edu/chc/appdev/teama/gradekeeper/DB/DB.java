@@ -713,8 +713,6 @@ public class DB extends SQLiteOpenHelper {
     public Cursor getAssignmentsForStudent(long studentId)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        //return db.rawQuery("SELECT * FROM assignments WHERE student_id = " + studentId, null);
-        //Cursor c =  db.rawQuery("SELECT * FROM assignment_grades WHERE student_id = " + studentId, null);
 
         String sql = "SELECT * FROM assignments ";
         sql += "LEFT JOIN assignment_grades ";
@@ -728,18 +726,35 @@ public class DB extends SQLiteOpenHelper {
 
         Cursor c =  db.rawQuery(sql, null);
 
-       /* Cursor c = db.rawQuery(sql, null);
-        result = new Student[c.getCount()];
-        int i = 0;
-        c.moveToFirst();
-        while (!c.isAfterLast()) {
-        result = new Student(
-                c.getInt(c.getColumnIndex("_id")),
-                c.getString(c.getColumnIndex("name"))
-        );
+        return c;
+    }
 
-        c.moveToNext();
-        }*/
+    public Cursor getAssignmentsForStudentGradebook(long studentId, Cursor gradebookCursor)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT * FROM assignments ";
+        sql += "LEFT JOIN assignment_grades ";
+        sql += "ON assignments._id = assignment_grades.assignment_id ";
+        sql += "WHERE (assignment_grades.student_id = ";
+        sql += studentId + " ";
+        sql += "OR assignment_grades.student_id IS NULL) ";
+        sql += "AND assignments.gradebook_id = ";
+        sql += gradebookCursor.getInt(gradebookCursor.getColumnIndex("_id"));
+
+        Cursor c =  db.rawQuery(sql, null);
+
+        return c;
+    }
+
+    public Cursor getGradebooksForStudent(long studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT * FROM gradebooks WHERE _id in ";
+        sql += "(SELECT gradebook_id from gradebook_students WHERE student_id = ";
+        sql += studentId + ")";
+
+        Cursor c =  db.rawQuery(sql, null);
 
         return c;
     }

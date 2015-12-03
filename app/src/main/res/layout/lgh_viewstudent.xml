@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/iv_name_icon"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignWithParentIfMissing="false"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/abc_dialog_padding_material"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_name_icon">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[tvGradebookName]"
+            android:id="@+id/tvGradebookName"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[tvCourseName]"
+            android:id="@+id/tvCourseName"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[tvNumAssignments]"
+            android:id="@+id/tvNumAssignments"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/iv_expand_icon"
+        android:layout_gravity="center_vertical|right"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

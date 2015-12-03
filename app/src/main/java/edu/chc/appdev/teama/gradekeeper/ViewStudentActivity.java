@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.DueAssignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentAssignments;
+import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentGrades;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 import edu.chc.appdev.teama.gradekeeper.DB.Student;
 
@@ -19,7 +22,7 @@ public class ViewStudentActivity extends AppCompatActivity
     private long id;
 
     private DB db;
-    private StudentAssignments assignmentAdapter;
+    private StudentGrades assignmentAdapter;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -51,14 +54,28 @@ public class ViewStudentActivity extends AppCompatActivity
             Log.w("Gradekeeper", "No student found with ID " + this.id + ": " + ex.getMessage());
         }
 
-        //this.db = new DB(this, null, null);
+       this.assignmentAdapter = new StudentGrades(this.db.getGradebooksForStudent(this.id), this,
+               this.db, this.id);
 
-        this.assignmentAdapter = new StudentAssignments(this, this.db.getAssignmentsForStudent(this.id), 0);
-
-        ListView lvItems = (ListView) this.findViewById(R.id.lvStudentAssignments);
+        ExpandableListView lvItems = (ExpandableListView) this.findViewById(R.id.lvStudentAssignments);
 
         lvItems.setAdapter(this.assignmentAdapter);
+
+        for(int i = 0; i < lvItems.getExpandableListAdapter().getGroupCount(); i++)
+        {
+            lvItems.expandGroup(i);
+        }
+
     }
+
+    public int GetDipsFromPixel(float pixels)
+    {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
