@@ -106,4 +106,16 @@ public class ViewStudentsActivity extends AppCompatActivity implements IFilterTe
         Intent openCoursesIntent = new Intent(this, MainActivity.class);
         this.startActivityForResult(openCoursesIntent, this.REQUEST_VIEW_COURSES);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        this.studentsAdapter.swapCursor(
+            this.db.getStudentsCursor(
+                this.studentNameLike.toString()
+            )
+        );
+    }
 }
