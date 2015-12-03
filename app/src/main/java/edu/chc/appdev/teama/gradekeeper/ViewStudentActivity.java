@@ -1,5 +1,8 @@
 package edu.chc.appdev.teama.gradekeeper;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -7,9 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.DueAssignments;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentAssignments;
@@ -77,6 +82,46 @@ public class ViewStudentActivity extends AppCompatActivity
         return (int) (pixels * scale + 0.5f);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        this.getMenuInflater().inflate(R.menu.viewstudent, menu);
+        return true;
+    }
+
+    public void deleteStudentFromDB(MenuItem menuItem)
+    {
+        AlertDialog.Builder confirm = new AlertDialog.Builder(this);
+
+        confirm.setTitle("Delete");
+        confirm.setMessage("Are you sure you want to delete this student?");
+        confirm.setPositiveButton("Delete", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                ViewStudentActivity.this.db.deleteStudent(ViewStudentActivity.this.id);
+
+                (Toast.makeText(ViewStudentActivity.this, "Deleted!", Toast.LENGTH_LONG)).show();
+                dialog.dismiss();
+                ViewStudentActivity.this.setResult(Activity.RESULT_OK);
+                ViewStudentActivity.this.finish();
+            }
+        });
+
+        confirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        confirm.create();
+        confirm.show();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
