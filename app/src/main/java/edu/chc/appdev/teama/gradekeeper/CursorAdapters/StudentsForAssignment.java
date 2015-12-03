@@ -35,23 +35,7 @@ public class StudentsForAssignment extends CursorAdapter
     {
         ((TextView) view.findViewById(R.id.li_student_name)).
                 setText(cursor.getString(cursor.getColumnIndex("name")));
-
-        // Needs to set each EditText to have the current grade.
-
-        DB db = new DB(context, null, null);
-
-        long assignmentId = cursor.getLong(cursor.getColumnIndex("assignment_id"));
-        long studentId = cursor.getLong(cursor.getColumnIndex("student_id"));
-
-        Cursor assignmentGrade = db.getAssignmentGrade(assignmentId, studentId);
-
-        String currentGrade = "";
-        if (assignmentGrade.getCount() > 0) {
-            assignmentGrade.moveToFirst();
-            currentGrade = ((Double) assignmentGrade.getDouble(assignmentGrade.getColumnIndex("grade"))).toString();
-        }
-
-        ((EditText) view.findViewById(R.id.editText)).setText(currentGrade);
-        assignmentGrade.close();
+        ((TextView) view.findViewById(R.id.etGrade)).
+            setText(cursor.getString(cursor.getColumnIndex("grade")));
     }
 }

@@ -1,7 +1,9 @@
 package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,14 +45,14 @@ public class GradeAssignmentActivity extends AppCompatActivity
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         Bundle extras = this.getIntent().getExtras();
 
         this.id = extras.getLong("_id");
 
 
-        this.studentsForAssignmentAdapter = new StudentsForAssignment(this, this.db.getStudentsForAssignment(this.id), 0);
+        this.studentsForAssignmentAdapter = new StudentsForAssignment(this, this.db.getStudentsWithGradesForAssignment(this.id), 0);
 
         ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
         lvGradesList.setAdapter(this.studentsForAssignmentAdapter);
@@ -69,63 +71,68 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
     public void deleteAssigmentFromDB(MenuItem menuItem)
     {
-        this.db.deleteAssignment(this.id);
+        AlertDialog.Builder confirm = new AlertDialog.Builder(this);
 
-        (Toast.makeText(this, "Deleted!", Toast.LENGTH_LONG)).show();
+        confirm.setTitle("Delete");
+        confirm.setMessage("Are you sure you want to delete this assignment?");
+        confirm.setPositiveButton("Delete", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                GradeAssignmentActivity.this.db.deleteAssignment(GradeAssignmentActivity.this.id);
 
-        this.setResult(Activity.RESULT_OK);
+                (Toast.makeText(GradeAssignmentActivity.this, "Deleted!", Toast.LENGTH_LONG)).show();
+                dialog.dismiss();
+                GradeAssignmentActivity.this.setResult(Activity.RESULT_OK);
+                GradeAssignmentActivity.this.finish();
+            }
+        });
 
-        this.finish();
+        confirm.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        confirm.create();
+        confirm.show();
     }
 
-    public void saveAssignmentGrades(MenuItem menuItem) {
-        long[] student_ids;
-        double[] grades;
+    public void saveAssignmentGrades(MenuItem menuItem)
+    {
 
         Cursor cursor = this.studentsForAssignmentAdapter.getCursor();
 
         ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
 
-        //LinearLayout linearGrades = (LinearLayout) lvGradesList.getChildAt(0);
-        //TableLayout tableGrades = (TableLayout) linearGrades.getChildAt(0);
-
-        int rows = cursor.getCount();
-        student_ids = new long[rows];
-        grades = new double[rows];
-
         cursor.moveToFirst();
 
         int i = 0;
         while (!cursor.isAfterLast()) {
-            student_ids[i] = cursor.getLong(cursor.getColumnIndex("student_id"));
-            LinearLayout linearGrades = (LinearLayout) lvGradesList.getChildAt(i);
-            TableLayout tableGrades = (TableLayout) linearGrades.getChildAt(0);
-            TableRow gradeRow = (TableRow) tableGrades.getChildAt(0);
-            /*(Toast.makeText(this, "lvGradesList " + ((Integer) lvGradesList.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-            (Toast.makeText(this, "linearGrades " + ((Integer) linearGrades.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-            (Toast.makeText(this, "tableGrades " + ((Integer) tableGrades.getChildCount()).toString(), Toast.LENGTH_LONG)).show();*/
-            //(Toast.makeText(this, ((Integer) gradeRow.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-            EditText gradeEditText = (EditText) gradeRow.getChildAt(1);
-            double grade = Double.parseDouble(gradeEditText.getText().toString());
-            grades[i] = grade;
-            //grades[i] = cursor.getDouble(cursor.getColumnIndex("grade"));
-            cursor.moveToNext();
+            View linearGrades = lvGradesList.getChildAt(i);
+            EditText etGrade = (EditText) linearGrades.findViewById(R.id.etGrade);
+            if(!etGrade.getText().toString().equals(""))
+            {
+                try
+                {
+                    Double grade = Double.parseDouble(etGrade.getText().toString());
+                    db.setAssignmentGradeForStudent(this.id, cursor.getLong(cursor.getColumnIndex("student_id")), grade);
+                }
+                catch (Exception ex)
+                {
+                    Toast.makeText(this, "An error occured while updating: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
             i++;
+            cursor.moveToNext();
         }
 
-        //(Toast.makeText(this, ((LinearLayout) lvGradesList.getChildAt(0)).getChildAt(0).toString(), Toast.LENGTH_LONG)).show();
-       //(Toast.makeText(this, ((Integer) lvGradesList.getChildCount()).toString(), Toast.LENGTH_LONG)).show();
-
-        cursor.close();
-
-        //this.studentsForAssignmentAdapter.
-        this.db.saveAssignmentGrades(this.id, student_ids, grades);
-
         (Toast.makeText(this, "Saved!", Toast.LENGTH_LONG)).show();
-
-        this.setResult(Activity.RESULT_OK);
-
-        this.finish();
     }
 
 

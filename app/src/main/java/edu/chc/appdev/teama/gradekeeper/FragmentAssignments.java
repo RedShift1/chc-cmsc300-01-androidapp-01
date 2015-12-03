@@ -60,13 +60,14 @@ public class FragmentAssignments extends ListFragment implements ITabbedFragment
         return "Assignments";
     }
 
-    /*@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == this.REQUEST_GRADEACTIVITY) {
-            parentActivity.refreshAssignments();
+        if (requestCode == this.REQUEST_GRADEACTIVITY)
+        {
+            ((ViewGradebookActivity) this.getContext()).refreshAssignments();
         }
-    }*/
+    }
 }

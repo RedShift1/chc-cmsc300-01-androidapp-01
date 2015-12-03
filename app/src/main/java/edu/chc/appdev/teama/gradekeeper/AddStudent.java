@@ -28,7 +28,7 @@ public class AddStudent extends AppCompatActivity {
         this.setSupportActionBar(toolbar);
 
 
-        this.db = new DB(this, null, null);
+        this.db = DB.getInstance(this);
 
         Bundle extras = this.getIntent().getExtras();
 
@@ -64,7 +64,7 @@ public class AddStudent extends AppCompatActivity {
 
     public void addStudentToDb(MenuItem menuItem)
     {
-        DB db = new DB(this, null, null);
+        DB db = DB.getInstance(this);
 
         try
         {

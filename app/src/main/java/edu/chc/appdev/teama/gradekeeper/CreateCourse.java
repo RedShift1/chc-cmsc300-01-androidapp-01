@@ -135,7 +135,7 @@ public class CreateCourse extends AppCompatActivity
             return;
         }
 
-        DB db = new DB(this, null, null);
+        DB db = DB.getInstance(this);
 
         db.addCourse(
             ((EditText) this.findViewById(R.id.txtName)).getText().toString(),

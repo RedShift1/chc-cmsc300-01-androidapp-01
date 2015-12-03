@@ -15,6 +15,18 @@ public class DB extends SQLiteOpenHelper {
 
     private static final int DATA_VERSION = 5;
 
+    private static DB instance = null;
+
+    public static DB getInstance(Context context)
+    {
+        if(instance == null)
+        {
+            instance = new DB(context.getApplicationContext(), null, null);
+        }
+
+        return instance;
+    }
+
     /**
      * Create a helper object to create, open, and/or manage a database.
      * This method always returns very quickly.  The database is not actually
@@ -25,7 +37,7 @@ public class DB extends SQLiteOpenHelper {
      * @param name    of the database file, or null for an in-memory database
      * @param factory to use for creating cursor objects, or null for the default
      */
-    public DB(Context context, String name, SQLiteDatabase.CursorFactory factory) {
+    private DB(Context context, String name, SQLiteDatabase.CursorFactory factory) {
         super(context, "gradekeeper.sqlite", factory, DB.DATA_VERSION);
     }
 
@@ -256,6 +268,59 @@ public class DB extends SQLiteOpenHelper {
             }
         }
         db.close();
+    }
+
+    public void setAssignmentGradeForStudent(long assignmentId, long studentId, double grade) throws Exception
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("assignment_id", assignmentId);
+        values.put("student_id", studentId);
+        values.put("grade", grade);
+        if(this.getAssignmentGradeForStudent(assignmentId, studentId) != null)
+        {
+            db.update(
+                "assignment_grades",
+                values,
+                String.format("assignment_id = %d AND student_id = %d", assignmentId, studentId),
+                null
+            );
+        }
+        else
+        {
+            db.insertOrThrow("assignment_grades", null, values);
+        }
+
+        db.close();
+    }
+
+    private Double getAssignmentGradeForStudent(long assignmentId, long studentId) throws Exception
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor c = db.query(
+            "assignment_grades",
+            new String[] {"grade"},
+            String.format("assignment_id = %d AND student_id = %d", assignmentId, studentId),
+            null, null, null, null
+        );
+
+        if (c.getCount() == 1)
+        {
+            c.moveToFirst();
+            Double result = c.getDouble(c.getColumnIndex("grade"));
+            c.close();
+            return result;
+        }
+        else if (c.getCount() == 0)
+        {
+            c.close();
+            return null;
+        }
+        else
+        {
+            throw new Exception("More than one row found");
+        }
     }
 
     public Cursor getDueAssignments()
@@ -642,5 +707,18 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM assignment_grades WHERE student_id = " + studentId +
                 " AND assignment_id = " + assignmentId, null);
+    }
+
+    public Cursor getStudentsWithGradesForAssignment(long assignmentId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT students._id, students.name AS name, assignments._id AS assignment_id, ";
+        sql += "students._id AS student_id, assignment_grades.grade AS grade FROM students ";
+        sql += "INNER JOIN gradebook_students ON gradebook_students.student_id = students._id ";
+        sql += "INNER JOIN assignments ON gradebook_students.gradebook_id = assignments.gradebook_id ";
+        sql += "LEFT JOIN assignment_grades ";
+        sql += "ON assignment_grades.assignment_id = assignments._id AND assignment_grades.student_id = students._id ";
+        sql += "WHERE assignments._id = " + assignmentId;
+        return db.rawQuery(sql, null);
     }
 }
