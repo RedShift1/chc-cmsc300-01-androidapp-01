@@ -5,5 +5,5 @@ package edu.chc.appdev.teama.gradekeeper;
  */
 public interface ITabbedFragment
 {
-    public String getName();
+    String getName();
 }
