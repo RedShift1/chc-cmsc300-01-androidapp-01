@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import edu.chc.appdev.teama.gradekeeper.CursorAdapters.Students;
-
 /**
  * Created by Glenn on 29/10/2015.
  */

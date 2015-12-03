@@ -2,8 +2,6 @@ package edu.chc.appdev.teama.gradekeeper.FormValidator;
 
 import android.widget.EditText;
 
-import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
-
 
 /**
  * Created by Glenn on 29/11/2015.

@@ -12,8 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import edu.chc.appdev.teama.gradekeeper.DB.DB;
-import edu.chc.appdev.teama.gradekeeper.DB.Student;
 import edu.chc.appdev.teama.gradekeeper.R;
 
 /**

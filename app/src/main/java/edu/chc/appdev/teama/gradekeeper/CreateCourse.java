@@ -1,22 +1,14 @@
 package edu.chc.appdev.teama.gradekeeper;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.github.jjobes.slidedaytimepicker.SlideDayTimeListener;
-import com.github.jjobes.slidedaytimepicker.SlideDayTimePicker;
-
-import java.util.ArrayList;
-
-import edu.chc.appdev.teama.gradekeeper.ArrayAdapters.CourseMeetings;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
 import edu.chc.appdev.teama.gradekeeper.FormValidator.EditTextValidator;
 import edu.chc.appdev.teama.gradekeeper.FormValidator.FormValidator;
@@ -56,7 +48,7 @@ public class CreateCourse extends AppCompatActivity
         this.validator.addField(
             new EditTextValidator(
                 (EditText) this.findViewById(R.id.txtCode),
-                new ITextValidator[] { new NotEmpty() }
+                new ITextValidator[]{new NotEmpty()}
             )
         );
     }
