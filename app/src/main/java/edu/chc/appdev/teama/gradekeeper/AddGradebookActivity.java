@@ -126,8 +126,17 @@ public class AddGradebookActivity extends AppCompatActivity
         }
 
         DB db = DB.getInstance(this);
-        db.addGradebookToCourse(this.id,
+        long gradebookId = db.addGradebookToCourse(this.id,
                 ((EditText) this.findViewById(R.id.etName)).getText().toString());
+
+        for(String[] meetingTime : this.meetingTimes)
+        {
+            db.addMeetingTimeToGradebook(
+                gradebookId,
+                Integer.parseInt(meetingTime[0]),
+                meetingTime[1]
+            );
+        }
 
         this.setResult(Activity.RESULT_OK);
 
