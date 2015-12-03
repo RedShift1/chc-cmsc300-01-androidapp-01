@@ -58,6 +58,14 @@ public class DB extends SQLiteOpenHelper {
                 "    name VARCHAR(100) NOT NULL" +
                 ");";
 
+        String sqlGradebookMeetingTimes = "CREATE TABLE gradebook_meetingtimes\n" +
+                "(" +
+                "   _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                "   gradebook_id INTEGER NOT NULL REFERENCES gradebooks (_id)," +
+                "   meeting_day INTEGER NOT NULL," + // Meeting day as integer from java.util.Calendar
+                "   meeting_time VARCHAR(5) NOT NULL" +
+                ");";
+
         String sqlAssignments = "CREATE TABLE assignments\n" +
                 "(\n" +
                 "    _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
