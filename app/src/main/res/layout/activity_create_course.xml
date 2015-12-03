@@ -40,18 +40,6 @@
             android:id="@+id/txtDescription"
             android:hint="Description" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add meeting time"
-            android:id="@+id/btnAddMeeting"
-            android:onClick="showDateTimePicker"/>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="276dp"
-            android:id="@+id/lvMeetings"/>
-
         </LinearLayout>
 
 </LinearLayout>
