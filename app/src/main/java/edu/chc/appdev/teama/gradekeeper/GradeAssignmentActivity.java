@@ -113,8 +113,18 @@ public class GradeAssignmentActivity extends AppCompatActivity
             {
                 try
                 {
+                    Assignment thisAssignment = this.db.getAssignment(this.id);
+                    float maxGrade = thisAssignment.getMaxgrade();
+
                     Double grade = Double.parseDouble(etGrade.getText().toString());
-                    db.setAssignmentGradeForStudent(this.id, cursor.getLong(cursor.getColumnIndex("student_id")), grade);
+                    if (grade <= maxGrade)
+                    {
+                        db.setAssignmentGradeForStudent(this.id, cursor.getLong(cursor.getColumnIndex("student_id")), grade);
+                    }
+                    else
+                    {
+                        Toast.makeText(this, "Grade cannot be higher than max grade!", Toast.LENGTH_LONG).show();
+                    }
                 }
                 catch (Exception ex)
                 {
