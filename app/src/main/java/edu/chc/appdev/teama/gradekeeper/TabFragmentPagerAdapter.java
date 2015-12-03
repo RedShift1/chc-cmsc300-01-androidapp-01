@@ -19,7 +19,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter
     public TabFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
-        this.tabFragments = new ArrayList<ITabbedFragment>();
+        this.tabFragments = new ArrayList<>();
     }
 
     public void addTabFragment(ITabbedFragment fragment)
