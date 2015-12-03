@@ -5,5 +5,5 @@ package edu.chc.appdev.teama.gradekeeper;
  */
 public interface IFilterTextChangedListener
 {
-    public void FilterTextChanged();
+    void FilterTextChanged();
 }
