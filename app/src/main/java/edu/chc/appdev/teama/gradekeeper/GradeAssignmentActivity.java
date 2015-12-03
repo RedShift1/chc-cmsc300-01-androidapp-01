@@ -18,6 +18,10 @@ import android.widget.Toast;
 import edu.chc.appdev.teama.gradekeeper.CursorAdapters.StudentsForAssignment;
 import edu.chc.appdev.teama.gradekeeper.DB.Assignment;
 import edu.chc.appdev.teama.gradekeeper.DB.DB;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.EditTextValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.FormValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
+import edu.chc.appdev.teama.gradekeeper.TextValidators.NotGreaterThan;
 
 public class GradeAssignmentActivity extends AppCompatActivity
 {
@@ -26,6 +30,10 @@ public class GradeAssignmentActivity extends AppCompatActivity
     private long id;
 
     private StudentsForAssignment studentsForAssignmentAdapter;
+
+    private FormValidator validator;
+
+    private Assignment thisAssignment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,22 +46,18 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-
+        this.validator = new FormValidator();
         this.db = DB.getInstance(this);
 
         Bundle extras = this.getIntent().getExtras();
 
         this.id = extras.getLong("_id");
 
-
-        this.studentsForAssignmentAdapter = new StudentsForAssignment(this, this.db.getStudentsWithGradesForAssignment(this.id), 0);
-
-        ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
-        lvGradesList.setAdapter(this.studentsForAssignmentAdapter);
+        this.thisAssignment = null;
 
         try
         {
-            Assignment thisAssignment = this.db.getAssignment(this.id);
+            this.thisAssignment = this.db.getAssignment(this.id);
             this.setTitle("Grade assignment");
             toolbar.setSubtitle(thisAssignment.getName());
         }
@@ -61,6 +65,17 @@ public class GradeAssignmentActivity extends AppCompatActivity
         {
             Log.w("Gradekeeper", "No assignment found with ID " + this.id);
         }
+
+        this.studentsForAssignmentAdapter = new StudentsForAssignment(
+            this,
+            this.db.getStudentsWithGradesForAssignment(this.id),
+            0,
+            this.validator,
+            new ITextValidator[] { new NotGreaterThan(this.thisAssignment.getMaxgrade()) }
+        );
+
+        ListView lvGradesList = (ListView) this.findViewById(R.id.lvGradeAssignment_Students);
+        lvGradesList.setAdapter(this.studentsForAssignmentAdapter);
     }
 
     public void deleteAssigmentFromDB(MenuItem menuItem)
@@ -98,6 +113,11 @@ public class GradeAssignmentActivity extends AppCompatActivity
 
     public void saveAssignmentGrades(MenuItem menuItem)
     {
+        if(!this.validator.isValid())
+        {
+            (Toast.makeText(this, "Form contains errors", Toast.LENGTH_LONG)).show();
+            return;
+        }
 
         Cursor cursor = this.studentsForAssignmentAdapter.getCursor();
 
@@ -113,18 +133,8 @@ public class GradeAssignmentActivity extends AppCompatActivity
             {
                 try
                 {
-                    Assignment thisAssignment = this.db.getAssignment(this.id);
-                    float maxGrade = thisAssignment.getMaxgrade();
-
                     Double grade = Double.parseDouble(etGrade.getText().toString());
-                    if (grade <= maxGrade)
-                    {
-                        db.setAssignmentGradeForStudent(this.id, cursor.getLong(cursor.getColumnIndex("student_id")), grade);
-                    }
-                    else
-                    {
-                        Toast.makeText(this, "Grade cannot be higher than max grade!", Toast.LENGTH_LONG).show();
-                    }
+                    db.setAssignmentGradeForStudent(this.id, cursor.getLong(cursor.getColumnIndex("student_id")), grade);
                 }
                 catch (Exception ex)
                 {

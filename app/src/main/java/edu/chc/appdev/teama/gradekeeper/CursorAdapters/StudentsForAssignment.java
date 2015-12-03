@@ -6,8 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import edu.chc.appdev.teama.gradekeeper.FormValidator.EditTextValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.FormValidator;
+import edu.chc.appdev.teama.gradekeeper.FormValidator.ITextValidator;
 import edu.chc.appdev.teama.gradekeeper.R;
 
 /**
@@ -16,9 +20,15 @@ import edu.chc.appdev.teama.gradekeeper.R;
 public class StudentsForAssignment extends CursorAdapter
 {
 
-    public StudentsForAssignment(Context context, Cursor c, int flags)
+    private FormValidator validator;
+    private ITextValidator[] etGradeValidators;
+
+    public StudentsForAssignment(Context context, Cursor c, int flags, FormValidator validator, ITextValidator[] etGradeValidators)
     {
         super(context, c, flags);
+
+        this.validator = validator;
+        this.etGradeValidators = etGradeValidators;
     }
 
     @Override
@@ -32,7 +42,11 @@ public class StudentsForAssignment extends CursorAdapter
     {
         ((TextView) view.findViewById(R.id.li_student_name)).
                 setText(cursor.getString(cursor.getColumnIndex("name")));
-        ((TextView) view.findViewById(R.id.etGrade)).
-            setText(cursor.getString(cursor.getColumnIndex("grade")));
+
+        EditText etGrade = (EditText) view.findViewById(R.id.etGrade);
+
+        etGrade.setText(cursor.getString(cursor.getColumnIndex("grade")));
+
+        this.validator.addField(new EditTextValidator(etGrade, this.etGradeValidators));
     }
 }
