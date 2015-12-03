@@ -78,7 +78,11 @@ public class AddGradebookActivity extends AppCompatActivity
 
     public void addMeetingTime(int day, int hour, int minute)
     {
-        String[] item = {String.valueOf(day), hour + ":" + minute};
+        String[] item =
+        {
+            String.valueOf(day),
+            String.format("%02d:%02d", hour, minute)
+        };
         this.meetingTimes.add(item);
         this.meetingTimesAdapter.notifyDataSetChanged();
     }
