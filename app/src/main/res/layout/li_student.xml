@@ -17,15 +17,6 @@
             android:layout_gravity="center_vertical">
     </TextView>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:id="@+id/ib_li_student_delete"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:onClick="deleteStudent"
-            android:layout_gravity="center_vertical" />
-
     </RelativeLayout>
 
 
