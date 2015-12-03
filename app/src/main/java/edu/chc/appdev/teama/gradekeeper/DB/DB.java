@@ -137,6 +137,29 @@ public class DB extends SQLiteOpenHelper {
         return id;
     }
 
+    public long addMeetingTimeToGradebook(long gradebookId, int day, String time)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("gradebook_id", gradebookId);
+        values.put("meeting_day", day);
+        values.put("meeting_time", time);
+        long id = db.insertOrThrow("gradebook_meetingtimes", null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public Cursor getMeetingTimesForGradebook(long gradebookId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery(
+            String.format("SELECT * FROM gradebook_meetingtimes WHERE gradebook_id = %d ORDER BY meeting_day", gradebookId),
+            null
+        );
+    }
+
     public Cursor getAssignmentsForGradebook(long gradebookId)
     {
         SQLiteDatabase db = this.getWritableDatabase();
