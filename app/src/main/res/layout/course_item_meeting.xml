@@ -7,14 +7,16 @@
         android:id="@+id/tvDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@+id/label">
+        android:text="[tvDay]"
+        android:textAppearance="?android:attr/textAppearanceListItem">
     </TextView>
 
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@+id/label">
+        android:text="[tvTime]"
+        android:textAppearance="?android:attr/textAppearanceListItem">
     </TextView>
 
 </LinearLayout>
