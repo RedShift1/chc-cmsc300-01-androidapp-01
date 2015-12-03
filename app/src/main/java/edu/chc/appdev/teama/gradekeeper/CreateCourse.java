@@ -26,14 +26,10 @@ import edu.chc.appdev.teama.gradekeeper.TextValidators.NotEmpty;
 public class CreateCourse extends AppCompatActivity
 {
 
-    private SlideDayTimeListener listener;
-    private ArrayList<String[]> meetingTimes;
-    private CourseMeetings meetingTimesAdapter;
     private FormValidator validator;
 
     public CreateCourse()
     {
-        this.meetingTimes = new ArrayList<String[]>();
     }
 
     @Override
@@ -49,26 +45,6 @@ public class CreateCourse extends AppCompatActivity
         this.setTitle("Add course");
         (this.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        listener = new SlideDayTimeListener() {
-
-            @Override
-            public void onDayTimeSet(int day, int hour, int minute)
-            {
-                // Do something with the day, hour and minute
-                // the user has selected.
-                CreateCourse.this.addMeetingTime(day, hour, minute);
-            }
-
-            @Override
-            public void onDayTimeCancel()
-            {
-                // The user has canceled the dialog.
-                // This override is optional.
-            }
-        };
-
-        this.meetingTimesAdapter = new CourseMeetings(this, this.meetingTimes);
-        ((ListView) this.findViewById(R.id.lvMeetings)).setAdapter(this.meetingTimesAdapter);
 
         this.validator = new FormValidator();
         this.validator.addField(
@@ -83,13 +59,6 @@ public class CreateCourse extends AppCompatActivity
                 new ITextValidator[] { new NotEmpty() }
             )
         );
-    }
-
-    public void addMeetingTime(int day, int hour, int minute)
-    {
-        String[] item = {String.valueOf(day), hour + ":" + minute};
-        this.meetingTimes.add(item);
-        this.meetingTimesAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -112,20 +81,6 @@ public class CreateCourse extends AppCompatActivity
         }
     }
 
-    public void showDateTimePicker(View view)
-    {
-        new SlideDayTimePicker.Builder(getSupportFragmentManager())
-                .setListener(this.listener)
-                .setInitialDay(1)
-                .setInitialHour(13)
-                .setInitialMinute(30)
-                .setIs24HourTime(true)
-                        //.setCustomDaysArray(getResources().getStringArray(R.array.days_of_week))
-                        //.setTheme(SlideDayTimePicker.HOLO_DARK)
-                        //.setIndicatorColor(Color.parseColor("#990000"))
-                .build()
-                .show();
-    }
 
     public void addCourseToDb(MenuItem menuItem)
     {
